@@ -228,7 +228,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);}
 <header>
   <div class="logo" onclick="resetAll()" title="Ir al inicio">
     <span class="logo-name">Kit de Investigación de Mercados</span>
-    <span class="logo-tag">v3.0 · USMP</span>
+    <span class="logo-tag">v3.0 · Hugo Cornejo Villena</span>
   </div>
   <div style="display:flex;align-items:center;gap:.75rem;">
     <button class="reset-btn" onclick="resetAll()">↺ Nuevo análisis</button>
@@ -238,11 +238,12 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);}
 
 <!-- API KEY BAR -->
 <div class="api-bar">
-  <span class="api-label">🤖 IA · GEMINI</span>
-  <input class="api-input" type="password" id="gemini-key" placeholder="Pegá tu API key de Google Gemini  (AIza...)" oninput="onKeyInput()">
+  <span class="api-label">🤖 IA · OPENAI</span>
+  <input class="api-input" type="password" id="gemini-key" placeholder="Pegá tu API key de OpenAI  (sk-...)" oninput="onKeyInput()">
   <button class="api-save" onclick="saveKey()">✓ Guardar key</button>
+  <button class="api-save" onclick="testKey()" style="background:#14302a;border-color:#1a7a4a;color:#4ade80;">⚡ Probar conexión</button>
   <span class="api-status api-empty" id="api-status-badge">Sin key — se usará análisis automático</span>
-  <span class="api-info">Obtené tu key gratis en <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com</a> · No se almacena en ningún servidor</span>
+  <span class="api-info">Obtené tu key en <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a> · No se almacena en ningún servidor</span>
 </div>
 
 <div class="mbar">
@@ -345,7 +346,12 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);}
       <div id="elast-curve"></div>
       <div id="elast-ins" class="nt nti" style="margin-top:.75rem"><span class="ni">📈</span><span id="elast-ins-txt"></span></div>
     </div>
-    <div class="sc"><div class="sh2"><div class="stl"><span class="slb">R</span>Script CBC Conjoint</div><div class="sact"><button class="sbtn" id="ccpb" onclick="cpSc('c')">⎘ Copiar</button><button class="sbtn" onclick="dlSc('c')">↓ .R</button></div></div><div class="sb"><pre id="csp"></pre></div></div>
+    <div style="display:flex;gap:.65rem;align-items:center;margin-bottom:1.1rem;padding:.75rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;">
+      <span style="font-family:'Geist Mono',monospace;font-size:.65rem;color:var(--ink3);">📄 Script R — CBC Conjoint</span>
+      <button class="btn bg" onclick="cpSc('c')" id="ccpb" style="font-size:.75rem;padding:.4rem .9rem;">⎘ Copiar script</button>
+      <button class="btn bs2" onclick="dlSc('c')" style="font-size:.75rem;padding:.4rem .9rem;">↓ Descargar .R</button>
+    </div>
+    <pre id="csp" style="display:none"></pre>
     <div class="card"><div class="ct">Exportar resultados</div><div class="bgrp"><button class="btn bs2" onclick="gCS(3)">← Paso anterior</button><button class="btn bp" onclick="expC()">↓ Excel resultados</button><button class="btn bg" onclick="resetMod('conjoint')">↺ Nuevo análisis</button></div></div>
   </div>
 </div>
@@ -400,9 +406,14 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);}
   </div>
   <div id="ms4" class="sp">
     <div class="aic"><div class="aih"><div class="aibdg">✦ IA</div><div class="aitl">Conclusiones del análisis</div></div><div id="mai"><div class="aild"><div class="dots"><span></span><span></span><span></span></div>Generando conclusiones…</div></div></div>
-    <div class="card"><div class="ct">Ranking de importancia — Score 0 a 100</div><p class="cs">100 = máxima importancia relativa. 0 = mínima importancia en el grupo encuestado.</p><div id="md-rc"></div></div>
+    <div class="card"><div class="ct">Ranking de importancia — Porcentajes suman 100%</div><p class="cs">Cada ítem recibe un porcentaje proporcional a su importancia relativa. La suma de todos los ítems es exactamente 100%.</p><div id="md-rc"></div></div>
     <div class="card"><div class="ct">Estadísticas detalladas</div><div id="md-st"></div></div>
-    <div class="sc"><div class="sh2"><div class="stl"><span class="slb">R</span>Script MaxDiff</div><div class="sact"><button class="sbtn" id="mcpb" onclick="cpSc('m')">⎘ Copiar</button><button class="sbtn" onclick="dlSc('m')">↓ .R</button></div></div><div class="sb"><pre id="msp"></pre></div></div>
+    <div style="display:flex;gap:.65rem;align-items:center;margin-bottom:1.1rem;padding:.75rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;">
+      <span style="font-family:'Geist Mono',monospace;font-size:.65rem;color:var(--ink3);">📄 Script R — MaxDiff</span>
+      <button class="btn bgb" onclick="cpSc('m')" id="mcpb" style="font-size:.75rem;padding:.4rem .9rem;">⎘ Copiar script</button>
+      <button class="btn bs2" onclick="dlSc('m')" style="font-size:.75rem;padding:.4rem .9rem;">↓ Descargar .R</button>
+    </div>
+    <pre id="msp" style="display:none"></pre>
     <div class="card"><div class="ct">Exportar resultados</div><p class="cs">Incluye ranking agregado y matriz individual por encuestado.</p>
       <div class="bgrp"><button class="btn bs2" onclick="gMS(3)">← Paso anterior</button><button class="btn bpb" onclick="expM()">↓ Excel agregado</button><button class="btn bgb" onclick="expMInd()">↓ Matriz individual</button><button class="btn bgb" onclick="resetMod('maxdiff')">↺ Nuevo análisis</button></div>
     </div>
@@ -669,36 +680,97 @@ function saveKey(){
   const badge = document.getElementById('api-status-badge');
   if(!v || v.length < 10){ alert('Ingresá una API key válida.'); return; }
   _geminiKey = v;
-  badge.textContent = '✓ Key activa — IA habilitada';
-  badge.className = 'api-status api-ok';
+  badge.textContent = '✓ Key guardada — hacé clic en "Probar conexión"';
+  badge.className = 'api-status api-empty';
+  badge.style.cssText = '';
 }
 
-// Llamada central a Gemini. Si falla o no hay key → fallback automático.
-async function callAI(prompt, fallbackFn) {
-  if(_geminiKey) {
-    try {
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${_geminiKey}`;
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({contents:[{parts:[{text: prompt}]}], generationConfig:{maxOutputTokens:900,temperature:0.7}})
-      });
-      const d = await res.json();
-      if(d.error){ throw new Error(d.error.message); }
-      const text = d.candidates?.[0]?.content?.parts?.[0]?.text;
-      if(text) return {ok:true, text};
-    } catch(e) {
-      console.warn('Gemini error:', e.message);
-    }
+async function testKey(){
+  const badge = document.getElementById('api-status-badge');
+  if(!_geminiKey){
+    const v = document.getElementById('gemini-key').value.trim();
+    if(!v){ alert('Primero ingresá tu API key y hacé clic en Guardar.'); return; }
+    _geminiKey = v;
   }
-  // Fallback: análisis automático basado en reglas
-  return {ok:false, text: fallbackFn()};
+  badge.textContent = '⟳ Probando conexión con OpenAI…';
+  badge.className = 'api-status api-empty';
+  badge.style.cssText = '';
+  try {
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json', 'Authorization':'Bearer '+_geminiKey},
+      body: JSON.stringify({model:'gpt-4o-mini', max_tokens:5, messages:[{role:'user',content:'ok'}]})
+    });
+    const d = await res.json();
+    if(d.error){
+      badge.textContent = '✗ ' + d.error.message;
+      badge.style.cssText = 'background:#2d0a0a;border:1px solid #7f1d1d;color:#f87171;font-family:Geist Mono,monospace;font-size:.6rem;padding:.22rem .55rem;border-radius:3px;white-space:normal;max-width:520px;';
+    } else if(d.choices?.[0]?.message?.content){
+      badge.textContent = '✓ Key activa — GPT-4o-mini habilitado';
+      badge.className = 'api-status api-ok';
+      badge.style.cssText = '';
+    } else {
+      badge.textContent = '⚠ Respuesta inesperada. Revisá la key.';
+      badge.style.cssText = 'background:#1c1307;border:1px solid #92400e;color:#fbbf24;font-family:Geist Mono,monospace;font-size:.6rem;padding:.22rem .55rem;border-radius:3px;';
+    }
+  } catch(e){
+    badge.textContent = '✗ Error de red: ' + e.message;
+    badge.style.cssText = 'background:#2d0a0a;border:1px solid #7f1d1d;color:#f87171;font-family:Geist Mono,monospace;font-size:.6rem;padding:.22rem .55rem;border-radius:3px;';
+  }
+}
+
+// Motor central — OpenAI GPT-4o-mini + fallback automático por reglas
+async function callAI(prompt, fallbackFn) {
+  if(!_geminiKey) return {ok:false, text: fallbackFn()};
+
+  const setBadge = (txt, cls='', css='') => {
+    const b = document.getElementById('api-status-badge');
+    if(!b) return;
+    b.textContent = txt;
+    b.className = 'api-status' + (cls ? ' '+cls : '');
+    b.style.cssText = css;
+  };
+
+  setBadge('⟳ Consultando GPT-4o-mini…', 'api-empty');
+  try {
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json', 'Authorization':'Bearer '+_geminiKey},
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        max_tokens: 900,
+        temperature: 0.75,
+        messages: [{role:'user', content: prompt}]
+      })
+    });
+    const d = await res.json();
+
+    if(d.error){
+      setBadge('✗ ' + d.error.message, '', 'background:#2d0a0a;border:1px solid #7f1d1d;color:#f87171;font-family:Geist Mono,monospace;font-size:.6rem;padding:.22rem .55rem;border-radius:3px;white-space:normal;max-width:520px;');
+      return {ok:false, text: fallbackFn()};
+    }
+
+    const text = d.choices?.[0]?.message?.content?.trim();
+    if(text){
+      setBadge('✓ Key activa — GPT-4o-mini habilitado', 'api-ok');
+      return {ok:true, text};
+    }
+
+    setBadge('⚠ Respuesta vacía. Usando análisis automático.', '', 'background:#1c1307;border:1px solid #92400e;color:#fbbf24;font-family:Geist Mono,monospace;font-size:.6rem;padding:.22rem .55rem;border-radius:3px;');
+    return {ok:false, text: fallbackFn()};
+
+  } catch(e) {
+    setBadge('✗ Error de red: '+e.message, '', 'background:#2d0a0a;border:1px solid #7f1d1d;color:#f87171;font-family:Geist Mono,monospace;font-size:.6rem;padding:.22rem .55rem;border-radius:3px;');
+    return {ok:false, text: fallbackFn()};
+  }
 }
 
 function showAI(elId, result) {
   const el = document.getElementById(elId);
   if(!el) return;
-  const tag = result.ok ? '' : '<span style="font-family:\'Geist Mono\',monospace;font-size:.58rem;background:#1c1917;border:1px solid #292524;color:#a09888;padding:.12rem .4rem;border-radius:3px;margin-right:.5rem;vertical-align:middle">AUTO</span>';
+  const tag = result.ok
+    ? '<span style="font-family:\'Geist Mono\',monospace;font-size:.58rem;background:#052e16;border:1px solid #166534;color:#4ade80;padding:.12rem .4rem;border-radius:3px;margin-right:.5rem;vertical-align:middle">✦ GPT</span>'
+    : '<span style="font-family:\'Geist Mono\',monospace;font-size:.58rem;background:#1c1917;border:1px solid #3a3530;color:#a09888;padding:.12rem .4rem;border-radius:3px;margin-right:.5rem;vertical-align:middle" title="Análisis generado automáticamente por reglas. Ingresá una API key de Gemini para conclusiones enriquecidas con IA.">⚙ AUTO</span>';
   el.innerHTML = `<div class="aitxt">${tag}${result.text}</div>`;
 }
 
@@ -776,9 +848,108 @@ function hMDrop(e){e.preventDefault();const f=e.dataTransfer.files[0];if(f)prMFi
 function hMFile(e){const f=e.target.files[0];if(f)prMFile(f);}
 function prMFile(file){const r=new FileReader();r.onload=e=>{try{const wb=XLSX.read(e.target.result,{type:'binary'});S.m.data=XLSX.utils.sheet_to_json(wb.Sheets['Respuestas']||wb.Sheets[wb.SheetNames[0]]);document.getElementById('mfs').classList.remove('hid');document.getElementById('mfst').textContent=`${file.name} — ${S.m.data.length} encuestados.`;document.getElementById('mab').disabled=false;}catch{alert('Error.');}};r.readAsBinaryString(file);}
 function loadMDemo(){const N=80,items=S.m.items,r=rng(555),tu=items.map((_,i)=>(items.length-i)*(0.8+r()*0.4));S.m.data=Array.from({length:N},(_,ei)=>{const row={id_encuestado:ei+1,version:(ei%S.m.vers)+1};S.m.design[ei%S.m.vers].forEach((set,t)=>{const us=set.map(idx=>tu[idx]*(0.7+r()*0.6));row['t'+(t+1)+'_mejor']=set[us.indexOf(Math.max(...us))]+1;row['t'+(t+1)+'_peor']=set[us.indexOf(Math.min(...us))]+1;});return row;});document.getElementById('mfs').classList.remove('hid');document.getElementById('mfst').textContent=`Datos demo — ${N} encuestados.`;document.getElementById('mab').disabled=false;}
-function analyzeM(){const data=S.m.data,items=S.m.items,N=items.length;const bc=new Array(N).fill(0),wc=new Array(N).fill(0),ap=new Array(N).fill(0);const indivScores=data.map(row=>{const v=Math.min((row.version||1)-1,S.m.design.length-1);const bI=new Array(N).fill(0),wI=new Array(N).fill(0);S.m.design[v].forEach((set,t)=>{set.forEach(idx=>ap[idx]++);const best=row['t'+(t+1)+'_mejor'],worst=row['t'+(t+1)+'_peor'];if(best&&best>=1&&best<=N){bc[best-1]++;bI[best-1]++;}if(worst&&worst>=1&&worst<=N){wc[worst-1]++;wI[worst-1]++;}});const net=items.map((_,i)=>bI[i]-wI[i]);const mn=Math.min(...net),mx=Math.max(...net),rn=mx-mn||1;return{id:row.id_encuestado,version:row.version||1,net,norm:net.map(s=>Math.round((s-mn)/rn*100*10)/10)};});const net=items.map((_,i)=>bc[i]-wc[i]),mn=Math.min(...net),mx=Math.max(...net),rn=mx-mn||1;const norm=net.map(s=>(s-mn)/rn*100);const ranked=items.map((it,i)=>({it,rank:0,b:bc[i],w:wc[i],net:net[i],score:norm[i]})).sort((a,b)=>b.net-a.net);ranked.forEach((r,i)=>r.rank=i+1);S.m.res={ranked,indivScores};renderMRes();gMS(4);genMAI();}
-function renderMRes(){const{ranked}=S.m.res;const rc=document.getElementById('md-rc');rc.innerHTML='';const gc=s=>s>=60?'#1a7a4a':s>=30?'#2563a8':'#c8430a';ranked.forEach(r=>{const row=document.createElement('div');row.className='rbr';const col=gc(r.score);row.innerHTML=`<div class="rl2" style="width:185px;font-size:.75rem"><span style="font-family:'Geist Mono',monospace;color:var(--ink3);font-size:.62rem">#${r.rank} </span>${r.it}</div><div class="rbw"><div class="rbf" style="width:${Math.max(2,r.score)}%;background:${col}">${r.score>10?r.score.toFixed(0):''}</div></div><div class="rv">${r.score.toFixed(1)}</div>`;rc.appendChild(row);});const st=document.getElementById('md-st');const tbl=document.createElement('table');tbl.style.cssText='width:100%;border-collapse:collapse;font-size:.8rem';tbl.innerHTML=`<thead><tr style="background:var(--surface)"><th style="text-align:left;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">#</th><th style="text-align:left;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">ÍTEM</th><th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--g)">MÁS</th><th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--r)">MENOS</th><th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">NETO</th><th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">SCORE</th></tr></thead><tbody>${ranked.map(r=>`<tr style="border-bottom:1px solid var(--border)"><td style="padding:.42rem .7rem;font-family:'Geist Mono',monospace;font-size:.68rem;color:var(--ink3)">${r.rank}</td><td style="padding:.42rem .7rem">${r.it}</td><td style="padding:.42rem .7rem;text-align:center;color:var(--g);font-weight:500">${r.b}</td><td style="padding:.42rem .7rem;text-align:center;color:var(--r)">${r.w}</td><td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace;color:${r.net>=0?'var(--g)':'var(--r)'}">${r.net>0?'+':''}${r.net}</td><td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace;font-weight:600">${r.score.toFixed(1)}</td></tr>`).join('')}</tbody>`;st.innerHTML='';st.appendChild(tbl);}
-function expM(){const{ranked}=S.m.res,wb=XLSX.utils.book_new();const rr=[['Rank','Ítem','Más impt.','Menos impt.','Neto','Score (0-100)','Zona'],...ranked.map(r=>[r.rank,r.it,r.b,r.w,r.net,r.score.toFixed(1),r.score>=60?'Alta':r.score>=30?'Media':'Baja'])];const wr=XLSX.utils.aoa_to_sheet(rr);XLSX.utils.book_append_sheet(wb,wr,'Ranking MaxDiff');XLSX.writeFile(wb,'resultados_maxdiff.xlsx');}
+function analyzeM(){
+  const data=S.m.data,items=S.m.items,N=items.length;
+  const bc=new Array(N).fill(0),wc=new Array(N).fill(0),ap=new Array(N).fill(0);
+
+  // Puntajes individuales por encuestado (normalizados 0-100 dentro de cada uno)
+  const indivScores=data.map(row=>{
+    const v=Math.min((row.version||1)-1,S.m.design.length-1);
+    const bI=new Array(N).fill(0),wI=new Array(N).fill(0);
+    S.m.design[v].forEach((set,t)=>{
+      set.forEach(idx=>ap[idx]++);
+      const best=row['t'+(t+1)+'_mejor'],worst=row['t'+(t+1)+'_peor'];
+      if(best&&best>=1&&best<=N){bc[best-1]++;bI[best-1]++;}
+      if(worst&&worst>=1&&worst<=N){wc[worst-1]++;wI[worst-1]++;}
+    });
+    const net=items.map((_,i)=>bI[i]-wI[i]);
+    const mn=Math.min(...net),mx=Math.max(...net),rn=mx-mn||1;
+    return{id:row.id_encuestado,version:row.version||1,net,norm:net.map(s=>Math.round((s-mn)/rn*100*10)/10)};
+  });
+
+  // Puntajes netos agregados
+  const net=items.map((_,i)=>bc[i]-wc[i]);
+
+  // ── Normalización proporcional: suma exactamente 100% ──
+  // 1. Desplazar a positivos (sumar el mínimo si hay negativos)
+  const minNet=Math.min(...net);
+  const shifted=net.map(s=>s - minNet); // todos >= 0
+  const totalShifted=shifted.reduce((a,b)=>a+b,0)||1;
+
+  // 2. Calcular porcentaje proporcional
+  let runningSum=0;
+  const scores=shifted.map((s,i)=>{
+    if(i===items.length-1){
+      // último ítem ajusta el residuo para suma exacta
+      return Math.round((100-runningSum)*10)/10;
+    }
+    const pct=Math.round(s/totalShifted*1000)/10;
+    runningSum+=pct;
+    return pct;
+  });
+
+  const ranked=items.map((it,i)=>({it,rank:0,b:bc[i],w:wc[i],net:net[i],score:scores[i]}))
+    .sort((a,b)=>b.net-a.net);
+  ranked.forEach((r,i)=>r.rank=i+1);
+
+  S.m.res={ranked,indivScores};
+  renderMRes();
+  gMS(4);
+  genMAI();
+}
+function renderMRes(){
+  const{ranked}=S.m.res;
+  const total=ranked.reduce((s,r)=>s+r.score,0);
+
+  // Gráfico de barras con %
+  const rc=document.getElementById('md-rc');rc.innerHTML='';
+  // Zonas relativas: top tercio=verde, medio=azul, bajo=rojo
+  const sorted=[...ranked].sort((a,b)=>b.score-a.score);
+  const topThird=sorted[Math.floor(sorted.length/3)]?.score||0;
+  const botThird=sorted[Math.floor(sorted.length*2/3)]?.score||100;
+  const gc=s=>s>=topThird?'#1a7a4a':s>=botThird?'#2563a8':'#c8430a';
+
+  ranked.forEach(r=>{
+    const row=document.createElement('div');row.className='rbr';const col=gc(r.score);
+    row.innerHTML=`<div class="rl2" style="width:185px;font-size:.75rem"><span style="font-family:'Geist Mono',monospace;color:var(--ink3);font-size:.62rem">#${r.rank} </span>${r.it}</div>
+    <div class="rbw"><div class="rbf" style="width:${Math.max(0.5,r.score)}%;background:${col}">${r.score>4?r.score.toFixed(1)+'%':''}</div></div>
+    <div class="rv">${r.score.toFixed(1)}%</div>`;
+    rc.appendChild(row);
+  });
+  // Fila TOTAL
+  const tr=document.createElement('div');tr.className='rbr';
+  tr.innerHTML=`<div class="rl2" style="font-weight:600;color:var(--ink);width:185px">TOTAL</div>
+    <div class="rbw"><div class="rbf" style="width:100%;background:#1a1714">100%</div></div>
+    <div class="rv" style="font-weight:600">${total.toFixed(1)}%</div>`;
+  rc.appendChild(tr);
+
+  // Tabla estadísticas — columna renombrada a %
+  const st=document.getElementById('md-st');
+  const tbl=document.createElement('table');tbl.style.cssText='width:100%;border-collapse:collapse;font-size:.8rem';
+  tbl.innerHTML=`<thead><tr style="background:var(--surface)">
+    <th style="text-align:left;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">#</th>
+    <th style="text-align:left;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">ÍTEM</th>
+    <th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--g)">MÁS</th>
+    <th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--r)">MENOS</th>
+    <th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">NETO</th>
+    <th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">% IMPORTANCIA</th>
+  </tr></thead><tbody>
+  ${ranked.map(r=>`<tr style="border-bottom:1px solid var(--border)">
+    <td style="padding:.42rem .7rem;font-family:'Geist Mono',monospace;font-size:.68rem;color:var(--ink3)">${r.rank}</td>
+    <td style="padding:.42rem .7rem">${r.it}</td>
+    <td style="padding:.42rem .7rem;text-align:center;color:var(--g);font-weight:500">${r.b}</td>
+    <td style="padding:.42rem .7rem;text-align:center;color:var(--r)">${r.w}</td>
+    <td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace;color:${r.net>=0?'var(--g)':'var(--r)'}">${r.net>0?'+':''}${r.net}</td>
+    <td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace;font-weight:600">${r.score.toFixed(1)}%</td>
+  </tr>`).join('')}
+  <tr style="border-top:2px solid var(--border);background:var(--surface)">
+    <td colspan="5" style="padding:.42rem .7rem;font-weight:600;color:var(--ink);font-size:.8rem">TOTAL</td>
+    <td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace;font-weight:700">${total.toFixed(1)}%</td>
+  </tr>
+  </tbody>`;
+  st.innerHTML='';st.appendChild(tbl);
+}
+function expM(){const{ranked}=S.m.res,wb=XLSX.utils.book_new();const total=ranked.reduce((s,r)=>s+r.score,0);const rr=[['Rank','Ítem','Veces más impt.','Veces menos impt.','Neto','% Importancia'],...ranked.map(r=>[r.rank,r.it,r.b,r.w,r.net,r.score.toFixed(1)]),['','TOTAL','','','',total.toFixed(1)]];const wr=XLSX.utils.aoa_to_sheet(rr);XLSX.utils.book_append_sheet(wb,wr,'Ranking MaxDiff');XLSX.writeFile(wb,'resultados_maxdiff.xlsx');}
 function expMInd(){const{ranked,indivScores}=S.m.res,items=S.m.items,wb=XLSX.utils.book_new();const hd=['id_encuestado','version',...items.map((it,i)=>`score_${i+1}`)];const rows=indivScores.map(r=>[r.id,r.version,...r.norm]);const ws=XLSX.utils.aoa_to_sheet([hd,...rows]);XLSX.utils.book_append_sheet(wb,ws,'Scores individuales');const hd2=['id_encuestado','version',...items.map((it,i)=>`net_${i+1}`)];const rows2=indivScores.map(r=>[r.id,r.version,...r.net]);const ws2=XLSX.utils.aoa_to_sheet([hd2,...rows2]);XLSX.utils.book_append_sheet(wb,ws2,'Puntajes netos');const ref=[['Ref.'],['Score 0-100 normalizado por encuestado'],...items.map((it,i)=>[`${i+1}. ${it}`])];const ws3=XLSX.utils.aoa_to_sheet(ref);XLSX.utils.book_append_sheet(wb,ws3,'Referencia ítems');XLSX.writeFile(wb,'scores_maxdiff_individual.xlsx');}
 
 // ══════════════════════════════════════════════════
