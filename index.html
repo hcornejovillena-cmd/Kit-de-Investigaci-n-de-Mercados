@@ -6,353 +6,167 @@
 <title>Kit de Investigación de Mercados</title>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<style>
-:root{--bg:#f5f2eb;--surface:#faf8f3;--card:#fff;--border:#e2ddd4;--bdk:#c8c0b0;--ink:#1a1714;--ink2:#4a453f;--ink3:#8a8278;--r:#c8430a;--b:#2563a8;--g:#1a7a4a;--p:#7c3aed;--rl:#fce8e0;--bl:#deeaf7;--gl:#d6f0e4;--pl:#ede9fe;--sh:0 2px 8px rgba(26,23,20,.08);}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--ink);font-family:'Geist',sans-serif;font-weight:300;min-height:100vh;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23c8b89a' fill-opacity='.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
-header{background:var(--ink);padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;}
-.logo{display:flex;align-items:baseline;gap:.75rem;cursor:pointer;}
-.logo-name{font-family:'Instrument Serif',serif;font-size:1.35rem;color:#f5f2eb;line-height:1.2;}
-.logo-tag{font-family:'Geist Mono',monospace;font-size:.6rem;color:#8a8278;letter-spacing:.12em;text-transform:uppercase;}
-.hbadge{font-family:'Geist Mono',monospace;font-size:.6rem;padding:.25rem .6rem;border:1px solid #3a3530;border-radius:2px;color:#8a8278;letter-spacing:.1em;}
-.mbar{background:var(--surface);border-bottom:1px solid var(--border);display:flex;padding:0 1.5rem;overflow-x:auto;flex-wrap:nowrap;}
-.mbtn{font-family:'Geist',sans-serif;font-size:.8rem;font-weight:500;padding:.85rem 1.1rem;background:none;border:none;border-bottom:2px solid transparent;color:var(--ink3);cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0;}
-.mbtn:hover{color:var(--ink);}
-.mbtn.active{color:var(--r);border-bottom-color:var(--r);}
-.mbtn.active.cb{color:var(--b);border-bottom-color:var(--b);}
-.mbtn.active.cg{color:var(--g);border-bottom-color:var(--g);}
-.mbtn.active.cp2{color:var(--p);border-bottom-color:var(--p);}
-.body{max-width:1080px;margin:0 auto;padding:1.75rem;}
-/* WIZARD */
-.wiz{display:flex;margin-bottom:1.75rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
-.ws{flex:1;padding:.7rem .75rem;text-align:center;border-right:1px solid var(--border);cursor:pointer;transition:background .15s;}
-.ws:last-child{border-right:none;}
-.wn{font-family:'Geist Mono',monospace;font-size:.58rem;color:var(--ink3);letter-spacing:.1em;display:block;margin-bottom:.15rem;}
-.wl{font-size:.72rem;font-weight:500;color:var(--ink2);}
-.ws.act{background:var(--r);} .ws.act .wn,.ws.act .wl{color:#fff;}
-.ws.act.wb{background:var(--b);}
-.ws.act.wg{background:var(--g);}
-.ws.act.wp{background:var(--p);}
-.ws.dn{background:var(--rl);} .ws.dn .wn,.ws.dn .wl{color:var(--r);}
-.ws.dn.wb{background:var(--bl);} .ws.dn.wb .wn,.ws.dn.wb .wl{color:var(--b);}
-.ws.dn.wg{background:var(--gl);} .ws.dn.wg .wn,.ws.dn.wg .wl{color:var(--g);}
-.ws.dn.wp{background:var(--pl);} .ws.dn.wp .wn,.ws.dn.wp .wl{color:var(--p);}
-/* CARDS */
-.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.6rem;margin-bottom:1.1rem;box-shadow:var(--sh);}
-.ct{font-family:'Instrument Serif',serif;font-size:1.2rem;margin-bottom:.3rem;}
-.cs{font-size:.82rem;color:var(--ink3);margin-bottom:1.1rem;line-height:1.55;}
-/* FORMS */
-label{display:block;font-size:.76rem;font-weight:500;color:var(--ink2);margin-bottom:.3rem;}
-input[type=text],input[type=number],select,textarea{width:100%;background:var(--surface);border:1px solid var(--bdk);border-radius:4px;padding:.5rem .7rem;font-family:'Geist',sans-serif;font-size:.84rem;color:var(--ink);outline:none;transition:border-color .2s;}
-input:focus,select:focus,textarea:focus{border-color:var(--r);}
-.fr{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:.9rem;}
-.fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.9rem;margin-bottom:.9rem;}
-.fr4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.9rem;margin-bottom:.9rem;}
-.fg{margin-bottom:.9rem;}
-/* ATTR BUILDER */
-.ab{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.9rem;margin-bottom:.65rem;}
-.ah{display:flex;align-items:center;gap:.65rem;margin-bottom:.65rem;}
-.an{width:22px;height:22px;background:var(--r);color:#fff;border-radius:50%;font-family:'Geist Mono',monospace;font-size:.65rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.ai2{flex:1;}
-.brm{background:none;border:1px solid var(--bdk);border-radius:4px;padding:.25rem .55rem;font-size:.68rem;color:var(--ink3);cursor:pointer;}
-.brm:hover{background:#fee;border-color:#f88;color:#c00;}
-.lrow{display:flex;gap:.45rem;flex-wrap:wrap;}
-.lc{display:flex;align-items:center;gap:.35rem;background:var(--card);border:1px solid var(--bdk);border-radius:4px;padding:.2rem .45rem;}
-.lc input{width:110px;padding:.18rem .35rem;font-size:.76rem;border:none;background:transparent;}
-.rml{background:none;border:none;color:var(--ink3);cursor:pointer;font-size:.78rem;padding:0;}
-.bal{background:none;border:1px dashed var(--bdk);border-radius:4px;padding:.2rem .55rem;font-size:.73rem;color:var(--ink3);cursor:pointer;}
-.bal:hover{border-color:var(--r);color:var(--r);}
-/* BUTTONS */
-.btn{font-family:'Geist',sans-serif;font-size:.83rem;font-weight:500;padding:.6rem 1.25rem;border-radius:4px;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:.45rem;transition:all .2s;}
-.btn:disabled{opacity:.4;cursor:not-allowed;}
-.bp{background:var(--r);color:#fff;}.bp:hover:not(:disabled){background:#a33508;}
-.bpb{background:var(--b);color:#fff;}.bpb:hover:not(:disabled){background:#1a4f8a;}
-.bpg2{background:var(--g);color:#fff;}.bpg2:hover:not(:disabled){background:#145c38;}
-.bpp{background:var(--p);color:#fff;}.bpp:hover:not(:disabled){background:#5b21b6;}
-.bs2{background:var(--surface);color:var(--ink2);border:1px solid var(--bdk);}.bs2:hover{background:var(--border);}
-.bg{background:none;color:var(--r);border:1px solid var(--r);}.bg:hover{background:var(--rl);}
-.bgb{background:none;color:var(--b);border:1px solid var(--b);}.bgb:hover{background:var(--bl);}
-.bgg{background:none;color:var(--g);border:1px solid var(--g);}.bgg:hover{background:var(--gl);}
-.bgp{background:none;color:var(--p);border:1px solid var(--p);}.bgp:hover{background:var(--pl);}
-.bgrp{display:flex;gap:.65rem;margin-top:1.1rem;flex-wrap:wrap;align-items:center;}
-/* TASK CARDS */
-.tc{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:var(--sh);}
-.tch{background:var(--ink);color:var(--bg);padding:.45rem .7rem;font-family:'Geist Mono',monospace;font-size:.62rem;letter-spacing:.1em;display:flex;justify-content:space-between;align-items:center;}
-.tcv{background:var(--r);color:#fff;padding:.12rem .38rem;border-radius:2px;font-size:.58rem;}
-.po{padding:.65rem;display:grid;grid-template-columns:1fr 1fr;gap:.45rem;}
-.popt{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:.45rem;}
-.pol{font-family:'Geist Mono',monospace;font-size:.56rem;color:var(--ink3);letter-spacing:.07em;margin-bottom:.3rem;text-transform:uppercase;}
-.poa{font-size:.7rem;color:var(--ink);line-height:1.55;}
-.no{grid-column:1/-1;background:#f9f6f0;border:1px dashed var(--bdk);border-radius:4px;padding:.38rem;text-align:center;font-size:.7rem;color:var(--ink3);font-style:italic;}
-/* MD CARDS */
-.mdc{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:var(--sh);}
-.mdh{background:var(--b);color:#fff;padding:.45rem .7rem;font-family:'Geist Mono',monospace;font-size:.62rem;letter-spacing:.1em;display:flex;justify-content:space-between;}
-.mil{padding:.65rem;display:flex;flex-direction:column;gap:.3rem;}
-.mir{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:.45rem;padding:.35rem .45rem;background:var(--surface);border:1px solid var(--border);border-radius:4px;font-size:.76rem;}
-.mix{font-family:'Geist Mono',monospace;font-size:.58rem;color:var(--ink3);width:16px;}
-.mbl{font-family:'Geist Mono',monospace;font-size:.53rem;padding:.12rem .3rem;border-radius:2px;background:var(--gl);color:var(--g);}
-.mwl{font-family:'Geist Mono',monospace;font-size:.53rem;padding:.12rem .3rem;border-radius:2px;background:var(--rl);color:var(--r);}
-/* PILLS */
-.vp{display:flex;gap:.45rem;margin-bottom:.9rem;flex-wrap:wrap;}
-.pill{font-family:'Geist Mono',monospace;font-size:.68rem;padding:.3rem .7rem;border-radius:3px;border:1px solid var(--bdk);background:var(--surface);color:var(--ink2);cursor:pointer;}
-.pill.act{background:var(--r);color:#fff;border-color:var(--r);}
-.pill.act.pb{background:var(--b);border-color:var(--b);}
-/* RESULT BARS */
-.rbr{display:flex;align-items:center;gap:.65rem;margin-bottom:.55rem;}
-.rl2{width:155px;font-size:.78rem;color:var(--ink2);text-align:right;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.rbw{flex:1;background:var(--surface);border-radius:3px;height:21px;overflow:hidden;border:1px solid var(--border);}
-.rbf{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:.45rem;font-family:'Geist Mono',monospace;font-size:.62rem;color:#fff;transition:width .6s ease;min-width:2px;}
-.rv{font-family:'Geist Mono',monospace;font-size:.73rem;color:var(--ink2);width:52px;text-align:right;flex-shrink:0;}
-.isec{margin:.9rem 0;}
-.ititle{font-size:.76rem;font-weight:500;color:var(--ink2);margin-bottom:.45rem;text-transform:uppercase;letter-spacing:.05em;}
-/* UPLOAD */
-.uz{border:2px dashed var(--bdk);border-radius:8px;padding:2.25rem;text-align:center;cursor:pointer;background:var(--surface);transition:all .2s;}
-.uz:hover,.uz.dr{border-color:var(--r);background:var(--rl);}
-.uz.ub:hover,.uz.ub.dr{border-color:var(--b);background:var(--bl);}
-.uz.ug:hover,.uz.ug.dr{border-color:var(--g);background:var(--gl);}
-.uz.up:hover,.uz.up.dr{border-color:var(--p);background:var(--pl);}
-.uico{font-size:1.8rem;margin-bottom:.4rem;}
-.utxt{font-size:.88rem;color:var(--ink2);margin-bottom:.2rem;}
-.usub{font-size:.76rem;color:var(--ink3);}
-/* NOTICES */
-.nt{display:flex;gap:.7rem;padding:.85rem .95rem;border-radius:6px;margin-bottom:.9rem;font-size:.81rem;line-height:1.55;}
-.nti{background:var(--bl);color:var(--b);border:1px solid #b3ccef;}
-.ntw{background:#fef3c7;color:#92400e;border:1px solid #fcd34d;}
-.nts{background:var(--gl);color:var(--g);border:1px solid #86efac;}
-.ntp{background:var(--pl);color:var(--p);border:1px solid #c4b5fd;}
-.ni{flex-shrink:0;font-size:.95rem;margin-top:.1rem;}
-.ebdg{display:inline-flex;align-items:center;gap:.35rem;background:var(--rl);color:var(--r);border:1px solid #f4c4b0;border-radius:3px;font-family:'Geist Mono',monospace;font-size:.62rem;padding:.22rem .55rem;letter-spacing:.07em;margin-bottom:.9rem;}
-.hid{display:none!important;}
-.dvd{border:none;border-top:1px solid var(--border);margin:1.1rem 0;}
-.tm{font-family:'Geist Mono',monospace;font-size:.76rem;}
-.cp{display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem;}
-.pi2{font-family:'Geist Mono',monospace;font-size:.7rem;color:var(--ink3);}
-.bpg3{background:var(--surface);border:1px solid var(--bdk);border-radius:4px;padding:.3rem .7rem;font-size:.73rem;cursor:pointer;color:var(--ink2);}
-.bpg3:hover:not(:disabled){background:var(--r);color:#fff;border-color:var(--r);}
-.bpg3:disabled{opacity:.4;cursor:default;}
-.mod{display:none;}.mod.act{display:block;}
-.sp{display:none;}.sp.act{display:block;}
-/* AI CARD */
-.aic{background:#1a1714;border:1px solid #3a3530;border-radius:8px;padding:1.4rem;margin-bottom:1.1rem;position:relative;overflow:hidden;}
-.aic::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--r),var(--b),var(--g),var(--p));}
-.aih{display:flex;align-items:center;gap:.55rem;margin-bottom:.9rem;}
-.aibdg{font-family:'Geist Mono',monospace;font-size:.58rem;padding:.18rem .45rem;background:linear-gradient(135deg,#c8430a18,#2563a818);border:1px solid #3a3530;border-radius:3px;color:#a09888;letter-spacing:.1em;text-transform:uppercase;}
-.aitl{font-family:'Instrument Serif',serif;font-size:1.05rem;color:#f5f2eb;}
-.aitxt{font-size:.86rem;color:#c8c0b0;line-height:1.8;white-space:pre-wrap;}
-.aild{display:flex;align-items:center;gap:.7rem;color:#6a6258;font-size:.81rem;font-style:italic;}
-.dots span{display:inline-block;width:5px;height:5px;border-radius:50%;animation:dp 1.2s infinite;}
-.dots span:nth-child(1){background:var(--r);}
-.dots span:nth-child(2){background:var(--b);animation-delay:.2s;}
-.dots span:nth-child(3){background:var(--g);animation-delay:.4s;}
-@keyframes dp{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1.2);}}
-/* R SCRIPT */
-.sc{background:#0d1117;border:1px solid #30363d;border-radius:8px;margin-bottom:1.1rem;overflow:hidden;}
-.sh2{background:#161b22;border-bottom:1px solid #30363d;padding:.6rem .95rem;display:flex;align-items:center;justify-content:space-between;}
-.stl{font-family:'Geist Mono',monospace;font-size:.7rem;color:#8b949e;display:flex;align-items:center;gap:.45rem;}
-.slb{background:#21262d;border:1px solid #30363d;border-radius:3px;padding:.08rem .38rem;font-size:.58rem;color:#79c0ff;}
-.sact{display:flex;gap:.45rem;}
-.sbtn{font-family:'Geist Mono',monospace;font-size:.62rem;padding:.27rem .6rem;border-radius:3px;cursor:pointer;border:1px solid #30363d;background:#21262d;color:#8b949e;transition:all .2s;}
-.sbtn:hover{background:#30363d;color:#f0f6fc;}
-.sbtn.ok{background:#1a7a4a33;border-color:#1a7a4a;color:#56d364;}
-.sb{padding:1.1rem;overflow-x:auto;max-height:400px;overflow-y:auto;}
-.sb pre{font-family:'Geist Mono',monospace;font-size:.76rem;line-height:1.72;color:#e6edf3;white-space:pre;}
-/* SIMULATOR */
-.sim-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.65rem;margin-bottom:1.1rem;}
-.sim-prod{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
-.sim-prod-head{padding:.45rem .55rem;font-family:'Geist Mono',monospace;font-size:.6rem;letter-spacing:.07em;color:#fff;display:flex;justify-content:space-between;align-items:center;}
-.sim-prod-body{padding:.55rem;}
-.sim-prod-body .fg{margin-bottom:.45rem;}
-.sim-prod-body label{font-size:.7rem;}
-.sim-prod-body select{font-size:.76rem;padding:.3rem .45rem;}
-.sim-share-row{display:flex;align-items:center;gap:.45rem;margin-top:.45rem;}
-.sim-share-label{font-size:.68rem;color:var(--ink3);width:52px;text-align:right;flex-shrink:0;}
-.sim-share-bar{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:3px;height:17px;overflow:hidden;}
-.sim-share-fill{height:100%;border-radius:3px;transition:width .5s ease;display:flex;align-items:center;padding-left:.35rem;font-family:'Geist Mono',monospace;font-size:.58rem;color:#fff;}
-.sim-share-val{font-family:'Geist Mono',monospace;font-size:.7rem;font-weight:600;width:38px;text-align:right;}
-.none-row{margin-top:.45rem;padding:.35rem .55rem;background:var(--surface);border:1px solid var(--border);border-radius:4px;display:flex;justify-content:space-between;align-items:center;font-size:.76rem;color:var(--ink3);}
-.sec-hdr{display:flex;align-items:center;gap:.65rem;margin:.9rem 0 .75rem;}
-.sec-hdr-line{flex:1;height:1px;background:var(--border);}
-.sec-hdr-label{font-family:'Geist Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:.1em;text-transform:uppercase;flex-shrink:0;}
-/* ELASTICITY */
-.elast-row{display:flex;align-items:center;gap:.55rem;margin-bottom:.45rem;}
-.elast-label{width:190px;font-size:.76rem;color:var(--ink2);flex-shrink:0;}
-.elast-bar{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:3px;height:21px;overflow:hidden;}
-.elast-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:.45rem;font-family:'Geist Mono',monospace;font-size:.62rem;color:#fff;transition:width .5s ease;}
-.elast-val{font-family:'Geist Mono',monospace;font-size:.7rem;width:42px;text-align:right;flex-shrink:0;}
-.elast-delta{font-family:'Geist Mono',monospace;font-size:.66rem;width:48px;text-align:right;flex-shrink:0;}
-/* VAN WESTENDORP CHART */
-.vw-chart-wrap{width:100%;overflow-x:auto;margin-bottom:1rem;}
-.vw-canvas{width:100%;min-width:500px;height:340px;}
-.vw-legend{display:flex;flex-wrap:wrap;gap:.6rem 1.2rem;margin-bottom:1rem;}
-.vw-leg-item{display:flex;align-items:center;gap:.4rem;font-size:.76rem;color:var(--ink2);}
-.vw-leg-dot{width:28px;height:3px;border-radius:2px;flex-shrink:0;}
-/* PRICE POINT CARDS */
-.pp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.65rem;margin-bottom:1rem;}
-.pp-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.8rem .75rem;text-align:center;}
-.pp-label{font-family:'Geist Mono',monospace;font-size:.58rem;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem;}
-.pp-val{font-family:'Instrument Serif',serif;font-size:1.5rem;color:var(--ink);margin-bottom:.2rem;}
-.pp-desc{font-size:.7rem;color:var(--ink3);line-height:1.4;}
-/* NMS CURVES */
-.nms-curve-wrap{width:100%;overflow-x:auto;margin-bottom:1rem;}
-.nms-canvas{width:100%;min-width:500px;height:280px;}
-/* RESET BUTTON */
-.reset-btn{display:inline-flex;align-items:center;gap:.4rem;font-family:'Geist Mono',monospace;font-size:.65rem;padding:.3rem .7rem;background:none;border:1px solid #3a3530;border-radius:3px;color:#8a8278;cursor:pointer;transition:all .2s;}
-.reset-btn:hover{border-color:var(--r);color:var(--r);}
-/* API KEY BAR */
-.api-bar{background:#111827;border-bottom:1px solid #1f2937;padding:.5rem 1.5rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;}
-.api-label{font-family:'Geist Mono',monospace;font-size:.6rem;color:#9ca3af;letter-spacing:.08em;white-space:nowrap;flex-shrink:0;}
-.api-input{flex:1;min-width:200px;max-width:360px;background:#1f2937;border:1px solid #374151;border-radius:4px;padding:.3rem .6rem;font-family:'Geist Mono',monospace;font-size:.72rem;color:#e5e7eb;outline:none;transition:border-color .2s;}
-.api-input:focus{border-color:#4f80c0;}
-.api-input::placeholder{color:#4b5563;}
-.api-save{font-family:'Geist Mono',monospace;font-size:.62rem;padding:.3rem .7rem;background:#1e3a5f;border:1px solid #2563a8;border-radius:4px;color:#93c5fd;cursor:pointer;transition:all .2s;white-space:nowrap;}
-.api-save:hover{background:#2563a8;color:#fff;}
-.api-status{font-family:'Geist Mono',monospace;font-size:.6rem;padding:.22rem .55rem;border-radius:3px;white-space:nowrap;}
-.api-ok{background:#052e16;border:1px solid #166534;color:#4ade80;}
-.api-empty{background:#1c1917;border:1px solid #292524;color:#6b7280;}
-.api-info{font-size:.7rem;color:#4b5563;}
-.api-info a{color:#60a5fa;text-decoration:none;}
-.api-info a:hover{text-decoration:underline;}
-/* INSTRUCCIONES CARD */
-.instr-block{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1rem;margin-bottom:.9rem;}
-.instr-q{display:flex;gap:.65rem;margin-bottom:.65rem;align-items:flex-start;}
-.instr-q:last-child{margin-bottom:0;}
-.instr-num{width:22px;height:22px;background:var(--p);color:#fff;border-radius:50%;font-family:'Geist Mono',monospace;font-size:.65rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem;}
-.instr-text{font-size:.82rem;color:var(--ink2);line-height:1.55;}
-.instr-text em{color:var(--p);font-style:normal;font-weight:500;}
-/* RESPONSIVE */
-@media(max-width:768px){.fr,.fr3,.fr4{grid-template-columns:1fr;}.po{grid-template-columns:1fr;}.sim-grid{grid-template-columns:1fr 1fr;}.pp-grid{grid-template-columns:1fr 1fr;}}
-</style>
+<link rel="stylesheet" href="./src/styles/app.css">
 </head>
 <body>
 
 <header>
-  <div class="logo" onclick="resetAll()" title="Ir al inicio">
-    <span class="logo-name">Kit de Investigación de Mercados</span>
-    <span class="logo-tag">v3.0 · Hugo Cornejo Villena</span>
+  <div class="logo" onclick="goHome()" title="Inicio">
+    <span class="logo-name" data-i18n="app.title">Kit de Investigación de Mercados</span>
+    <span class="logo-tag">v5.0 · <a href="https://www.linkedin.com/in/hcornejovillena" target="_blank" rel="noopener" class="author-link">Hugo Cornejo Villena</a></span>
   </div>
-  <div style="display:flex;align-items:center;gap:.75rem;">
-    <button class="reset-btn" onclick="resetAll()">↺ Nuevo análisis</button>
-    <span class="hbadge">CBC · MaxDiff · VW · NMS</span>
+  <div style="display:flex;align-items:center;gap:.85rem;">
+    <div class="lang-switch">
+      <button class="lang-btn active" id="lang-es" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" id="lang-en" onclick="setLang('en')">EN</button>
+    </div>
   </div>
 </header>
 
-<!-- API KEY BAR -->
-<div class="api-bar">
-  <span class="api-label">🤖 IA · OPENAI</span>
-  <input class="api-input" type="password" id="gemini-key" placeholder="Pegá tu API key de OpenAI  (sk-...)" oninput="onKeyInput()">
-  <button class="api-save" onclick="saveKey()">✓ Guardar key</button>
-  <button class="api-save" onclick="testKey()" style="background:#14302a;border-color:#1a7a4a;color:#4ade80;">⚡ Probar conexión</button>
-  <span class="api-status api-empty" id="api-status-badge">Sin key — se usará análisis automático</span>
-  <span class="api-info">Obtené tu key en <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a> · No se almacena en ningún servidor</span>
+<!-- NIVEL 1 — SELECTOR DE MODO -->
+<div class="modebar">
+  <button class="modebtn active" id="modebtn-edu" onclick="setAppMode('edu')">
+    <span class="modebtn-icon">🎓</span>
+    <span class="modebtn-txt"><span class="modebtn-title" data-i18n="mode.learn.title">Modo Aprendizaje</span><span class="modebtn-sub" data-i18n="mode.learn.sub">Casos guiados con evaluación pedagógica</span></span>
+  </button>
+  <button class="modebtn" id="modebtn-calc" onclick="setAppMode('calc')">
+    <span class="modebtn-icon">⚙</span>
+    <span class="modebtn-txt"><span class="modebtn-title" data-i18n="mode.calc.title">Modo Cálculo</span><span class="modebtn-sub" data-i18n="mode.calc.sub">Herramienta de análisis y resolución técnica</span></span>
+  </button>
 </div>
 
-<div class="mbar">
+<!-- API KEY BAR — solo visible en Modo Cálculo, y solo activa si el usuario marca que tiene key -->
+<div class="api-bar hid" id="api-bar-calc">
+  <label class="api-toggle">
+    <input type="checkbox" id="api-toggle-cb" onchange="toggleApiBar()">
+    <span data-i18n="api.toggle">Tengo una API key de OpenAI</span>
+  </label>
+  <div id="api-bar-fields" class="hid" style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;">
+    <span class="api-label">🤖 <span data-i18n="api.label">IA · OPENAI</span></span>
+      <input class="api-input" type="password" id="openai-key" autocomplete="off" spellcheck="false" oninput="onKeyInput()">
+    <button class="api-save" onclick="saveKey()" data-i18n="api.save">✓ Guardar key</button>
+    <button class="api-save" onclick="testKey()" style="background:#14302a;border-color:#1a7a4a;color:#4ade80;" data-i18n="api.test">⚡ Probar conexión</button>
+    <span class="api-status api-empty" id="api-status-badge" data-i18n="api.empty">Sin key — se usará análisis automático</span>
+    <span class="api-info"><span data-i18n="api.getkey">Obtené tu key en</span> <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a> · <span data-i18n="api.noserver">No se almacena en ningún servidor</span></span>
+  </div>
+</div>
+
+<!-- NIVEL 2 — SUBNAV MODO CÁLCULO (técnicas) -->
+<div class="mbar hid" id="mbar-calc">
   <button class="mbtn active" id="tab-conjoint" onclick="swMod('conjoint',this,'')">⬡ CBC Conjoint</button>
   <button class="mbtn" id="tab-maxdiff" onclick="swMod('maxdiff',this,'cb')">◈ MaxDiff</button>
   <button class="mbtn" id="tab-vw" onclick="swMod('vw',this,'cg')">◎ Van Westendorp</button>
   <button class="mbtn" id="tab-nms" onclick="swMod('nms',this,'cp2')">◑ VW + Newton-Miller-Smith</button>
+  <button class="mbtn" id="tab-turf" onclick="swMod('turf',this,'ct')">◉ TURF Analysis</button>
 </div>
 
 <!-- ══════════════════════════════════════════════════
      MÓDULO CBC CONJOINT
 ══════════════════════════════════════════════════ -->
-<div id="mod-conjoint" class="mod act">
+<div id="mod-conjoint" class="mod">
 <div class="body">
   <div class="wiz" id="cwiz">
-    <div class="ws act" id="cw1"><span class="wn">PASO 01</span><span class="wl">Configurar</span></div>
-    <div class="ws" id="cw2"><span class="wn">PASO 02</span><span class="wl">Diseño</span></div>
-    <div class="ws" id="cw3"><span class="wn">PASO 03</span><span class="wl">Datos</span></div>
-    <div class="ws" id="cw4"><span class="wn">PASO 04</span><span class="wl">Resultados</span></div>
+    <div class="ws act" id="cw1"><span class="wn" data-i18n="calc.step">PASO</span> 01<span class="wl" data-i18n="calc.cbc.wiz.1">Configurar</span></div>
+    <div class="ws" id="cw2"><span class="wn" data-i18n="calc.step">PASO</span> 02<span class="wl" data-i18n="calc.cbc.wiz.2">Diseño</span></div>
+    <div class="ws" id="cw3"><span class="wn" data-i18n="calc.step">PASO</span> 03<span class="wl" data-i18n="calc.cbc.wiz.3">Datos</span></div>
+    <div class="ws" id="cw4"><span class="wn" data-i18n="calc.step">PASO</span> 04<span class="wl" data-i18n="calc.cbc.wiz.4">Resultados</span></div>
   </div>
   <div id="cs1" class="sp act">
     <div class="card">
-      <div class="ebdg">★ EJEMPLO — Tarjeta de Crédito (Perú)</div>
-      <div class="ct">Definir atributos y niveles</div>
-      <p class="cs">Hasta 6 atributos con 2–5 niveles. Se generan 15 tareas con 4 opciones + "Ninguno".</p>
-      <div class="nt nti"><span class="ni">ℹ</span><span>Ejemplo con tarjeta de crédito en contexto peruano. Modificalo para tu caso.</span></div>
+      <div class="ebdg" data-i18n="calc.cbc.example.badge">★ EJEMPLO — Tarjeta de Crédito (Perú)</div>
+      <div class="ct" data-i18n="calc.cbc.attrs.title">Definir atributos y niveles</div>
+      <p class="cs" data-i18n="calc.cbc.attrs.desc">Hasta 6 atributos con 2–5 niveles. Se generan 15 tareas con 4 opciones + "Ninguno".</p>
+      <div class="nt nti"><span class="ni">ℹ</span><span data-i18n="calc.cbc.example.note">Ejemplo con tarjeta de crédito en contexto peruano. Modificalo para tu caso.</span></div>
       <div id="cbc-ac"></div>
       <div class="bgrp">
-        <button class="btn bg" onclick="addCAttr()" id="btn-aa">＋ Atributo</button>
-        <button class="btn bs2" onclick="loadCEx()">↺ Ejemplo</button>
-        <button class="btn bp" onclick="genCDesign()">Generar diseño →</button>
+        <button class="btn bg" onclick="addCAttr()" id="btn-aa" data-i18n="calc.cbc.btn.addattr">＋ Atributo</button>
+        <button class="btn bs2" onclick="loadCEx()" data-i18n="calc.cbc.btn.example">↺ Ejemplo</button>
+        <button class="btn bp" onclick="genCDesign()" data-i18n="calc.cbc.btn.gendesign">Generar diseño →</button>
       </div>
     </div>
     <div class="card">
-      <div class="ct">Versiones del diseño</div>
-      <p class="cs">Cada versión tiene las mismas 15 tareas con diferente orden de presentación.</p>
-      <div class="nt ntw"><span class="ni">⚠</span><span>Con 2+ versiones: anotar cuál versión recibió cada encuestado. La columna <em>version</em> en el Excel las distingue.</span></div>
-      <div class="fg"><label>Número de versiones</label>
+      <div class="ct" data-i18n="calc.cbc.versions.title">Versiones del diseño</div>
+      <p class="cs" data-i18n="calc.cbc.versions.desc">Cada versión tiene las mismas 15 tareas con diferente orden de presentación.</p>
+      <div class="nt ntw"><span class="ni">⚠</span><span data-i18n="calc.cbc.versions.note">Con 2+ versiones: anotar cuál versión recibió cada encuestado. La columna <em>version</em> en el Excel las distingue.</span></div>
+      <div class="fg"><label data-i18n="calc.cbc.versions.label">Número de versiones</label>
         <div class="vp">
-          <div class="pill act" onclick="setCVer(1,this)">1 versión</div>
-          <div class="pill" onclick="setCVer(2,this)">2 versiones</div>
-          <div class="pill" onclick="setCVer(4,this)">4 versiones</div>
+          <div class="pill act" onclick="setCVer(1,this)" data-i18n="calc.md.ver1">1 versión</div>
+          <div class="pill" onclick="setCVer(2,this)" data-i18n="calc.md.ver2">2 versiones</div>
+          <div class="pill" onclick="setCVer(4,this)" data-i18n="calc.cbc.ver4">4 versiones</div>
         </div>
       </div>
     </div>
   </div>
   <div id="cs2" class="sp">
     <div class="card">
-      <div class="ct">Tarjetas de elección generadas</div>
-      <p class="cs">Navegá tarea por tarea. Descargá la plantilla Excel para registrar respuestas.</p>
+      <div class="ct" data-i18n="calc.cbc.cards.title">Tarjetas de elección generadas</div>
+      <p class="cs" data-i18n="calc.cbc.cards.desc">Navegá tarea por tarea. Descargá la plantilla Excel para registrar respuestas.</p>
       <div class="vp" id="cbc-vs"></div>
-      <div class="cp"><button class="bpg3" id="cprev" onclick="chCP(-1)">← Ant.</button><span class="pi2" id="cpi">Tarea 1 de 15</span><button class="bpg3" id="cnext" onclick="chCP(1)">Sig. →</button></div>
+      <div class="cp"><button class="bpg3" id="cprev" onclick="chCP(-1)" data-i18n="calc.md.btn.prevcard">← Ant.</button><span class="pi2" id="cpi">Tarea 1 de 15</span><button class="bpg3" id="cnext" onclick="chCP(1)" data-i18n="calc.md.btn.nextcard">Sig. →</button></div>
       <div id="cbc-cd"></div>
       <hr class="dvd">
       <div class="bgrp">
-        <button class="btn bs2" onclick="gCS(1)">← Paso anterior</button>
-        <button class="btn bg" onclick="dlCTpl()">↓ Plantilla Excel</button>
-        <button class="btn bp" onclick="gCS(3)">Ya tengo datos →</button>
+        <button class="btn bs2" onclick="gCS(1)" data-i18n="calc.btn.prev">← Paso anterior</button>
+        <button class="btn bg" onclick="dlCTpl()" data-i18n="calc.md.btn.template">↓ Plantilla Excel</button>
+        <button class="btn bp" onclick="gCS(3)" data-i18n="calc.md.btn.havedata">Ya tengo datos →</button>
       </div>
     </div>
   </div>
   <div id="cs3" class="sp">
     <div class="card">
-      <div class="ct">Cargar respuestas CBC</div>
-      <div class="nt nti"><span class="ni">ℹ</span><div><strong>Formato:</strong> Cada fila = 1 encuestado.<br>Columnas: <span class="tm">id_encuestado | version | tarea_1 … tarea_15</span><br>Valores: <span class="tm">1–4</span> (opción elegida) o <span class="tm">0</span> (Ninguno).</div></div>
+      <div class="ct" data-i18n="calc.cbc.load.title">Cargar respuestas CBC</div>
+      <div class="nt nti"><span class="ni">ℹ</span><div data-i18n="calc.cbc.load.note"><strong>Formato:</strong> Cada fila = 1 encuestado.<br>Columnas: <span class="tm">id_encuestado | version | tarea_1 … tarea_15</span><br>Valores: <span class="tm">1–4</span> (opción elegida) o <span class="tm">0</span> (Ninguno).</div></div>
       <div class="uz" onclick="document.getElementById('cfi').click()" ondragover="ev(event)" ondrop="hCDrop(event)">
-        <div class="uico">📊</div><div class="utxt">Arrastrá el Excel o hacé clic</div><div class="usub">.xlsx · Plantilla CBC</div>
+        <div class="uico">📊</div><div class="utxt" data-i18n="calc.dropzone.click">Arrastrá el Excel o hacé clic</div><div class="usub" data-i18n="calc.cbc.dropzone.sub">.xlsx · Plantilla CBC</div>
       </div>
       <input type="file" id="cfi" accept=".xlsx,.xls" class="hid" onchange="hCFile(event)">
       <div id="cfs" class="hid nt nts" style="margin-top:.9rem"><span class="ni">✓</span><span id="cfst"></span></div>
       <hr class="dvd">
-      <div class="nt ntw"><span class="ni">⚠</span><span>¿Sin datos reales? Usá datos de <strong>demostración</strong>.</span></div>
+      <div class="nt ntw"><span class="ni">⚠</span><span data-i18n="calc.cbc.note.demo">¿Sin datos reales? Usá datos de <strong>demostración</strong>.</span></div>
       <div class="bgrp">
-        <button class="btn bs2" onclick="gCS(2)">← Paso anterior</button>
-        <button class="btn bg" onclick="loadCDemo()">Usar datos demo</button>
-        <button class="btn bp" id="cab" onclick="analyzeC()" disabled>Analizar →</button>
+        <button class="btn bs2" onclick="gCS(2)" data-i18n="calc.btn.prev">← Paso anterior</button>
+        <button class="btn bg" onclick="loadCDemo()" data-i18n="calc.btn.demo">Usar datos demo</button>
+        <button class="btn bp" id="cab" onclick="analyzeC()" disabled data-i18n="calc.btn.analyze">Analizar →</button>
       </div>
     </div>
   </div>
   <div id="cs4" class="sp">
-    <div class="aic"><div class="aih"><div class="aibdg">✦ IA</div><div class="aitl">Conclusiones del análisis</div></div><div id="cai"><div class="aild"><div class="dots"><span></span><span></span><span></span></div>Generando conclusiones…</div></div></div>
-    <div class="card"><div class="ct">Importancia relativa de atributos</div><p class="cs">Suman exactamente 100%. Mayor % = más influyente en la decisión de compra.</p><div id="cbc-ic"></div></div>
-    <div class="card"><div class="ct">Utilidades parciales (part-worths)</div><p class="cs">Contribución de cada nivel a la preferencia. Positivo = preferido sobre el promedio del atributo.</p><div id="cbc-uc"></div></div>
+    <div class="aic"><div class="aih"><div class="aibdg">✦ IA</div><div class="aitl" data-i18n="calc.ai.title">Conclusiones del análisis</div></div><div id="cai"><div class="aild"><div class="dots"><span></span><span></span><span></span></div><span data-i18n="calc.ai.loading">Generando conclusiones…</span></div></div></div>
+    <div class="nt nti"><span class="ni">ℹ</span><span data-i18n="calc.cbc.model.scope"><strong>Modelo actual:</strong> logit multinomial agregado (MNL). Las utilidades describen el promedio de la muestra y no preferencias individuales. Versiones futuras incorporarán Hierarchical Bayes (HB) para estimar utilidades por encuestado.</span></div>
+    <div class="card"><div class="ct" data-i18n="calc.cbc.imp.title">Importancia relativa de atributos</div><p class="cs" data-i18n="calc.cbc.imp.desc">Suman exactamente 100%. Mayor % = más influyente en la decisión de compra.</p><div id="cbc-ic"></div></div>
+    <div class="card"><div class="ct" data-i18n="calc.cbc.util.title">Utilidades parciales (part-worths)</div><p class="cs" data-i18n="calc.cbc.util.desc">Contribución de cada nivel a la preferencia. Positivo = preferido sobre el promedio del atributo.</p><div id="cbc-uc"></div></div>
     <div class="card">
-      <div class="ct">Simulador de market share</div>
-      <p class="cs">Configurá 4 productos y observá el share estimado en tiempo real.</p>
-      <div class="sec-hdr"><div class="sec-hdr-line"></div><span class="sec-hdr-label">Atributo de precio</span><div class="sec-hdr-line"></div></div>
-      <div class="nt ntw" id="pd-notice"><span class="ni">⚠</span><div id="pd-text">Detectando…</div></div>
-      <div class="fr" style="margin-bottom:1rem"><div class="fg"><label>Atributo de precio (ajustable)</label><select id="price-attr-sel" onchange="onPAC()"></select></div><div></div></div>
-      <div class="sec-hdr"><div class="sec-hdr-line"></div><span class="sec-hdr-label">Configurar productos</span><div class="sec-hdr-line"></div></div>
+      <div class="ct" data-i18n="calc.cbc.sim.title">Simulador de market share</div>
+      <p class="cs" id="sim-count-label" data-i18n="calc.cbc.sim.desc">Configurá los productos y observá el share estimado en tiempo real.</p>
+      <div class="sec-hdr"><div class="sec-hdr-line"></div><span class="sec-hdr-label" data-i18n="calc.cbc.sec.priceattr">Atributo de precio</span><div class="sec-hdr-line"></div></div>
+      <div class="nt ntw" id="pd-notice"><span class="ni">⚠</span><div id="pd-text" data-i18n="calc.cbc.detecting">Detectando…</div></div>
+      <div class="fr" style="margin-bottom:1rem"><div class="fg"><label data-i18n="calc.cbc.priceattr.label">Atributo de precio (ajustable)</label><select id="price-attr-sel" onchange="onPAC()"></select></div><div></div></div>
+      <div class="sec-hdr"><div class="sec-hdr-line"></div><span class="sec-hdr-label" data-i18n="calc.cbc.sec.configprods">Configurar productos</span><div class="sec-hdr-line"></div></div>
+      <div class="sim-ctrl">
+        <button class="btn bs2" id="sim-btn-rm" onclick="rmSimProd()" data-i18n="calc.cbc.btn.rmprod">− Producto</button>
+        <span class="sim-ctrl-badge" id="sim-ctrl-badge">2 productos</span>
+        <button class="btn bs2" id="sim-btn-add" onclick="addSimProd()" data-i18n="calc.cbc.btn.addprod">+ Producto</button>
+      </div>
       <div class="sim-grid" id="sim-prods"></div>
-      <div class="rbr"><div class="rl2" style="font-size:.73rem;color:var(--ink3)">Ninguno</div><div class="rbw"><div class="rbf" id="sbar-none" style="background:#8a8278;width:10%"></div></div><div class="rv" id="sval-none">—</div></div>
+      <div class="rbr"><div class="rl2" style="font-size:.73rem;color:var(--ink3)" data-i18n="calc.cbc.none.label">Ninguno</div><div class="rbw"><div class="rbf" id="sbar-none" style="background:#8a8278;width:10%"></div></div><div class="rv" id="sval-none">—</div></div>
+      <div class="sim-none-note" data-i18n="calc.cbc.none.note">ℹ <strong>"Ninguno"</strong> representa la opción de no comprar. Compite con utilidad base = 0. Las utilidades del modelo están centradas: u = 0 equivale a un producto con cada atributo en su nivel de preferencia promedio del estudio. Un share alto de "Ninguno" significa que los productos configurados tienen combinaciones menos atractivas que ese promedio — el mercado preferiría no comprar ninguna de esas opciones.</div>
     </div>
     <div class="card">
-      <div class="ct">Curva de elasticidad de precio</div>
-      <p class="cs">Configurá los atributos no-precio de tu producto y observá cómo varía el share al cambiar el precio.</p>
-      <div class="sec-hdr"><div class="sec-hdr-line"></div><span class="sec-hdr-label">Producto base</span><div class="sec-hdr-line"></div></div>
+      <div class="ct" data-i18n="calc.cbc.elast.title">Curva de elasticidad de precio</div>
+      <p class="cs" data-i18n="calc.cbc.elast.desc">Configurá los atributos no-precio de tu producto y observá cómo varía el share al cambiar el precio.</p>
+      <div class="sec-hdr"><div class="sec-hdr-line"></div><span class="sec-hdr-label" data-i18n="calc.cbc.sec.baseprod">Producto base</span><div class="sec-hdr-line"></div></div>
       <div id="elast-cfg" class="fr3"></div>
-      <div class="sec-hdr"><div class="sec-hdr-line"></div><span class="sec-hdr-label">Curva de demanda implícita</span><div class="sec-hdr-line"></div></div>
+      <div class="sec-hdr"><div class="sec-hdr-line"></div><span class="sec-hdr-label" data-i18n="calc.cbc.sec.demandcurve">Curva de demanda implícita</span><div class="sec-hdr-line"></div></div>
       <div id="elast-curve"></div>
       <div id="elast-ins" class="nt nti" style="margin-top:.75rem"><span class="ni">📈</span><span id="elast-ins-txt"></span></div>
     </div>
     <div style="display:flex;gap:.65rem;align-items:center;margin-bottom:1.1rem;padding:.75rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;">
-      <span style="font-family:'Geist Mono',monospace;font-size:.65rem;color:var(--ink3);">📄 Script R — CBC Conjoint</span>
-      <button class="btn bg" onclick="cpSc('c')" id="ccpb" style="font-size:.75rem;padding:.4rem .9rem;">⎘ Copiar script</button>
-      <button class="btn bs2" onclick="dlSc('c')" style="font-size:.75rem;padding:.4rem .9rem;">↓ Descargar .R</button>
+      <span style="font-family:'Geist Mono',monospace;font-size:.65rem;color:var(--ink3);">📄 <span data-i18n="calc.cbc.script.label">Script R — CBC Conjoint</span></span>
+      <button class="btn bg" onclick="cpSc('c')" id="ccpb" style="font-size:.75rem;padding:.4rem .9rem;" data-i18n="calc.script.copy">⎘ Copiar script</button>
+      <button class="btn bs2" onclick="dlSc('c')" style="font-size:.75rem;padding:.4rem .9rem;" data-i18n="calc.script.dl">↓ Descargar .R</button>
     </div>
     <pre id="csp" style="display:none"></pre>
-    <div class="card"><div class="ct">Exportar resultados</div><div class="bgrp"><button class="btn bs2" onclick="gCS(3)">← Paso anterior</button><button class="btn bp" onclick="expC()">↓ Excel resultados</button><button class="btn bg" onclick="resetMod('conjoint')">↺ Nuevo análisis</button></div></div>
+    <div class="card"><div class="ct" data-i18n="calc.export.title">Exportar resultados</div><div class="bgrp"><button class="btn bs2" onclick="gCS(3)" data-i18n="calc.btn.prev">← Paso anterior</button><button class="btn bp" onclick="expC()" data-i18n="calc.btn.excel">↓ Excel resultados</button><button class="btn bg" onclick="resetMod('conjoint')" data-i18n="calc.btn.reset">↺ Nuevo análisis</button></div></div>
   </div>
 </div>
 </div>
@@ -363,59 +177,59 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);}
 <div id="mod-maxdiff" class="mod">
 <div class="body">
   <div class="wiz">
-    <div class="ws act wb" id="mw1"><span class="wn">PASO 01</span><span class="wl">Ítems</span></div>
-    <div class="ws wb" id="mw2"><span class="wn">PASO 02</span><span class="wl">Tarjetas</span></div>
-    <div class="ws wb" id="mw3"><span class="wn">PASO 03</span><span class="wl">Datos</span></div>
-    <div class="ws wb" id="mw4"><span class="wn">PASO 04</span><span class="wl">Ranking</span></div>
+    <div class="ws act wb" id="mw1"><span class="wn" data-i18n="calc.step">PASO</span> 01<span class="wl" data-i18n="calc.md.wiz.1">Ítems</span></div>
+    <div class="ws wb" id="mw2"><span class="wn" data-i18n="calc.step">PASO</span> 02<span class="wl" data-i18n="calc.md.wiz.2">Tarjetas</span></div>
+    <div class="ws wb" id="mw3"><span class="wn" data-i18n="calc.step">PASO</span> 03<span class="wl" data-i18n="calc.md.wiz.3">Datos</span></div>
+    <div class="ws wb" id="mw4"><span class="wn" data-i18n="calc.step">PASO</span> 04<span class="wl" data-i18n="calc.md.wiz.4">Ranking</span></div>
   </div>
   <div id="ms1" class="sp act">
     <div class="card">
-      <div class="ebdg" style="background:var(--bl);color:var(--b);border-color:#b3ccef">★ EJEMPLO — Beneficios App de Delivery</div>
-      <div class="ct">Ingresar ítems a evaluar</div>
-      <p class="cs">Entre 5 y 30 ítems. El encuestado elegirá el <strong>más</strong> y el <strong>menos</strong> importante en cada tarjeta.</p>
+      <div class="ebdg" style="background:var(--bl);color:var(--b);border-color:#b3ccef" data-i18n="calc.md.example.badge">★ EJEMPLO — Beneficios App de Delivery</div>
+      <div class="ct" data-i18n="calc.md.items.title">Ingresar ítems a evaluar</div>
+      <p class="cs" data-i18n="calc.md.items.desc">Entre 5 y 30 ítems. El encuestado elegirá el <strong>más</strong> y el <strong>menos</strong> importante en cada tarjeta.</p>
       <div id="md-ic"></div>
-      <div class="bgrp"><button class="btn bgb" onclick="addMI()">＋ Ítem</button><button class="btn bs2" onclick="loadMEx()">↺ Ejemplo</button><button class="btn bpb" onclick="genMDesign()">Generar tarjetas →</button></div>
+      <div class="bgrp"><button class="btn bgb" onclick="addMI()" data-i18n="calc.md.btn.additem">＋ Ítem</button><button class="btn bs2" onclick="loadMEx()" data-i18n="calc.md.btn.example">↺ Ejemplo</button><button class="btn bpb" onclick="genMDesign()" data-i18n="calc.md.btn.gendesign">Generar tarjetas →</button></div>
     </div>
-    <div class="card"><div class="ct">Configuración</div>
+    <div class="card"><div class="ct" data-i18n="calc.md.config.title">Configuración</div>
       <div class="fr">
-        <div class="fg"><label>Ítems por tarjeta</label><select id="mips"><option value="4" selected>4 ítems</option><option value="5">5 ítems</option></select></div>
-        <div class="fg"><label>Versiones</label><div class="vp"><div class="pill act pb" onclick="setMVer(1,this)">1 versión</div><div class="pill" onclick="setMVer(2,this)">2 versiones</div></div></div>
+        <div class="fg"><label data-i18n="calc.md.itemspercard">Ítems por tarjeta</label><select id="mips"><option value="4" selected data-i18n="calc.md.opt4">4 ítems</option><option value="5" data-i18n="calc.md.opt5">5 ítems</option></select></div>
+        <div class="fg"><label data-i18n="calc.md.versions.label">Versiones</label><div class="vp"><div class="pill act pb" onclick="setMVer(1,this)" data-i18n="calc.md.ver1">1 versión</div><div class="pill" onclick="setMVer(2,this)" data-i18n="calc.md.ver2">2 versiones</div></div></div>
       </div>
     </div>
   </div>
   <div id="ms2" class="sp">
-    <div class="card"><div class="ct">Tarjetas MaxDiff</div><p class="cs">El encuestado elige el más y menos importante en cada tarjeta.</p>
+    <div class="card"><div class="ct" data-i18n="calc.md.cards.title">Tarjetas MaxDiff</div><p class="cs" data-i18n="calc.md.cards.desc">El encuestado elige el más y menos importante en cada tarjeta.</p>
       <div class="vp" id="md-vs"></div>
-      <div class="cp"><button class="bpg3" id="mprev" onclick="chMP(-1)">← Ant.</button><span class="pi2" id="mpi">Tarjeta 1</span><button class="bpg3" id="mnext" onclick="chMP(1)">Sig. →</button></div>
+      <div class="cp"><button class="bpg3" id="mprev" onclick="chMP(-1)" data-i18n="calc.md.btn.prevcard">← Ant.</button><span class="pi2" id="mpi">Tarjeta 1</span><button class="bpg3" id="mnext" onclick="chMP(1)" data-i18n="calc.md.btn.nextcard">Sig. →</button></div>
       <div id="md-cd"></div><hr class="dvd">
-      <div class="bgrp"><button class="btn bs2" onclick="gMS(1)">← Paso anterior</button><button class="btn bgb" onclick="dlMTpl()">↓ Plantilla Excel</button><button class="btn bpb" onclick="gMS(3)">Ya tengo datos →</button></div>
+      <div class="bgrp"><button class="btn bs2" onclick="gMS(1)" data-i18n="calc.btn.prev">← Paso anterior</button><button class="btn bgb" onclick="dlMTpl()" data-i18n="calc.md.btn.template">↓ Plantilla Excel</button><button class="btn bpb" onclick="gMS(3)" data-i18n="calc.md.btn.havedata">Ya tengo datos →</button></div>
     </div>
   </div>
   <div id="ms3" class="sp">
-    <div class="card"><div class="ct">Cargar respuestas MaxDiff</div>
-      <div class="nt nti"><span class="ni">ℹ</span><div><strong>Formato:</strong><br><span class="tm">id_encuestado | version | t1_mejor | t1_peor | t2_mejor | …</span><br>Número de ítem (1 a N).</div></div>
+    <div class="card"><div class="ct" data-i18n="calc.md.load.title">Cargar respuestas MaxDiff</div>
+      <div class="nt nti"><span class="ni">ℹ</span><div data-i18n="calc.md.load.note"><strong>Formato:</strong><br><span class="tm">id_encuestado | version | t1_mejor | t1_peor | t2_mejor | …</span><br>Número de ítem (1 a N).</div></div>
       <div class="uz ub" onclick="document.getElementById('mfi').click()" ondragover="ev(event)" ondrop="hMDrop(event)">
-        <div class="uico">📋</div><div class="utxt">Arrastrá el Excel o hacé clic</div><div class="usub">.xlsx · Plantilla MaxDiff</div>
+        <div class="uico">📋</div><div class="utxt" data-i18n="calc.dropzone.click">Arrastrá el Excel o hacé clic</div><div class="usub" data-i18n="calc.md.dropzone.sub">.xlsx · Plantilla MaxDiff</div>
       </div>
       <input type="file" id="mfi" accept=".xlsx,.xls" class="hid" onchange="hMFile(event)">
       <div id="mfs" class="hid nt nts" style="margin-top:.9rem"><span class="ni">✓</span><span id="mfst"></span></div>
       <hr class="dvd">
-      <div class="nt ntw"><span class="ni">⚠</span><span>¿Sin datos? Usá datos de <strong>demostración</strong>.</span></div>
-      <div class="bgrp"><button class="btn bs2" onclick="gMS(2)">← Paso anterior</button><button class="btn bgb" onclick="loadMDemo()">Usar datos demo</button><button class="btn bpb" id="mab" onclick="analyzeM()" disabled>Analizar →</button></div>
+      <div class="nt ntw"><span class="ni">⚠</span><span data-i18n="calc.note.demo">¿Sin datos? Usá datos de <strong>demostración</strong>.</span></div>
+      <div class="bgrp"><button class="btn bs2" onclick="gMS(2)" data-i18n="calc.btn.prev">← Paso anterior</button><button class="btn bgb" onclick="loadMDemo()" data-i18n="calc.btn.demo">Usar datos demo</button><button class="btn bpb" id="mab" onclick="analyzeM()" disabled data-i18n="calc.btn.analyze">Analizar →</button></div>
     </div>
   </div>
   <div id="ms4" class="sp">
-    <div class="aic"><div class="aih"><div class="aibdg">✦ IA</div><div class="aitl">Conclusiones del análisis</div></div><div id="mai"><div class="aild"><div class="dots"><span></span><span></span><span></span></div>Generando conclusiones…</div></div></div>
-    <div class="card"><div class="ct">Ranking de importancia — Porcentajes suman 100%</div><p class="cs">Cada ítem recibe un porcentaje proporcional a su importancia relativa. La suma de todos los ítems es exactamente 100%.</p><div id="md-rc"></div></div>
-    <div class="card"><div class="ct">Estadísticas detalladas</div><div id="md-st"></div></div>
+    <div class="aic"><div class="aih"><div class="aibdg">✦ IA</div><div class="aitl" data-i18n="calc.ai.title">Conclusiones del análisis</div></div><div id="mai"><div class="aild"><div class="dots"><span></span><span></span><span></span></div><span data-i18n="calc.ai.loading">Generando conclusiones…</span></div></div></div>
+    <div class="card"><div class="ct" data-i18n="calc.md.rank.title">Ranking de importancia — Porcentajes suman 100%</div><p class="cs" data-i18n="calc.md.rank.desc">Cada ítem recibe un porcentaje proporcional a su importancia relativa. La suma de todos los ítems es exactamente 100%.</p><div id="md-rc"></div></div>
+    <div class="card"><div class="ct" data-i18n="calc.md.stats.title">Estadísticas detalladas</div><div id="md-st"></div></div>
     <div style="display:flex;gap:.65rem;align-items:center;margin-bottom:1.1rem;padding:.75rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;">
-      <span style="font-family:'Geist Mono',monospace;font-size:.65rem;color:var(--ink3);">📄 Script R — MaxDiff</span>
-      <button class="btn bgb" onclick="cpSc('m')" id="mcpb" style="font-size:.75rem;padding:.4rem .9rem;">⎘ Copiar script</button>
-      <button class="btn bs2" onclick="dlSc('m')" style="font-size:.75rem;padding:.4rem .9rem;">↓ Descargar .R</button>
+      <span style="font-family:'Geist Mono',monospace;font-size:.65rem;color:var(--ink3);">📄 <span data-i18n="calc.md.script.label">Script R — MaxDiff</span></span>
+      <button class="btn bgb" onclick="cpSc('m')" id="mcpb" style="font-size:.75rem;padding:.4rem .9rem;" data-i18n="calc.script.copy">⎘ Copiar script</button>
+      <button class="btn bs2" onclick="dlSc('m')" style="font-size:.75rem;padding:.4rem .9rem;" data-i18n="calc.script.dl">↓ Descargar .R</button>
     </div>
     <pre id="msp" style="display:none"></pre>
-    <div class="card"><div class="ct">Exportar resultados</div><p class="cs">Incluye ranking agregado y matriz individual por encuestado.</p>
-      <div class="bgrp"><button class="btn bs2" onclick="gMS(3)">← Paso anterior</button><button class="btn bpb" onclick="expM()">↓ Excel agregado</button><button class="btn bgb" onclick="expMInd()">↓ Matriz individual</button><button class="btn bgb" onclick="resetMod('maxdiff')">↺ Nuevo análisis</button></div>
+    <div class="card"><div class="ct" data-i18n="calc.export.title">Exportar resultados</div><p class="cs" data-i18n="calc.md.export.desc">Incluye ranking agregado y matriz individual por encuestado.</p>
+      <div class="bgrp"><button class="btn bs2" onclick="gMS(3)" data-i18n="calc.btn.prev">← Paso anterior</button><button class="btn bpb" onclick="expM()" data-i18n="calc.md.btn.exportagg">↓ Excel agregado</button><button class="btn bgb" onclick="expMInd()" data-i18n="calc.md.btn.exportind">↓ Matriz individual</button><button class="btn bgb" onclick="resetMod('maxdiff')" data-i18n="calc.btn.reset">↺ Nuevo análisis</button></div>
     </div>
   </div>
 </div>
@@ -427,82 +241,87 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);}
 <div id="mod-vw" class="mod">
 <div class="body">
   <div class="wiz">
-    <div class="ws act wg" id="vw1"><span class="wn">PASO 01</span><span class="wl">Instrucciones</span></div>
-    <div class="ws wg" id="vw2"><span class="wn">PASO 02</span><span class="wl">Cargar datos</span></div>
-    <div class="ws wg" id="vw3"><span class="wn">PASO 03</span><span class="wl">Resultados</span></div>
+    <div class="ws act wg" id="vw1"><span class="wn" data-i18n="calc.step">PASO</span> 01<span class="wl" data-i18n="calc.vw.wiz.1">Instrucciones</span></div>
+    <div class="ws wg" id="vw2"><span class="wn" data-i18n="calc.step">PASO</span> 02<span class="wl" data-i18n="calc.vw.wiz.2">Cargar datos</span></div>
+    <div class="ws wg" id="vw3"><span class="wn" data-i18n="calc.step">PASO</span> 03<span class="wl" data-i18n="calc.vw.wiz.3">Resultados</span></div>
   </div>
 
   <div id="vs1" class="sp act">
     <div class="card">
-      <div class="ct">¿Qué es el Van Westendorp PSM?</div>
-      <p class="cs">El Price Sensitivity Meter (PSM) es una técnica desarrollada por Peter van Westendorp (1976) para identificar el rango de precios psicológicamente aceptable para un producto o servicio. A partir de 4 preguntas abiertas, genera curvas de percepción de precio que revelan los límites inferior y superior del rango aceptable, el precio óptimo y el precio de indiferencia.</p>
-      <div class="nt ntp"><span class="ni">📋</span><span>El modelo <strong>no requiere</strong> mostrar precios previos al encuestado. El encuestado imagina libremente qué precio correspondería a cada percepción.</span></div>
+      <div class="ct" data-i18n="calc.vw.what.title">¿Qué es el Van Westendorp PSM?</div>
+      <p class="cs" data-i18n="calc.vw.what.desc">El Price Sensitivity Meter (PSM) es una técnica desarrollada por Peter van Westendorp (1976) para identificar el rango de precios psicológicamente aceptable para un producto o servicio. A partir de 4 preguntas abiertas, genera curvas de percepción de precio que revelan los límites inferior y superior del rango aceptable, el precio óptimo y el precio de indiferencia.</p>
+      <div class="nt ntp"><span class="ni">📋</span><span data-i18n="calc.vw.what.note">El modelo <strong>no requiere</strong> mostrar precios previos al encuestado. El encuestado imagina libremente qué precio correspondería a cada percepción.</span></div>
     </div>
     <div class="card">
-      <div class="ct">Cómo aplicar las preguntas en campo</div>
-      <p class="cs">Las 4 preguntas deben hacerse en este orden, después de presentar el concepto del producto. Registrá la respuesta como número (sin símbolo de moneda).</p>
+      <div class="ct" data-i18n="calc.vw.field.title">Cómo aplicar las preguntas en campo</div>
+      <p class="cs" data-i18n="calc.vw.field.desc">Las 4 preguntas deben hacerse en este orden, después de presentar el concepto del producto. Registrá la respuesta como número (sin símbolo de moneda).</p>
       <div class="instr-block">
-        <div class="instr-q"><div class="instr-num">1</div><div class="instr-text">¿A qué precio este producto te parece <em>tan barato</em> que dudarías de su calidad? <br><small style="color:var(--ink3)">(Columna: <strong>muy_barato</strong>)</small></div></div>
-        <div class="instr-q"><div class="instr-num">2</div><div class="instr-text">¿A qué precio este producto te parece <em>barato</em> y una buena compra?<br><small style="color:var(--ink3)">(Columna: <strong>barato</strong>)</small></div></div>
-        <div class="instr-q"><div class="instr-num">3</div><div class="instr-text">¿A qué precio este producto empieza a parecerte <em>caro</em>, aunque aún lo considerarías?<br><small style="color:var(--ink3)">(Columna: <strong>caro</strong>)</small></div></div>
-        <div class="instr-q"><div class="instr-num">4</div><div class="instr-text">¿A qué precio este producto te parece <em>tan caro</em> que definitivamente no lo comprarías?<br><small style="color:var(--ink3)">(Columna: <strong>muy_caro</strong>)</small></div></div>
+        <div class="instr-q"><div class="instr-num">1</div><div class="instr-text" data-i18n="calc.vw.q1">¿A qué precio este producto te parece <em>tan barato</em> que dudarías de su calidad? <br><small style="color:var(--ink3)">(Columna: <strong>muy_barato</strong>)</small></div></div>
+        <div class="instr-q"><div class="instr-num">2</div><div class="instr-text" data-i18n="calc.vw.q2">¿A qué precio este producto te parece <em>barato</em> y una buena compra?<br><small style="color:var(--ink3)">(Columna: <strong>barato</strong>)</small></div></div>
+        <div class="instr-q"><div class="instr-num">3</div><div class="instr-text" data-i18n="calc.vw.q3">¿A qué precio este producto empieza a parecerte <em>caro</em>, aunque aún lo considerarías?<br><small style="color:var(--ink3)">(Columna: <strong>caro</strong>)</small></div></div>
+        <div class="instr-q"><div class="instr-num">4</div><div class="instr-text" data-i18n="calc.vw.q4">¿A qué precio este producto te parece <em>tan caro</em> que definitivamente no lo comprarías?<br><small style="color:var(--ink3)">(Columna: <strong>muy_caro</strong>)</small></div></div>
       </div>
-      <div class="nt ntw"><span class="ni">⚠</span><div><strong>Regla de consistencia:</strong> muy_barato ≤ barato ≤ caro ≤ muy_caro. Las respuestas que no cumplan esta condición serán excluidas automáticamente del análisis.</div></div>
+      <div class="nt ntw"><span class="ni">⚠</span><div data-i18n="calc.vw.consistency"><strong>Regla de consistencia:</strong> muy_barato ≤ barato ≤ caro ≤ muy_caro. Las respuestas que no cumplan esta condición serán excluidas automáticamente del análisis.</div></div>
     </div>
     <div class="card">
-      <div class="ct">Formato del archivo Excel</div>
-      <p class="cs">El archivo debe tener exactamente estas columnas (los nombres deben coincidir):</p>
+      <div class="ct" data-i18n="calc.vw.format.title">Formato del archivo Excel</div>
+      <p class="cs" data-i18n="calc.vw.format.desc">El archivo debe tener exactamente estas columnas (los nombres deben coincidir):</p>
       <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:.8rem">
         <tr style="background:var(--surface)"><th style="padding:.5rem .75rem;border:1px solid var(--border);text-align:left;font-family:'Geist Mono',monospace;font-size:.72rem">id</th><th style="padding:.5rem .75rem;border:1px solid var(--border);font-family:'Geist Mono',monospace;font-size:.72rem">muy_barato</th><th style="padding:.5rem .75rem;border:1px solid var(--border);font-family:'Geist Mono',monospace;font-size:.72rem">barato</th><th style="padding:.5rem .75rem;border:1px solid var(--border);font-family:'Geist Mono',monospace;font-size:.72rem">caro</th><th style="padding:.5rem .75rem;border:1px solid var(--border);font-family:'Geist Mono',monospace;font-size:.72rem">muy_caro</th></tr>
         <tr><td style="padding:.45rem .75rem;border:1px solid var(--border)">1</td><td style="padding:.45rem .75rem;border:1px solid var(--border)">10</td><td style="padding:.45rem .75rem;border:1px solid var(--border)">20</td><td style="padding:.45rem .75rem;border:1px solid var(--border)">40</td><td style="padding:.45rem .75rem;border:1px solid var(--border)">60</td></tr>
         <tr style="background:var(--surface)"><td style="padding:.45rem .75rem;border:1px solid var(--border)">2</td><td style="padding:.45rem .75rem;border:1px solid var(--border)">8</td><td style="padding:.45rem .75rem;border:1px solid var(--border)">18</td><td style="padding:.45rem .75rem;border:1px solid var(--border)">35</td><td style="padding:.45rem .75rem;border:1px solid var(--border)">55</td></tr>
       </table></div>
       <div class="bgrp">
-        <button class="btn bpg2" onclick="gVW(2)">Continuar → Cargar datos</button>
+        <button class="btn bpg2" onclick="gVW(2)" data-i18n="calc.vw.btn.next2">Continuar → Cargar datos</button>
       </div>
     </div>
   </div>
 
   <div id="vs2" class="sp">
     <div class="card">
-      <div class="ct">Cargar datos Van Westendorp</div>
-      <div class="nt nts"><span class="ni">✓</span><span>Columnas requeridas: <span class="tm">id · muy_barato · barato · caro · muy_caro</span></span></div>
+      <div class="ct" data-i18n="calc.vw.load.title">Cargar datos Van Westendorp</div>
+      <div class="nt nts"><span class="ni">✓</span><span data-i18n="calc.vw.load.cols">Columnas requeridas: <span class="tm">id · muy_barato · barato · caro · muy_caro</span></span></div>
       <div class="uz ug" onclick="document.getElementById('vwfi').click()" ondragover="ev(event)" ondrop="hVWDrop(event)">
-        <div class="uico">💰</div><div class="utxt">Arrastrá el Excel o hacé clic</div><div class="usub">.xlsx · Datos PSM Van Westendorp</div>
+        <div class="uico">💰</div><div class="utxt" data-i18n="calc.dropzone.click">Arrastrá el Excel o hacé clic</div><div class="usub" data-i18n="calc.vw.dropzone.sub">.xlsx · Datos PSM Van Westendorp</div>
       </div>
       <input type="file" id="vwfi" accept=".xlsx,.xls" class="hid" onchange="hVWFile(event)">
       <div id="vwfs" class="hid nt nts" style="margin-top:.9rem"><span class="ni">✓</span><span id="vwfst"></span></div>
       <hr class="dvd">
-      <div class="nt ntw"><span class="ni">⚠</span><span>¿Sin datos? Usá los datos de <strong>demostración</strong>.</span></div>
-      <div class="fg" style="max-width:320px;margin-top:.5rem"><label>Nombre del producto / servicio (para las conclusiones)</label><input type="text" id="vw-product" placeholder="Ej: Servicio de streaming premium" value="Producto evaluado"></div>
+      <div class="nt ntw"><span class="ni">⚠</span><span data-i18n="calc.note.demo">¿Sin datos? Usá los datos de <strong>demostración</strong>.</span></div>
+      <div class="fg" style="max-width:320px;margin-top:.5rem"><label data-i18n="calc.vw.product.label">Nombre del producto / servicio (para las conclusiones)</label><input type="text" id="vw-product" placeholder="Ej: Servicio de streaming premium" value="Producto evaluado"></div>
       <div class="bgrp">
-        <button class="btn bs2" onclick="gVW(1)">← Paso anterior</button>
-        <button class="btn bgg" onclick="loadVWDemo()">Usar datos demo</button>
-        <button class="btn bpg2" id="vwab" onclick="analyzeVW()" disabled>Analizar →</button>
+        <button class="btn bs2" onclick="gVW(1)" data-i18n="calc.btn.prev">← Paso anterior</button>
+        <button class="btn bgg" onclick="loadVWDemo()" data-i18n="calc.btn.demo">Usar datos demo</button>
+        <button class="btn bpg2" id="vwab" onclick="analyzeVW()" disabled data-i18n="calc.btn.analyze">Analizar →</button>
       </div>
     </div>
   </div>
 
   <div id="vs3" class="sp">
-    <div class="aic"><div class="aih"><div class="aibdg">✦ IA</div><div class="aitl">Conclusiones del análisis</div></div><div id="vwai"><div class="aild"><div class="dots"><span></span><span></span><span></span></div>Generando conclusiones…</div></div></div>
+    <div class="aic"><div class="aih"><div class="aibdg">✦ IA</div><div class="aitl" data-i18n="calc.ai.title">Conclusiones del análisis</div></div><div id="vwai"><div class="aild"><div class="dots"><span></span><span></span><span></span></div><span data-i18n="calc.ai.loading">Generando conclusiones…</span></div></div></div>
     <div class="card">
-      <div class="ct">Puntos de precio clave</div>
-      <p class="cs">Los 4 puntos de intersección de las curvas acumuladas del PSM.</p>
+      <div class="ct" data-i18n="calc.vw.pts.title">Puntos de precio clave</div>
+      <p class="cs" data-i18n="calc.vw.pts.desc">Los 4 puntos de intersección de las curvas acumuladas del PSM.</p>
       <div class="pp-grid" id="vw-pp"></div>
       <div class="nt nts" id="vw-range-notice"><span class="ni">📊</span><span id="vw-range-text"></span></div>
     </div>
     <div class="card">
-      <div class="ct">Gráfico Van Westendorp PSM</div>
-      <p class="cs">Curvas de frecuencia acumulada. Las intersecciones definen el rango de precios aceptable y el precio óptimo.</p>
+      <div class="ct" data-i18n="calc.vw.chart.title">Gráfico Van Westendorp PSM</div>
+      <p class="cs" data-i18n="calc.vw.chart.desc">Curvas de frecuencia acumulada. Las intersecciones definen el rango de precios aceptable y el precio óptimo.</p>
       <div class="vw-legend" id="vw-legend"></div>
       <div class="vw-chart-wrap"><canvas class="vw-canvas" id="vw-canvas"></canvas></div>
     </div>
     <div class="card">
-      <div class="ct">Estadísticas descriptivas</div>
+      <div class="ct" data-i18n="calc.vw.stats.title">Estadísticas descriptivas</div>
       <div id="vw-stats"></div>
     </div>
-    <div class="card"><div class="ct">Exportar resultados</div>
-      <div class="bgrp"><button class="btn bs2" onclick="gVW(2)">← Paso anterior</button><button class="btn bpg2" onclick="expVW()">↓ Excel resultados</button><button class="btn bgg" onclick="resetMod('vw')">↺ Nuevo análisis</button></div>
+    <div class="card">
+      <div class="ct" data-i18n="calc.vw.outliers.title">Valores atípicos (rango IQR)</div>
+      <p class="cs" data-i18n="calc.vw.outliers.desc">Detección automática de precios individuales fuera del rango Q1−1.5×RIC a Q3+1.5×RIC. No se excluyen automáticamente del análisis — son una señal para revisión manual.</p>
+      <div id="vw-outliers"></div>
+    </div>
+    <div class="card"><div class="ct" data-i18n="calc.export.title">Exportar resultados</div>
+      <div class="bgrp"><button class="btn bs2" onclick="gVW(2)" data-i18n="calc.btn.prev">← Paso anterior</button><button class="btn bpg2" onclick="expVW()" data-i18n="calc.btn.excel">↓ Excel resultados</button><button class="btn bgg" onclick="resetMod('vw')" data-i18n="calc.btn.reset">↺ Nuevo análisis</button></div>
     </div>
   </div>
 </div>
@@ -514,896 +333,619 @@ input:focus,select:focus,textarea:focus{border-color:var(--r);}
 <div id="mod-nms" class="mod">
 <div class="body">
   <div class="wiz">
-    <div class="ws act wp" id="nw1"><span class="wn">PASO 01</span><span class="wl">Instrucciones</span></div>
-    <div class="ws wp" id="nw2"><span class="wn">PASO 02</span><span class="wl">Cargar datos</span></div>
-    <div class="ws wp" id="nw3"><span class="wn">PASO 03</span><span class="wl">Resultados</span></div>
+    <div class="ws act wp" id="nw1"><span class="wn" data-i18n="calc.step">PASO</span> 01<span class="wl" data-i18n="calc.vw.wiz.1">Instrucciones</span></div>
+    <div class="ws wp" id="nw2"><span class="wn" data-i18n="calc.step">PASO</span> 02<span class="wl" data-i18n="calc.vw.wiz.2">Cargar datos</span></div>
+    <div class="ws wp" id="nw3"><span class="wn" data-i18n="calc.step">PASO</span> 03<span class="wl" data-i18n="calc.vw.wiz.3">Resultados</span></div>
   </div>
 
   <div id="ns1" class="sp act">
     <div class="card">
-      <div class="ct">VW + Extensión Newton-Miller-Smith (NMS)</div>
-      <p class="cs">La extensión NMS (1993) agrega 2 preguntas de intención de compra al PSM clásico. Esto permite construir curvas de demanda y revenue aproximadas, identificando el precio de máximo volumen de venta y el precio que maximiza los ingresos.</p>
-      <div class="nt ntp"><span class="ni">📈</span><span>La extensión NMS <strong>calibra</strong> las respuestas del PSM hacia comportamientos más realistas, corrigiendo la tendencia de los encuestados a exagerar los precios aceptables.</span></div>
+      <div class="ct" data-i18n="calc.nms.title">VW + Extensión Newton-Miller-Smith (NMS)</div>
+      <p class="cs" data-i18n="calc.nms.desc">La extensión NMS (1993) agrega 2 preguntas de intención de compra al PSM clásico. Esto permite construir curvas de demanda y revenue aproximadas, identificando el precio de máximo volumen de venta y el precio que maximiza los ingresos.</p>
+      <div class="nt ntp"><span class="ni">📈</span><span data-i18n="calc.nms.note">La extensión NMS <strong>calibra</strong> las respuestas del PSM hacia comportamientos más realistas, corrigiendo la tendencia de los encuestados a exagerar los precios aceptables.</span></div>
     </div>
     <div class="card">
-      <div class="ct">Las 6 preguntas del instrumento NMS</div>
-      <p class="cs">Las primeras 4 son idénticas al PSM clásico. Las 2 adicionales usan los precios que el propio encuestado indicó como referencia.</p>
+      <div class="ct" data-i18n="calc.nms.q.title">Las 6 preguntas del instrumento NMS</div>
+      <p class="cs" data-i18n="calc.nms.q.desc">Las primeras 4 son idénticas al PSM clásico. Las 2 adicionales usan los precios que el propio encuestado indicó como referencia.</p>
       <div class="instr-block">
-        <div class="instr-q"><div class="instr-num">1</div><div class="instr-text">¿A qué precio este producto te parece <em>tan barato</em> que dudarías de su calidad?<br><small style="color:var(--ink3)">(Columna: <strong>muy_barato</strong>)</small></div></div>
-        <div class="instr-q"><div class="instr-num">2</div><div class="instr-text">¿A qué precio este producto te parece <em>barato</em> y una buena compra?<br><small style="color:var(--ink3)">(Columna: <strong>barato</strong>)</small></div></div>
-        <div class="instr-q"><div class="instr-num">3</div><div class="instr-text">¿A qué precio este producto empieza a parecerte <em>caro</em>, aunque aún lo considerarías?<br><small style="color:var(--ink3)">(Columna: <strong>caro</strong>)</small></div></div>
-        <div class="instr-q"><div class="instr-num">4</div><div class="instr-text">¿A qué precio este producto te parece <em>tan caro</em> que definitivamente no lo comprarías?<br><small style="color:var(--ink3)">(Columna: <strong>muy_caro</strong>)</small></div></div>
+        <div class="instr-q"><div class="instr-num">1</div><div class="instr-text" data-i18n="calc.vw.q1">¿A qué precio este producto te parece <em>tan barato</em> que dudarías de su calidad?<br><small style="color:var(--ink3)">(Columna: <strong>muy_barato</strong>)</small></div></div>
+        <div class="instr-q"><div class="instr-num">2</div><div class="instr-text" data-i18n="calc.vw.q2">¿A qué precio este producto te parece <em>barato</em> y una buena compra?<br><small style="color:var(--ink3)">(Columna: <strong>barato</strong>)</small></div></div>
+        <div class="instr-q"><div class="instr-num">3</div><div class="instr-text" data-i18n="calc.vw.q3">¿A qué precio este producto empieza a parecerte <em>caro</em>, aunque aún lo considerarías?<br><small style="color:var(--ink3)">(Columna: <strong>caro</strong>)</small></div></div>
+        <div class="instr-q"><div class="instr-num">4</div><div class="instr-text" data-i18n="calc.vw.q4">¿A qué precio este producto te parece <em>tan caro</em> que definitivamente no lo comprarías?<br><small style="color:var(--ink3)">(Columna: <strong>muy_caro</strong>)</small></div></div>
         <div class="instr-q" style="padding-top:.65rem;border-top:1px dashed var(--border);margin-top:.65rem">
           <div class="instr-num" style="background:var(--p)">5</div>
-          <div class="instr-text">Si este producto costara <em>[precio "barato" que indicó el encuestado]</em>, ¿qué tan probable es que lo compre en los próximos 6 meses?<br><small style="color:var(--ink3)">Escala 1–5: 1=Definitivamente no · 2=Probablemente no · 3=Indeciso · 4=Probablemente sí · 5=Definitivamente sí<br>(Columna: <strong>intent_barato</strong>)</small></div>
+          <div class="instr-text" data-i18n="calc.nms.q5">Si este producto costara <em>[precio "barato" que indicó el encuestado]</em>, ¿qué tan probable es que lo compre en los próximos 6 meses?<br><small style="color:var(--ink3)">Escala 1–5: 1=Definitivamente no · 2=Probablemente no · 3=Indeciso · 4=Probablemente sí · 5=Definitivamente sí<br>(Columna: <strong>intent_barato</strong>)</small></div>
         </div>
         <div class="instr-q">
           <div class="instr-num" style="background:var(--p)">6</div>
-          <div class="instr-text">Si este producto costara <em>[precio "caro" que indicó el encuestado]</em>, ¿qué tan probable es que lo compre en los próximos 6 meses?<br><small style="color:var(--ink3)">Escala 1–5: 1=Definitivamente no · 2=Probablemente no · 3=Indeciso · 4=Probablemente sí · 5=Definitivamente sí<br>(Columna: <strong>intent_caro</strong>)</small></div>
+          <div class="instr-text" data-i18n="calc.nms.q6">Si este producto costara <em>[precio "caro" que indicó el encuestado]</em>, ¿qué tan probable es que lo compre en los próximos 6 meses?<br><small style="color:var(--ink3)">Escala 1–5: 1=Definitivamente no · 2=Probablemente no · 3=Indeciso · 4=Probablemente sí · 5=Definitivamente sí<br>(Columna: <strong>intent_caro</strong>)</small></div>
         </div>
       </div>
-      <div class="nt ntw"><span class="ni">⚠</span><div><strong>Importante en campo:</strong> Las preguntas 5 y 6 deben presentarse con el precio personalizado de cada encuestado (el que él mismo indicó en Q2 y Q3 respectivamente). En encuestas en papel, el encuestador anota el precio antes de hacer la pregunta.</div></div>
+      <div class="nt ntw"><span class="ni">⚠</span><div data-i18n="calc.nms.important"><strong>Importante en campo:</strong> Las preguntas 5 y 6 deben presentarse con el precio personalizado de cada encuestado (el que él mismo indicó en Q2 y Q3 respectivamente). En encuestas en papel, el encuestador anota el precio antes de hacer la pregunta.</div></div>
     </div>
     <div class="card">
-      <div class="ct">Formato del archivo Excel</div>
-      <p class="cs">6 columnas de datos (además del ID). Las columnas de intención van de 1 a 5.</p>
+      <div class="ct" data-i18n="calc.vw.format.title">Formato del archivo Excel</div>
+      <p class="cs" data-i18n="calc.nms.format.desc">6 columnas de datos (además del ID). Las columnas de intención van de 1 a 5.</p>
       <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:.78rem">
         <tr style="background:var(--surface)"><th style="padding:.45rem .65rem;border:1px solid var(--border);font-family:'Geist Mono',monospace;font-size:.68rem">id</th><th style="padding:.45rem .65rem;border:1px solid var(--border);font-family:'Geist Mono',monospace;font-size:.68rem">muy_barato</th><th style="padding:.45rem .65rem;border:1px solid var(--border);font-family:'Geist Mono',monospace;font-size:.68rem">barato</th><th style="padding:.45rem .65rem;border:1px solid var(--border);font-family:'Geist Mono',monospace;font-size:.68rem">caro</th><th style="padding:.45rem .65rem;border:1px solid var(--border);font-family:'Geist Mono',monospace;font-size:.68rem">muy_caro</th><th style="padding:.45rem .65rem;border:1px solid var(--border);font-family:'Geist Mono',monospace;font-size:.68rem">intent_barato</th><th style="padding:.45rem .65rem;border:1px solid var(--border);font-family:'Geist Mono',monospace;font-size:.68rem">intent_caro</th></tr>
         <tr><td style="padding:.42rem .65rem;border:1px solid var(--border)">1</td><td style="padding:.42rem .65rem;border:1px solid var(--border)">10</td><td style="padding:.42rem .65rem;border:1px solid var(--border)">20</td><td style="padding:.42rem .65rem;border:1px solid var(--border)">40</td><td style="padding:.42rem .65rem;border:1px solid var(--border)">60</td><td style="padding:.42rem .65rem;border:1px solid var(--border)">4</td><td style="padding:.42rem .65rem;border:1px solid var(--border)">2</td></tr>
         <tr style="background:var(--surface)"><td style="padding:.42rem .65rem;border:1px solid var(--border)">2</td><td style="padding:.42rem .65rem;border:1px solid var(--border)">8</td><td style="padding:.42rem .65rem;border:1px solid var(--border)">18</td><td style="padding:.42rem .65rem;border:1px solid var(--border)">35</td><td style="padding:.42rem .65rem;border:1px solid var(--border)">55</td><td style="padding:.42rem .65rem;border:1px solid var(--border)">5</td><td style="padding:.42rem .65rem;border:1px solid var(--border)">2</td></tr>
       </table></div>
-      <div class="bgrp"><button class="btn bpp" onclick="gNMS(2)">Continuar → Cargar datos</button></div>
+      <div class="bgrp"><button class="btn bpp" onclick="gNMS(2)" data-i18n="calc.vw.btn.next2">Continuar → Cargar datos</button></div>
     </div>
   </div>
 
   <div id="ns2" class="sp">
-    <div class="card"><div class="ct">Cargar datos NMS</div>
-      <div class="nt ntp"><span class="ni">ℹ</span><span>Columnas requeridas: <span class="tm">id · muy_barato · barato · caro · muy_caro · intent_barato · intent_caro</span></span></div>
+    <div class="card"><div class="ct" data-i18n="calc.nms.load.title">Cargar datos NMS</div>
+      <div class="nt ntp"><span class="ni">ℹ</span><span data-i18n="calc.nms.load.cols">Columnas requeridas: <span class="tm">id · muy_barato · barato · caro · muy_caro · intent_barato · intent_caro</span></span></div>
       <div class="uz up" onclick="document.getElementById('nmfi').click()" ondragover="ev(event)" ondrop="hNMDrop(event)">
-        <div class="uico">📈</div><div class="utxt">Arrastrá el Excel o hacé clic</div><div class="usub">.xlsx · Datos NMS</div>
+        <div class="uico">📈</div><div class="utxt" data-i18n="calc.dropzone.click">Arrastrá el Excel o hacé clic</div><div class="usub" data-i18n="calc.nms.dropzone.sub">.xlsx · Datos NMS</div>
       </div>
       <input type="file" id="nmfi" accept=".xlsx,.xls" class="hid" onchange="hNMFile(event)">
       <div id="nmfs" class="hid nt nts" style="margin-top:.9rem"><span class="ni">✓</span><span id="nmfst"></span></div>
       <hr class="dvd">
-      <div class="nt ntw"><span class="ni">⚠</span><span>¿Sin datos? Usá datos de <strong>demostración</strong>.</span></div>
-      <div class="fg" style="max-width:320px;margin-top:.5rem"><label>Nombre del producto / servicio</label><input type="text" id="nms-product" placeholder="Ej: Membresía gym premium" value="Producto evaluado"></div>
-      <div class="bgrp"><button class="btn bs2" onclick="gNMS(1)">← Paso anterior</button><button class="btn bgp" onclick="loadNMSDemo()">Usar datos demo</button><button class="btn bpp" id="nmab" onclick="analyzeNMS()" disabled>Analizar →</button></div>
+      <div class="nt ntw"><span class="ni">⚠</span><span data-i18n="calc.note.demo">¿Sin datos? Usá datos de <strong>demostración</strong>.</span></div>
+      <div class="fg" style="max-width:320px;margin-top:.5rem"><label data-i18n="calc.nms.product.label">Nombre del producto / servicio</label><input type="text" id="nms-product" placeholder="Ej: Membresía gym premium" value="Producto evaluado"></div>
+      <div class="bgrp"><button class="btn bs2" onclick="gNMS(1)" data-i18n="calc.btn.prev">← Paso anterior</button><button class="btn bgp" onclick="loadNMSDemo()" data-i18n="calc.btn.demo">Usar datos demo</button><button class="btn bpp" id="nmab" onclick="analyzeNMS()" disabled data-i18n="calc.btn.analyze">Analizar →</button></div>
     </div>
   </div>
 
   <div id="ns3" class="sp">
-    <div class="aic"><div class="aih"><div class="aibdg">✦ IA</div><div class="aitl">Conclusiones del análisis</div></div><div id="nmai"><div class="aild"><div class="dots"><span></span><span></span><span></span></div>Generando conclusiones…</div></div></div>
-    <div class="card"><div class="ct">Puntos de precio clave — PSM</div><div class="pp-grid" id="nms-pp"></div></div>
-    <div class="card"><div class="ct">Gráfico Van Westendorp PSM</div><div class="vw-legend" id="nms-vw-legend"></div><div class="vw-chart-wrap"><canvas class="vw-canvas" id="nms-vw-canvas"></canvas></div></div>
+    <div class="aic"><div class="aih"><div class="aibdg">✦ IA</div><div class="aitl" data-i18n="calc.ai.title">Conclusiones del análisis</div></div><div id="nmai"><div class="aild"><div class="dots"><span></span><span></span><span></span></div><span data-i18n="calc.ai.loading">Generando conclusiones…</span></div></div></div>
+    <div class="card"><div class="ct" data-i18n="calc.nms.pts.title">Puntos de precio clave — PSM</div><div class="pp-grid" id="nms-pp"></div></div>
+    <div class="card"><div class="ct" data-i18n="calc.vw.chart.title">Gráfico Van Westendorp PSM</div><div class="vw-legend" id="nms-vw-legend"></div><div class="vw-chart-wrap"><canvas class="vw-canvas" id="nms-vw-canvas"></canvas></div></div>
     <div class="card">
-      <div class="ct">Curvas de demanda y revenue — Extensión NMS</div>
-      <p class="cs">Demanda aproximada (% dispuestos a comprar) y revenue estimado por nivel de precio.</p>
+      <div class="ct" data-i18n="calc.nms.curves.title">Curvas de demanda y revenue — Extensión NMS</div>
+      <p class="cs" data-i18n="calc.nms.curves.desc">Demanda aproximada (% dispuestos a comprar) y revenue estimado por nivel de precio.</p>
       <div class="pp-grid" id="nms-optima" style="margin-bottom:.9rem"></div>
       <div class="nms-curve-wrap"><canvas class="nms-canvas" id="nms-canvas"></canvas></div>
     </div>
-    <div class="card"><div class="ct">Estadísticas descriptivas</div><div id="nms-stats"></div></div>
-    <div class="card"><div class="ct">Exportar resultados</div>
-      <div class="bgrp"><button class="btn bs2" onclick="gNMS(2)">← Paso anterior</button><button class="btn bpp" onclick="expNMS()">↓ Excel resultados</button><button class="btn bgp" onclick="resetMod('nms')">↺ Nuevo análisis</button></div>
+    <div class="card"><div class="ct" data-i18n="calc.vw.stats.title">Estadísticas descriptivas</div><div id="nms-stats"></div></div>
+    <div class="card">
+      <div class="ct" data-i18n="calc.vw.outliers.title">Valores atípicos (rango IQR)</div>
+      <p class="cs" data-i18n="calc.nms.outliers.desc">Detección automática de precios individuales fuera del rango Q1−1.5×RIC a Q3+1.5×RIC.</p>
+      <div id="nms-outliers"></div>
+    </div>
+    <div class="card"><div class="ct" data-i18n="calc.export.title">Exportar resultados</div>
+      <div class="bgrp"><button class="btn bs2" onclick="gNMS(2)" data-i18n="calc.btn.prev">← Paso anterior</button><button class="btn bpp" onclick="expNMS()" data-i18n="calc.btn.excel">↓ Excel resultados</button><button class="btn bgp" onclick="resetMod('nms')" data-i18n="calc.btn.reset">↺ Nuevo análisis</button></div>
     </div>
   </div>
 </div>
 </div>
 
+<!-- ══════════════════════════════════════════════════
+     MÓDULO TURF ANALYSIS
+══════════════════════════════════════════════════ -->
+<div id="mod-turf" class="mod">
+<div class="body">
+  <div class="wiz">
+    <div class="ws act wt" id="tw1"><span class="wn" data-i18n="calc.step">PASO</span> 01<span class="wl" data-i18n="calc.turf.wiz.1">Datos</span></div>
+    <div class="ws wt" id="tw2"><span class="wn" data-i18n="calc.step">PASO</span> 02<span class="wl" data-i18n="calc.turf.wiz.2">Configurar</span></div>
+    <div class="ws wt" id="tw3"><span class="wn" data-i18n="calc.step">PASO</span> 03<span class="wl" data-i18n="calc.turf.wiz.3">Resultados</span></div>
+  </div>
+
+  <!-- TURF STEP 1 -->
+  <div id="ts1" class="sp act">
+    <div class="card">
+      <div class="ct" data-i18n="calc.turf.what.title">¿Qué es TURF Analysis?</div>
+      <p class="cs" data-i18n="calc.turf.what.desc">TURF (Total Unduplicated Reach and Frequency) identifica la combinación de ítems que maximiza el alcance total no duplicado de consumidores. En lugar de elegir los ítems individualmente más populares, TURF busca la combinación que llega al mayor número de personas distintas.</p>
+      <div class="nt" style="background:var(--tl);color:var(--t);border:1px solid #fde68a"><span class="ni">📋</span><div data-i18n="calc.turf.uses.note"><strong>Usos típicos:</strong> portafolios de productos, selección de mensajes publicitarios, combinaciones de beneficios, elección de sabores o variantes a lanzar, medios de comunicación.</div></div>
+      <div class="nt ntw"><span class="ni">⚠</span><span data-i18n="calc.turf.warning.note">TURF no estima causalidad ni segmenta consumidores. Su objetivo es optimizar combinaciones de ítems para maximizar alcance no duplicado. Cuando se usa con MaxDiff o Conjoint, las utilidades deben provenir de un modelo previamente estimado.</span></div>
+    </div>
+
+    <div class="card">
+      <div class="ct" data-i18n="calc.turf.load.title">Cargar datos</div>
+      <p class="cs" data-i18n="calc.turf.load.desc">El archivo debe tener una columna <span class="tm">id</span> y una columna por ítem. Acepta 3 tipos de datos:</p>
+      <div class="fr3" style="margin-bottom:1rem">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.9rem">
+          <div style="font-family:'Geist Mono',monospace;font-size:.62rem;color:var(--t);margin-bottom:.4rem;letter-spacing:.08em" data-i18n="calc.turf.type.binary.label">BINARIO</div>
+          <div style="font-size:.78rem;color:var(--ink2);line-height:1.5" data-i18n="calc.turf.type.binary.desc">Valores 0/1. Un encuestado es alcanzado si elige (1) el ítem.</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.9rem">
+          <div style="font-family:'Geist Mono',monospace;font-size:.62rem;color:var(--t);margin-bottom:.4rem;letter-spacing:.08em" data-i18n="calc.turf.type.threshold.label">POR UMBRAL</div>
+          <div style="font-size:.78rem;color:var(--ink2);line-height:1.5" data-i18n="calc.turf.type.threshold.desc">Valores continuos. El usuario define un umbral mínimo para considerar "alcanzado".</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.9rem">
+          <div style="font-family:'Geist Mono',monospace;font-size:.62rem;color:var(--t);margin-bottom:.4rem;letter-spacing:.08em" data-i18n="calc.turf.type.weighted.label">PONDERADO</div>
+          <div style="font-size:.78rem;color:var(--ink2);line-height:1.5" data-i18n="calc.turf.type.weighted.desc">Utilidades MaxDiff/Conjoint. Convierte utilidades en probabilidad de alcance.</div>
+        </div>
+      </div>
+
+      <!-- Integración MaxDiff -->
+      <div class="nt" style="background:var(--gl);color:var(--g);border:1px solid #86efac;margin-bottom:1rem">
+        <span class="ni">⚡</span>
+        <div>
+          <strong data-i18n="calc.turf.md.title">Usar resultados de MaxDiff directamente</strong><br>
+          <span style="font-size:.78rem" data-i18n="calc.turf.md.desc">Importa los puntajes netos individuales (best−worst por encuestado), centrados en cero. Positivo = ítem preferido, negativo = no preferido. Es el formato correcto para TURF ponderado por probabilidad (Orme, 2025).</span>
+          <div style="margin-top:.5rem">
+            <button class="btn bgg" onclick="loadFromMaxDiff()" id="turf-from-md-btn" data-i18n="calc.turf.btn.frommaxdiff">⟵ Importar desde MaxDiff</button>
+            <span id="turf-md-status" style="font-size:.75rem;color:var(--ink3);margin-left:.5rem"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="uz" style="border-color:var(--t)" onclick="document.getElementById('turf-fi').click()" ondragover="ev(event)" ondrop="hTURFDrop(event)">
+        <div class="uico">📊</div>
+        <div class="utxt" data-i18n="calc.turf.dropzone.txt">Arrastrá el archivo o hacé clic para seleccionar</div>
+        <div class="usub" data-i18n="calc.turf.dropzone.sub">.xlsx o .csv · Matriz individuos × ítems</div>
+      </div>
+      <input type="file" id="turf-fi" accept=".xlsx,.xls,.csv" class="hid" onchange="hTURFFile(event)">
+      <div id="turf-fs" class="hid nt nts" style="margin-top:.9rem"><span class="ni">✓</span><span id="turf-fst"></span></div>
+
+      <hr class="dvd">
+      <div class="nt ntw"><span class="ni">⚠</span><span data-i18n="calc.turf.note.demo">¿Sin datos? Usá datos de <strong>demostración</strong> (12 beneficios × 80 encuestados).</span></div>
+      <div class="bgrp">
+        <button class="btn bgt" onclick="loadTURFDemo()" data-i18n="calc.btn.demo">Usar datos demo</button>
+        <button class="btn bpt" id="turf-next1" onclick="gTURF(2)" disabled data-i18n="calc.turf.btn.gotoconfig">Configurar análisis →</button>
+      </div>
+    </div>
+
+    <!-- Formato esperado -->
+    <div class="card">
+      <div class="ct" data-i18n="calc.turf.format.title">Formato del archivo</div>
+      <p class="cs" data-i18n="calc.turf.format.desc">Primera columna: ID del encuestado. Siguientes columnas: un ítem por columna. El nombre de la columna es el nombre del ítem.</p>
+      <div style="overflow-x:auto"><table style="border-collapse:collapse;font-size:.78rem;width:100%">
+        <tr style="background:var(--surface)">
+          <th style="padding:.4rem .65rem;border:1px solid var(--border);font-family:'Geist Mono',monospace;font-size:.68rem">id</th>
+          <th style="padding:.4rem .65rem;border:1px solid var(--border);font-family:'Geist Mono',monospace;font-size:.68rem">Velocidad</th>
+          <th style="padding:.4rem .65rem;border:1px solid var(--border);font-family:'Geist Mono',monospace;font-size:.68rem">Precio</th>
+          <th style="padding:.4rem .65rem;border:1px solid var(--border);font-family:'Geist Mono',monospace;font-size:.68rem">Variedad</th>
+          <th style="padding:.4rem .65rem;border:1px solid var(--border);font-family:'Geist Mono',monospace;font-size:.68rem">Seguimiento</th>
+        </tr>
+        <tr><td style="padding:.38rem .65rem;border:1px solid var(--border)">1</td><td style="padding:.38rem .65rem;border:1px solid var(--border)">1</td><td style="padding:.38rem .65rem;border:1px solid var(--border)">0</td><td style="padding:.38rem .65rem;border:1px solid var(--border)">1</td><td style="padding:.38rem .65rem;border:1px solid var(--border)">0</td></tr>
+        <tr style="background:var(--surface)"><td style="padding:.38rem .65rem;border:1px solid var(--border)">2</td><td style="padding:.38rem .65rem;border:1px solid var(--border)">0</td><td style="padding:.38rem .65rem;border:1px solid var(--border)">1</td><td style="padding:.38rem .65rem;border:1px solid var(--border)">1</td><td style="padding:.38rem .65rem;border:1px solid var(--border)">1</td></tr>
+        <tr><td style="padding:.38rem .65rem;border:1px solid var(--border)">3</td><td style="padding:.38rem .65rem;border:1px solid var(--border)">1</td><td style="padding:.38rem .65rem;border:1px solid var(--border)">1</td><td style="padding:.38rem .65rem;border:1px solid var(--border)">0</td><td style="padding:.38rem .65rem;border:1px solid var(--border)">0</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- TURF STEP 2 -->
+  <div id="ts2" class="sp">
+    <div class="card">
+      <div class="ct" data-i18n="calc.turf.config.title">Configurar análisis TURF</div>
+      <p class="cs" id="turf-data-summary"></p>
+
+      <div class="fr">
+        <div class="fg">
+          <label data-i18n="calc.turf.type.label">Tipo de TURF</label>
+          <select id="turf-type" onchange="onTURFTypeChange()">
+            <option value="binary" data-i18n="calc.turf.type.opt.binary">Clásico binario (valores 0/1)</option>
+            <option value="threshold" data-i18n="calc.turf.type.opt.threshold">Por umbral (valores continuos)</option>
+            <option value="weighted" data-i18n="calc.turf.type.opt.weighted">Ponderado por probabilidad (utilidades MaxDiff)</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label data-i18n="calc.turf.kmax.label">Tamaño máximo del portafolio (k)</label>
+          <select id="turf-kmax">
+            <option value="3" data-i18n="calc.turf.kmax.opt3">Hasta k = 3</option>
+            <option value="4" selected data-i18n="calc.turf.kmax.opt4">Hasta k = 4</option>
+            <option value="5" data-i18n="calc.turf.kmax.opt5">Hasta k = 5</option>
+            <option value="6" data-i18n="calc.turf.kmax.opt6">Hasta k = 6</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Umbral (solo visible para tipo threshold) -->
+      <div id="turf-threshold-cfg" class="hid">
+        <div class="fr">
+          <div class="fg">
+            <label data-i18n="calc.turf.threshold.label">Umbral mínimo para considerar "alcanzado"</label>
+            <input type="number" id="turf-threshold-val" value="0.5" step="0.1" style="max-width:180px">
+          </div>
+          <div class="fg" style="display:flex;align-items:flex-end">
+            <div class="nt nti" style="margin:0;font-size:.78rem;flex:1"><span class="ni">ℹ</span><span data-i18n="calc.turf.threshold.note">Un valor ≥ umbral significa que el encuestado es alcanzado por ese ítem.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Configuración ponderado (solo visible para tipo weighted) -->
+      <div id="turf-weighted-cfg" class="hid">
+        <div class="fr">
+          <div class="fg">
+            <label data-i18n="calc.turf.anchor.label">Tipo de MaxDiff</label>
+            <select id="turf-anchor-type">
+              <option value="standard" data-i18n="calc.turf.anchor.opt.standard">MaxDiff estándar (no anclado)</option>
+              <option value="anchored" data-i18n="calc.turf.anchor.opt.anchored">MaxDiff anclado</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label data-i18n="calc.turf.itemsperset.label">Ítems por tarjeta en el diseño MaxDiff</label>
+            <select id="turf-items-per-set">
+              <option value="4" selected data-i18n="calc.turf.itemsperset.opt4">4 ítems por tarjeta</option>
+              <option value="5" data-i18n="calc.turf.itemsperset.opt5">5 ítems por tarjeta</option>
+            </select>
+          </div>
+        </div>
+        <div class="fr">
+          <div class="fg">
+            <label data-i18n="calc.turf.probthreshold.label">Umbral de probabilidad (post-thresholding)</label>
+            <input type="number" id="turf-prob-threshold" value="0.3" step="0.05" min="0.1" max="0.9" style="max-width:180px">
+          </div>
+          <div class="fg" style="display:flex;align-items:flex-end">
+            <div class="nt nti" style="margin:0;font-size:.78rem;flex:1"><span class="ni">ℹ</span><span data-i18n="calc.turf.probthreshold.note">Encuestado alcanzado si P(portafolio) ≥ umbral. Para MaxDiff: 0.6–0.7. Para anchored MaxDiff: 0.5. Ajustar hasta obtener reach realista (no 100% con k=1).</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fg">
+        <label data-i18n="calc.turf.optimizeby.label">Optimizar portafolio por</label>
+        <select id="turf-optimize-by">
+          <option value="reach" data-i18n="calc.turf.optimizeby.opt.reach">Máximo Reach (alcance no duplicado)</option>
+          <option value="reach_freq" data-i18n="calc.turf.optimizeby.opt.reachfreq">Máximo Reach, luego mayor Frequency</option>
+        </select>
+      </div>
+
+      <div class="fg">
+        <label data-i18n="calc.turf.topn.label">Número de combinaciones a mostrar en el ranking</label>
+        <select id="turf-top-n">
+          <option value="5" data-i18n="calc.turf.topn.opt5">Top 5</option>
+          <option value="10" selected data-i18n="calc.turf.topn.opt10">Top 10</option>
+          <option value="20" data-i18n="calc.turf.topn.opt20">Top 20</option>
+        </select>
+      </div>
+
+      <div class="bgrp">
+        <button class="btn bs2" onclick="gTURF(1)" data-i18n="calc.btn.prev">← Paso anterior</button>
+        <button class="btn bpt" onclick="runTURF()" data-i18n="calc.turf.btn.calc">Calcular TURF →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TURF STEP 3 -->
+  <div id="ts3" class="sp">
+    <!-- AI -->
+    <div class="aic"><div class="aih"><div class="aibdg">✦ IA</div><div class="aitl" data-i18n="calc.ai.title">Conclusiones del análisis</div></div><div id="turfai"><div class="aild"><div class="dots"><span></span><span></span><span></span></div><span data-i18n="calc.ai.loading">Generando conclusiones…</span></div></div></div>
+
+    <!-- Portafolio óptimo destacado -->
+    <div class="card" id="turf-optimal-card">
+      <div class="ct" data-i18n="calc.turf.optimal.title">Portafolio óptimo</div>
+      <div id="turf-optimal-display"></div>
+    </div>
+
+    <!-- Curva de ganancia marginal -->
+    <div class="card">
+      <div class="ct" data-i18n="calc.turf.marginal.title">Curva de ganancia marginal</div>
+      <p class="cs" data-i18n="calc.turf.marginal.desc">Reach del mejor portafolio para cada tamaño k. Muestra el punto de rendimientos decrecientes.</p>
+      <div id="turf-marginal-curve"></div>
+    </div>
+
+    <!-- Ranking de combinaciones -->
+    <div class="card">
+      <div class="ct" data-i18n="calc.turf.ranking.title">Ranking de portafolios</div>
+      <p class="cs" data-i18n="calc.turf.ranking.desc">Mejores combinaciones ordenadas por criterio seleccionado.</p>
+      <div class="turf-matrix" id="turf-ranking-table"></div>
+    </div>
+
+    <!-- Matriz de solapamiento -->
+    <div class="card">
+      <div class="ct" data-i18n="calc.turf.overlap.title">Matriz de solapamiento entre ítems</div>
+      <p class="cs" data-i18n="calc.turf.overlap.desc">Porcentaje de encuestados alcanzados simultáneamente por ambos ítems. Alto solapamiento = redundancia.</p>
+      <div class="turf-matrix" id="turf-overlap-matrix"></div>
+      <div style="display:flex;gap:1rem;margin-top:.5rem;font-size:.72rem;color:var(--ink3)">
+        <span><span style="display:inline-block;width:12px;height:12px;background:#fecaca;border-radius:2px;margin-right:.3rem"></span><span data-i18n="calc.turf.overlap.high">Alto solapamiento (&gt;50%)</span></span>
+        <span><span style="display:inline-block;width:12px;height:12px;background:#fef3c7;border-radius:2px;margin-right:.3rem"></span><span data-i18n="calc.turf.overlap.med">Medio (25-50%)</span></span>
+        <span><span style="display:inline-block;width:12px;height:12px;background:#d1fae5;border-radius:2px;margin-right:.3rem"></span><span data-i18n="calc.turf.overlap.low">Bajo (&lt;25%)</span></span>
+      </div>
+    </div>
+
+    <!-- SHAPLEY TIPO 1: Contribución al portafolio óptimo -->
+    <div class="card" id="shapley-portfolio-card">
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.35rem">
+        <div class="ct" style="margin:0" data-i18n="calc.turf.shapley.portfolio.title">Shapley Values — Contribución al portafolio óptimo</div>
+        <span style="font-family:'Geist Mono',monospace;font-size:.6rem;background:var(--tl);color:var(--t);border:1px solid #fde68a;border-radius:3px;padding:.15rem .45rem" data-i18n="calc.turf.badge.new">NUEVO</span>
+      </div>
+      <p class="cs" data-i18n="calc.turf.shapley.portfolio.desc">¿Cuánto aporta cada ítem del portafolio óptimo al reach total? Promedio de contribuciones marginales sobre todas las permutaciones de entrada. Los valores suman exactamente el reach del portafolio.</p>
+      <div class="nt" style="background:var(--tl);color:var(--t);border:1px solid #fde68a;margin-bottom:.9rem">
+        <span class="ni">📖</span>
+        <span data-i18n="calc.turf.shapley.ref">Basado en: Orme, B. (2025). <em>Understanding Item Contribution in TURF Analysis.</em> Sawtooth Software. Un ítem con Shapley alto es insustituible; uno con Shapley bajo podría reemplazarse sin perder mucho reach.</span>
+      </div>
+      <div id="shapley-portfolio-loading" class="aild" style="color:var(--ink3)"><div class="dots"><span></span><span></span><span></span></div><span data-i18n="calc.turf.shapley.loading">Calculando Shapley Values…</span></div>
+      <div id="shapley-portfolio-result" class="hid"></div>
+    </div>
+
+    <!-- SHAPLEY TIPO 2: Ranking generalizado -->
+    <div class="card" id="shapley-general-card">
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.35rem">
+        <div class="ct" style="margin:0" data-i18n="calc.turf.shapley.general.title">Shapley Values — Ranking generalizado de todos los ítems</div>
+        <span style="font-family:'Geist Mono',monospace;font-size:.6rem;background:var(--tl);color:var(--t);border:1px solid #fde68a;border-radius:3px;padding:.15rem .45rem" data-i18n="calc.turf.badge.new">NUEVO</span>
+      </div>
+      <p class="cs" data-i18n="calc.turf.shapley.general.desc">¿Cuánto contribuye cada ítem al reach de <em>todos los portafolios posibles</em>? Identifica ítems que capturan segmentos únicos ("punch above their weight") vs. ítems redundantes. Los valores se normalizan para sumar 100%.</p>
+      <div class="nt ntw" style="margin-bottom:.9rem">
+        <span class="ni">⚠</span>
+        <span data-i18n="calc.turf.shapley.general.warn">Para estudios con más de 15 ítems se usa muestreo balanceado (BIBD) sobre portafolios de tamaño 3–5. Los resultados son estadísticamente equivalentes al cálculo exacto.</span>
+      </div>
+      <div id="shapley-general-loading" class="aild" style="color:var(--ink3)"><div class="dots"><span></span><span></span><span></span></div><span data-i18n="calc.turf.shapley.general.loading">Calculando Shapley generalizado…</span></div>
+      <div id="shapley-general-result" class="hid"></div>
+      <!-- Scatter plot Shapley vs Score promedio -->
+      <div id="shapley-scatter-wrap" class="hid" style="margin-top:1rem">
+        <div class="ititle" data-i18n="calc.turf.scatter.title">Shapley vs. Score promedio — Detección de redundancias</div>
+        <p style="font-size:.78rem;color:var(--ink3);margin-bottom:.75rem" data-i18n="calc.turf.scatter.desc">Ítems por encima de la línea = capturan segmentos únicos. Ítems por debajo = redundantes con ítems más populares.</p>
+        <canvas id="shapley-scatter-canvas" style="width:100%;height:320px;"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ct" data-i18n="calc.turf.export.title">Exportar resultados completos</div>
+      <div class="bgrp">
+        <button class="btn bs2" onclick="gTURF(2)" data-i18n="calc.btn.prev">← Paso anterior</button>
+        <button class="btn bpt" onclick="expTURF()" data-i18n="calc.btn.excel">↓ Excel resultados</button>
+        <button class="btn bgt" onclick="resetMod('turf')" data-i18n="calc.btn.reset">↺ Nuevo análisis</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     MÓDULO — MODO APRENDIZAJE
+══════════════════════════════════════════════════ -->
+<div id="mod-edu" class="mod act">
+<div class="body">
+
+  <!-- WIZARD -->
+  <div class="wiz" id="edu-wiz">
+    <div class="ws act wedu" id="ew0"><span class="wn" data-i18n="wiz.step">PASO 01</span><span class="wl" data-i18n="wiz.0">El problema</span></div>
+    <div class="ws wedu" id="ew1"><span class="wn" data-i18n="wiz.step">PASO 02</span><span class="wl" data-i18n="wiz.1">Caso</span></div>
+    <div class="ws wedu" id="ew2"><span class="wn" data-i18n="wiz.step">PASO 03</span><span class="wl" data-i18n="wiz.2">Orientación</span></div>
+    <div class="ws wedu" id="ew3"><span class="wn" data-i18n="wiz.step">PASO 04</span><span class="wl" data-i18n="wiz.3">Pretest</span></div>
+    <div class="ws wedu" id="ew4"><span class="wn" data-i18n="wiz.step">PASO 05</span><span class="wl" data-i18n="wiz.4">Diagnóstico</span></div>
+    <div class="ws wedu" id="ew5"><span class="wn" data-i18n="wiz.step">PASO 06</span><span class="wl" data-i18n="wiz.5">Análisis</span></div>
+    <div class="ws wedu" id="ew6"><span class="wn" data-i18n="wiz.step">PASO 07</span><span class="wl" data-i18n="wiz.6">Interpretación</span></div>
+    <div class="ws wedu" id="ew7"><span class="wn" data-i18n="wiz.step">PASO 08</span><span class="wl" data-i18n="wiz.7">Evaluación</span></div>
+    <div class="ws wedu" id="ew8"><span class="wn" data-i18n="wiz.step">PASO 09</span><span class="wl" data-i18n="wiz.8">Reporte</span></div>
+  </div>
+
+  <!-- ── PASO 0: EL PROBLEMA (CONCEPTUAL, ANTES DE NOMBRAR LA TÉCNICA) ── -->
+  <div id="es0" class="sp act">
+    <div class="edu-header">
+      <div class="edu-header-tag" data-i18n="edu.header.tag">🎓 Modo Aprendizaje · Kit de Investigación de Mercados</div>
+      <div class="edu-header-title" data-i18n="edu.header.title">Aprendizaje guiado por problemas reales de marketing</div>
+      <div class="edu-header-sub" data-i18n="edu.header.sub">No partimos de una técnica estadística. Partimos de un problema de negocio. Tú decidirás qué información necesitas y qué herramienta la resuelve.</div>
+    </div>
+    <div class="card">
+      <div class="ct" data-i18n="edu.problems.select.title">¿Qué tipo de problema de negocio quieres resolver?</div>
+      <p class="cs" data-i18n="edu.problems.select.desc">Cada problema empresarial requiere un tipo distinto de información — y por lo tanto, una técnica de investigación distinta. Elige el que más se acerque a tu situación.</p>
+      <div id="edu-problem-list"></div>
+    </div>
+  </div>
+
+  <!-- ── PASO 1: PROBLEMA EN DETALLE + CASOS FILTRADOS ── -->
+  <div id="es1" class="sp">
+    <div id="edu-problem-detail"></div>
+    <div class="card">
+      <div class="ct" data-i18n="edu.case.select.title">Selecciona un caso de estudio</div>
+      <p class="cs" data-i18n="edu.case.select.desc">Cada caso incluye datos de encuesta, contexto de negocio y una decisión de marketing que deberás resolver.</p>
+      <div id="edu-case-list"></div>
+      <div class="bgrp" style="margin-top:1.25rem">
+        <button class="btn bs2" onclick="gEdu(0)">← <span data-i18n="nav.prev">Paso anterior</span></button>
+        <button class="btn bpedu" id="edu-case-start-btn" onclick="startEduCase()"><span data-i18n="edu.case.start">Comenzar caso</span> →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PASO 2: BRIEF AMPLIADO Y SELECTOR METODOLÓGICO ── -->
+  <div id="es2" class="sp">
+    <div id="edu-brief-block"></div>
+    <div class="card">
+      <div class="ct" data-i18n="edu.meth.title">Selector metodológico</div>
+      <p class="cs" data-i18n="edu.meth.desc">Antes de analizar los datos, reflexiona sobre la técnica. Responde las tres preguntas y el sistema confirmará si elegiste correctamente.</p>
+      <div class="fg">
+        <label data-i18n="edu.meth.q1">¿Qué decisión de negocio se quiere tomar?</label>
+        <select id="meth-q1">
+          <option value="" data-i18n="edu.meth.select">— Selecciona —</option>
+          <option value="precio" data-i18n="edu.meth.q1.a">Fijar o revisar el precio de un producto</option>
+          <option value="preferencia" data-i18n="edu.meth.q1.b">Identificar atributos más valorados</option>
+          <option value="portafolio" data-i18n="edu.meth.q1.c">Optimizar un portafolio de productos</option>
+          <option value="producto" data-i18n="edu.meth.q1.d">Diseñar el producto ideal</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label data-i18n="edu.meth.q2">¿Qué tipo de información tienes disponible?</label>
+        <select id="meth-q2">
+          <option value="" data-i18n="edu.meth.select">— Selecciona —</option>
+          <option value="precios_percibidos" data-i18n="edu.meth.q2.a">Precios percibidos por los consumidores (4 preguntas de precio)</option>
+          <option value="elecciones" data-i18n="edu.meth.q2.b">Elecciones entre perfiles de producto</option>
+          <option value="mejorpeor" data-i18n="edu.meth.q2.c">Rankings de mejor y peor ítem</option>
+          <option value="binaria" data-i18n="edu.meth.q2.d">Datos de uso o consumo (sí/no)</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label data-i18n="edu.meth.q3">¿Qué resultado esperas obtener?</label>
+        <select id="meth-q3">
+          <option value="" data-i18n="edu.meth.select">— Selecciona —</option>
+          <option value="rango_precios" data-i18n="edu.meth.q3.a">Rango psicológico de precios aceptables</option>
+          <option value="importancias" data-i18n="edu.meth.q3.b">Importancia relativa de atributos</option>
+          <option value="share" data-i18n="edu.meth.q3.c">Cuota de mercado simulada</option>
+          <option value="alcance" data-i18n="edu.meth.q3.d">Máximo alcance de consumidores</option>
+          <option value="demanda_ingresos" data-i18n="edu.meth.q3.e">Demanda e ingresos estimados por nivel de precio</option>
+        </select>
+      </div>
+      <div id="meth-rec" class="meth-recommendation">
+        <div class="meth-rec-title" data-i18n="edu.meth.rec.title">✦ Recomendación del sistema</div>
+        <div id="meth-rec-text" class="meth-rec-text"></div>
+      </div>
+      <div class="bgrp">
+        <button class="btn bs2" onclick="gEdu(1)">← <span data-i18n="nav.prev">Paso anterior</span></button>
+        <button class="btn bs2" onclick="evalMeth()" data-i18n="edu.meth.eval">Evaluar selección</button>
+        <button class="btn bpedu" id="edu-meth-next" onclick="gEdu(3)" disabled><span data-i18n="nav.next">Continuar</span> →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PASO 3: PRETEST ── -->
+  <div id="es3" class="sp">
+    <div class="card">
+      <div class="ct" data-i18n="edu.pretest.title">Pretest — Conocimiento previo</div>
+      <p class="cs" data-i18n="edu.pretest.desc">Responde estas 3 preguntas antes de ver los datos. No hay penalización por errores — es para medir tu punto de partida.</p>
+      <div id="edu-pretest-qs"></div>
+      <div class="bgrp">
+        <button class="btn bs2" onclick="gEdu(2)">← <span data-i18n="nav.prev">Paso anterior</span></button>
+        <button class="btn bpedu" id="edu-pretest-btn" onclick="submitPretest()" disabled><span data-i18n="edu.pretest.submit">Enviar respuestas</span> →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PASO 4: DIAGNÓSTICO DE DATOS (CON DETECCIÓN IQR) ── -->
+  <div id="es4" class="sp">
+    <div class="card">
+      <div class="ct" data-i18n="edu.instr.title">Así se recolectaron estos datos</div>
+      <p class="cs" data-i18n="edu.instr.desc">Antes de revisar la calidad de los datos, veamos exactamente qué se le preguntó a cada encuestado y cómo se aplicó el instrumento.</p>
+      <div id="edu-instrument-content"></div>
+    </div>
+    <div class="card">
+      <div class="ct" data-i18n="edu.diag.title">Diagnóstico de la base de datos</div>
+      <p class="cs" data-i18n="edu.diag.desc">Antes de analizar, revisamos la calidad de los datos. Este paso refleja la práctica profesional: ningún análisis es válido sin verificar los datos.</p>
+      <div id="edu-diag-content"></div>
+      <div class="bgrp">
+        <button class="btn bs2" onclick="gEdu(3)">← <span data-i18n="nav.prev">Paso anterior</span></button>
+        <button class="btn bpedu" onclick="runEduAnalysis()"><span data-i18n="edu.diag.run">Ejecutar análisis</span> →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PASO 5: ANÁLISIS POR CAPAS ── -->
+  <div id="es5" class="sp">
+    <div class="card">
+      <div class="ct" data-i18n="edu.layers.title">Resultados por capas</div>
+      <p class="cs" data-i18n="edu.layers.desc">Los mismos resultados se presentan en tres niveles. Lee los tres antes de continuar con tu interpretación.</p>
+      <div class="layer-tabs">
+        <div class="layer-tab active" onclick="switchLayer('tecnico',this)">🔬 <span data-i18n="edu.layers.tech">Técnico</span></div>
+        <div class="layer-tab" onclick="switchLayer('interpretativo',this)">💡 <span data-i18n="edu.layers.interp">Interpretativo</span></div>
+        <div class="layer-tab" onclick="switchLayer('gerencial',this)">📊 <span data-i18n="edu.layers.mgmt">Gerencial</span></div>
+      </div>
+      <div id="layer-tecnico" class="layer-content active">
+        <div id="edu-results-tecnico"></div>
+      </div>
+      <div id="layer-interpretativo" class="layer-content">
+        <div id="edu-results-interp"></div>
+      </div>
+      <div id="layer-gerencial" class="layer-content">
+        <div id="edu-results-mgmt"></div>
+      </div>
+      <div class="bgrp" style="margin-top:1.25rem">
+        <button class="btn bs2" onclick="gEdu(4)">← <span data-i18n="nav.prev">Paso anterior</span></button>
+        <button class="btn bpedu" onclick="gEdu(6)"><span data-i18n="edu.layers.cta">Pasar a mi interpretación</span> →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PASO 6: RESUMEN DE RESULTADOS + RESPUESTA DEL ESTUDIANTE + FEEDBACK IA ── -->
+  <div id="es6" class="sp">
+    <div class="card">
+      <div class="ct" data-i18n="edu.resp.title">Tu interpretación y recomendación</div>
+      <p class="cs" data-i18n="edu.resp.desc">Redacta tu análisis en los cinco campos. Sé específico: usa los números del análisis como evidencia.</p>
+      <div class="results-recap" id="edu-results-recap"></div>
+      <div class="resp-field">
+        <label><span class="resp-num">1</span> <span data-i18n="edu.resp.f1">Hallazgo principal</span></label>
+        <textarea id="resp-hallazgo" data-i18n-ph="edu.resp.f1.ph" placeholder="¿Cuál es el dato más importante que encontraste? Menciona el valor numérico." oninput="checkRespComplete()"></textarea>
+      </div>
+      <div class="resp-field">
+        <label><span class="resp-num">2</span> <span data-i18n="edu.resp.f2">Evidencia del análisis</span></label>
+        <textarea id="resp-evidencia" data-i18n-ph="edu.resp.f2.ph" placeholder="¿Qué números o curvas sustentan tu hallazgo? Cita los puntos de precio específicos." oninput="checkRespComplete()"></textarea>
+      </div>
+      <div class="resp-field">
+        <label><span class="resp-num">3</span> <span data-i18n="edu.resp.f3">Recomendación gerencial</span></label>
+        <textarea id="resp-recomendacion" data-i18n-ph="edu.resp.f3.ph" placeholder="¿Qué precio recomendarías fijar y por qué? Menciona el objetivo estratégico." oninput="checkRespComplete()"></textarea>
+      </div>
+      <div class="resp-field">
+        <label><span class="resp-num">4</span> <span data-i18n="edu.resp.f4">Limitaciones del análisis</span></label>
+        <textarea id="resp-limitaciones" data-i18n-ph="edu.resp.f4.ph" placeholder="¿Qué no puede responder este análisis? ¿Qué información adicional sería útil?" oninput="checkRespComplete()"></textarea>
+      </div>
+      <div class="resp-field">
+        <label><span class="resp-num">5</span> <span data-i18n="edu.resp.f5">Próximo paso propuesto</span></label>
+        <textarea id="resp-siguiente" data-i18n-ph="edu.resp.f5.ph" placeholder="Si pudieras hacer una investigación adicional, ¿qué harías?" oninput="checkRespComplete()"></textarea>
+      </div>
+      <div class="nt nti" style="margin-top:.5rem">
+        <span class="ni">💡</span><span data-i18n="edu.resp.ai.explain">Para recibir retroalimentación sobre tu respuesta, puedes copiar el siguiente prompt y pegarlo en la IA que sueles usar (ChatGPT, Claude u otra). El sistema no envía tus datos a ningún servidor — tú decides si compartirlos.</span>
+      </div>
+      <div class="bgrp" style="margin-bottom:1.25rem;margin-top:.75rem">
+        <button class="btn bgedu" id="edu-copy-prompt-btn" onclick="copyAIPrompt()" disabled>📋 <span data-i18n="edu.resp.copyprompt">Copiar prompt para IA externa</span></button>
+      </div>
+      <div id="edu-prompt-preview" class="hid">
+        <div class="prompt-box">
+          <div class="prompt-box-label" data-i18n="edu.resp.promptbox.label">PROMPT GENERADO — pega esto en ChatGPT, Claude u otra IA</div>
+          <div class="prompt-box-text" id="edu-prompt-text"></div>
+        </div>
+        <div class="fg" style="margin-top:.9rem">
+          <label data-i18n="edu.resp.feedback.label">Pega aquí el feedback que recibiste de la IA (opcional)</label>
+          <textarea id="resp-ai-feedback" data-i18n-ph="edu.resp.feedback.ph" placeholder="Copia y pega la respuesta de ChatGPT u otra IA aquí..." style="min-height:100px;" oninput="S.edu.aiFeedback=this.value"></textarea>
+        </div>
+      </div>
+      <div class="bgrp">
+        <button class="btn bs2" onclick="gEdu(5)">← <span data-i18n="nav.prev">Paso anterior</span></button>
+        <button class="btn bpedu" id="edu-resp-next" onclick="saveRespAndContinue()" disabled><span data-i18n="edu.resp.next">Continuar a evaluación</span> →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PASO 7: POSTEST + ENCUESTA ── -->
+  <div id="es7" class="sp">
+    <div class="card">
+      <div class="ct" data-i18n="edu.postest.title">Postest — Evaluación de aprendizaje</div>
+      <p class="cs" data-i18n="edu.postest.desc">Las mismas 3 preguntas del pretest. Compararemos tus respuestas para medir el aprendizaje logrado.</p>
+      <div id="edu-postest-qs"></div>
+      <div id="edu-prepost-compare" class="hid" style="margin-top:1rem"></div>
+      <div class="bgrp">
+        <button class="btn bs2" onclick="gEdu(6)">← <span data-i18n="nav.prev">Paso anterior</span></button>
+        <button class="btn bpedu" id="edu-postest-btn" onclick="submitPosttest()" disabled><span data-i18n="edu.postest.submit">Ver comparación</span> →</button>
+        <button class="btn bpedu hid" id="edu-survey-btn" onclick="showSurvey()"><span data-i18n="edu.postest.tosurvey">Continuar a encuesta</span> →</button>
+      </div>
+    </div>
+    <div class="card hid" id="edu-survey-card">
+      <div class="ct" data-i18n="edu.survey.title">Encuesta de experiencia</div>
+      <p class="cs" data-i18n="edu.survey.desc">Tus respuestas ayudan a mejorar esta herramienta y son parte de la investigación educativa del proyecto.</p>
+      <div id="edu-survey-content"></div>
+      <div class="bgrp">
+        <button class="btn bpedu" onclick="saveSurveyAndContinue()"><span data-i18n="edu.survey.finish">Finalizar y generar reporte</span> →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PASO 8: REPORTE FINAL ── -->
+  <div id="es8" class="sp">
+    <div class="card">
+      <div class="edu-header" style="margin-bottom:1.25rem">
+        <div class="edu-header-tag" data-i18n="edu.report.tag">✓ Sesión completada</div>
+        <div class="edu-header-title" data-i18n="edu.report.title">Tu reporte está listo</div>
+        <div class="edu-header-sub" data-i18n="edu.report.sub">Descarga el reporte HTML para entregarlo a tu docente o guardarlo como evidencia de aprendizaje.</div>
+      </div>
+      <div class="ct" data-i18n="edu.report.code">Código de sesión</div>
+      <div class="session-code" id="edu-session-code">—</div>
+      <p class="cs" style="margin-bottom:1.25rem" data-i18n="edu.report.codenote">Anota este código. Tu docente puede usarlo para verificar la autenticidad del reporte.</p>
+      <div id="edu-report-summary"></div>
+      <div class="bgrp">
+        <button class="btn bpedu" onclick="downloadReport()">⬇ <span data-i18n="edu.report.dlhtml">Descargar reporte HTML</span></button>
+        <button class="btn bgedu" onclick="downloadCSV()">⬇ <span data-i18n="edu.report.dlcsv">Descargar datos CSV</span></button>
+        <button class="btn bs2" onclick="resetEdu()">↺ <span data-i18n="edu.report.newcase">Nuevo caso</span></button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /body -->
+</div><!-- /mod-edu -->
+
+
 <script>
-// ══════════════════════════════════════════════════
-// GLOBAL STATE & UTILS
-// ══════════════════════════════════════════════════
-const S={c:{attrs:[],vers:1,design:[],cv:0,cp:0,data:null,res:null,priceAttr:null},m:{items:[],vers:1,design:[],cv:0,cp:0,data:null,res:null},vw:{data:null,res:null},nms:{data:null,res:null}};
-const COLS=['#c8430a','#2563a8','#1a7a4a','#8b5cf6','#d97706','#ec4899'];
-const PCOLS=['#c8430a','#2563a8','#1a7a4a','#8b5cf6'];
-function rng(s){let x=s;return()=>{x=(x*1664525+1013904223)&0xffffffff;return(x>>>0)/0xffffffff;};}
-function ev(e){e.preventDefault();}
-function fmt(n){return typeof n==='number'?n.toFixed(2):n;}
-
-function swMod(m,btn,cls){
-  document.querySelectorAll('.mod').forEach(p=>p.classList.remove('act'));
-  document.querySelectorAll('.mbtn').forEach(b=>{b.classList.remove('active','cb','cg','cp2');});
-  document.getElementById('mod-'+m).classList.add('act');
-  btn.classList.add('active');if(cls)btn.classList.add(cls);
-}
-function resetAll(){
-  Object.assign(S,{c:{attrs:[],vers:1,design:[],cv:0,cp:0,data:null,res:null,priceAttr:null},m:{items:[],vers:1,design:[],cv:0,cp:0,data:null,res:null},vw:{data:null,res:null},nms:{data:null,res:null}});
-  document.querySelectorAll('.mod').forEach(p=>p.classList.remove('act'));
-  document.querySelectorAll('.mbtn').forEach(b=>b.classList.remove('active','cb','cg','cp2'));
-  document.getElementById('mod-conjoint').classList.add('act');
-  document.getElementById('tab-conjoint').classList.add('active');
-  loadCEx();loadMEx();
-  gCS(1);gMS(1);gVW(1);gNMS(1);
-  ['cfs','mfs','vwfs','nmfs'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.add('hid');});
-  ['cab','mab','vwab','nmab'].forEach(id=>{const el=document.getElementById(id);if(el)el.disabled=true;});
-}
-function resetMod(mod){
-  if(mod==='conjoint'){S.c={attrs:[],vers:1,design:[],cv:0,cp:0,data:null,res:null,priceAttr:null};loadCEx();gCS(1);['cfs'].forEach(id=>{document.getElementById(id)?.classList.add('hid');});document.getElementById('cab').disabled=true;}
-  if(mod==='maxdiff'){S.m={items:[],vers:1,design:[],cv:0,cp:0,data:null,res:null};loadMEx();gMS(1);document.getElementById('mfs')?.classList.add('hid');document.getElementById('mab').disabled=true;}
-  if(mod==='vw'){S.vw={data:null,res:null};gVW(1);document.getElementById('vwfs')?.classList.add('hid');document.getElementById('vwab').disabled=true;}
-  if(mod==='nms'){S.nms={data:null,res:null};gNMS(1);document.getElementById('nmfs')?.classList.add('hid');document.getElementById('nmab').disabled=true;}
-}
-
-// STEP NAVIGATION
-function gCS(n){document.querySelectorAll('#mod-conjoint .sp').forEach(p=>p.classList.remove('act'));document.getElementById('cs'+n).classList.add('act');for(let i=1;i<=4;i++){const w=document.getElementById('cw'+i);w.classList.remove('act','dn');if(i<n)w.classList.add('dn');if(i===n)w.classList.add('act');}}
-function gMS(n){document.querySelectorAll('#mod-maxdiff .sp').forEach(p=>p.classList.remove('act'));document.getElementById('ms'+n).classList.add('act');for(let i=1;i<=4;i++){const w=document.getElementById('mw'+i);w.classList.remove('act','dn');if(i<n)w.classList.add('dn');if(i===n)w.classList.add('act');}}
-function gVW(n){document.querySelectorAll('#mod-vw .sp').forEach(p=>p.classList.remove('act'));document.getElementById('vs'+n).classList.add('act');for(let i=1;i<=3;i++){const w=document.getElementById('vw'+i);w.classList.remove('act','dn');if(i<n)w.classList.add('dn');if(i===n)w.classList.add('act');}}
-function gNMS(n){document.querySelectorAll('#mod-nms .sp').forEach(p=>p.classList.remove('act'));document.getElementById('ns'+n).classList.add('act');for(let i=1;i<=3;i++){const w=document.getElementById('nw'+i);w.classList.remove('act','dn');if(i<n)w.classList.add('dn');if(i===n)w.classList.add('act');}}
-
-// ══════════════════════════════════════════════════
-// CBC CONJOINT (igual que v2.1, resumido)
-// ══════════════════════════════════════════════════
-function loadCEx(){S.c.attrs=[{name:'Tasa de interés anual (TEA)',levels:['12% anual','18% anual','24% anual']},{name:'% de dinero devuelto en compras',levels:['Sin devolución','1% de devolución','2% de devolución','3% de devolución']},{name:'Costo de membresía anual',levels:['S/ 0 al año','S/ 50 al año','S/ 120 al año']},{name:'Cobertura de uso',levels:['Solo uso local','Uso a nivel nacional','Uso nacional e internacional']},{name:'Beneficio principal de la tarjeta',levels:['Acumulación de millas','Descuentos en restaurantes','Seguro de viaje','Acceso a salas VIP en aeropuertos']}];renderCA();}
-function addCAttr(){if(S.c.attrs.length>=6){alert('Máximo 6 atributos.');return;}S.c.attrs.push({name:'',levels:['','']});renderCA();}
-function rmCA(i){S.c.attrs.splice(i,1);renderCA();}
-function addCL(ai){if(S.c.attrs[ai].levels.length>=5){alert('Máximo 5 niveles.');return;}S.c.attrs[ai].levels.push('');renderCA();}
-function rmCL(ai,li){if(S.c.attrs[ai].levels.length<=2){alert('Mínimo 2 niveles.');return;}S.c.attrs[ai].levels.splice(li,1);renderCA();}
-function renderCA(){const c=document.getElementById('cbc-ac');c.innerHTML='';S.c.attrs.forEach((a,ai)=>{const d=document.createElement('div');d.className='ab';d.innerHTML=`<div class="ah"><div class="an">${ai+1}</div><input class="ai2" type="text" placeholder="Nombre del atributo" value="${a.name}" oninput="S.c.attrs[${ai}].name=this.value"><button class="brm" onclick="rmCA(${ai})">✕</button></div><div class="lrow">${a.levels.map((l,li)=>`<div class="lc"><input type="text" placeholder="Nivel ${li+1}" value="${l}" oninput="S.c.attrs[${ai}].levels[${li}]=this.value"><button class="rml" onclick="rmCL(${ai},${li})">✕</button></div>`).join('')}${a.levels.length<5?`<button class="bal" onclick="addCL(${ai})">＋</button>`:''}</div>`;c.appendChild(d);});const btn=document.getElementById('btn-aa');if(btn)btn.style.display=S.c.attrs.length>=6?'none':'';}
-function setCVer(n,el){S.c.vers=n;document.querySelectorAll('#mod-conjoint .vp .pill').forEach(p=>p.classList.remove('act'));el.classList.add('act');}
-function genCDesign(){const attrs=S.c.attrs;if(attrs.length<2){alert('Mínimo 2 atributos.');return;}for(let a of attrs){if(!a.name.trim()){alert('Falta nombre.');return;}for(let l of a.levels){if(!l.trim()){alert('Falta texto en nivel.');return;}}}const T=15,P=4,V=S.c.vers;S.c.design=[];for(let v=0;v<V;v++){const r=rng(42+v*137),tasks=[];for(let t=0;t<T;t++){const task=[];for(let p=0;p<P;p++){const prod={};attrs.forEach(a=>{prod[a.name]=a.levels[Math.floor(r()*a.levels.length)];});task.push(prod);}tasks.push(task);}const sh=[...Array(T).keys()].sort(()=>r()-0.5);S.c.design.push(sh.map(i=>tasks[i]));}S.c.cv=0;S.c.cp=0;renderCVS();renderCC();gCS(2);}
-function renderCVS(){const sel=document.getElementById('cbc-vs');sel.innerHTML='';for(let v=0;v<S.c.vers;v++){const p=document.createElement('div');p.className='pill'+(v===0?' act':'');p.textContent='Versión '+(v+1);const vv=v;p.onclick=()=>{S.c.cv=vv;S.c.cp=0;document.querySelectorAll('#cbc-vs .pill').forEach(x=>x.classList.remove('act'));p.classList.add('act');renderCC();};sel.appendChild(p);}}
-function renderCC(){const v=S.c.cv,t=S.c.cp,task=S.c.design[v][t],attrs=S.c.attrs;document.getElementById('cpi').textContent=`Tarea ${t+1} de 15`;document.getElementById('cprev').disabled=t===0;document.getElementById('cnext').disabled=t===14;document.getElementById('cbc-cd').innerHTML=`<div class="tc"><div class="tch">TAREA ${t+1} — ¿Cuál elegiría? <span class="tcv">V${v+1}</span></div><div class="po">${task.map((prod,pi)=>`<div class="popt"><div class="pol" style="color:${PCOLS[pi]}">Opción ${pi+1}</div><div class="poa">${attrs.map(a=>`<span>${a.name}:</span> ${prod[a.name]}<br>`).join('')}</div></div>`).join('')}<div class="no">☐ Ninguno de los anteriores</div></div></div>`;}
-function chCP(d){S.c.cp=Math.max(0,Math.min(14,S.c.cp+d));renderCC();}
-function dlCTpl(){const wb=XLSX.utils.book_new(),T=15,V=S.c.vers,attrs=S.c.attrs;const wi=XLSX.utils.aoa_to_sheet([['INSTRUCCIONES CBC Conjoint'],[''],['Cada fila = 1 encuestado. version: '+(Array.from({length:V},(_,i)=>i+1).join(' o '))+'. tarea_1 a tarea_15: 1-4 o 0 (Ninguno).']]);wi['!cols']=[{wch:80}];XLSX.utils.book_append_sheet(wb,wi,'Instrucciones');const tc=Array.from({length:T},(_,i)=>'tarea_'+(i+1)),hd=['id_encuestado','version',...tc];const wr=XLSX.utils.aoa_to_sheet([hd,...Array.from({length:5},(_,i)=>[i+1,(i%V)+1,...Array(T).fill('')])]);wr['!cols']=hd.map((_,i)=>({wch:i<2?15:9}));XLSX.utils.book_append_sheet(wb,wr,'Respuestas');for(let v=0;v<V;v++){const rows=[['TAREA','OPCIÓN',...attrs.map(a=>a.name)]];S.c.design[v].forEach((task,ti)=>{task.forEach((prod,pi)=>rows.push([ti+1,'Opción '+(pi+1),...attrs.map(a=>prod[a.name])]));rows.push([ti+1,'Ninguno',...attrs.map(()=>'—')]);});const wd=XLSX.utils.aoa_to_sheet(rows);wd['!cols']=[{wch:8},{wch:10},...attrs.map(()=>({wch:22}))];XLSX.utils.book_append_sheet(wb,wd,'Diseño_V'+(v+1));}XLSX.writeFile(wb,'plantilla_cbc_conjoint.xlsx');}
-function hCDrop(e){e.preventDefault();const f=e.dataTransfer.files[0];if(f)prCFile(f);}
-function hCFile(e){const f=e.target.files[0];if(f)prCFile(f);}
-function prCFile(file){const r=new FileReader();r.onload=e=>{try{const wb=XLSX.read(e.target.result,{type:'binary'});S.c.data=XLSX.utils.sheet_to_json(wb.Sheets['Respuestas']||wb.Sheets[wb.SheetNames[0]]);document.getElementById('cfs').classList.remove('hid');document.getElementById('cfst').textContent=`${file.name} — ${S.c.data.length} encuestados.`;document.getElementById('cab').disabled=false;}catch{alert('Error al leer.');}};r.readAsBinaryString(file);}
-function loadCDemo(){const T=15,P=4,N=80,r=rng(999);S.c.data=Array.from({length:N},(_,i)=>{const row={id_encuestado:i+1,version:(i%S.c.vers)+1};for(let t=1;t<=T;t++){const x=r();row['tarea_'+t]=x<0.08?0:Math.min(P,Math.ceil(x*P*1.1));}return row;});document.getElementById('cfs').classList.remove('hid');document.getElementById('cfst').textContent=`Datos demo — ${N} encuestados simulados.`;document.getElementById('cab').disabled=false;}
-function analyzeC(){const data=S.c.data,attrs=S.c.attrs,T=15;const lc={};attrs.forEach(a=>{lc[a.name]={};a.levels.forEach(l=>{lc[a.name][l]={ch:0,tot:0};});});data.forEach(row=>{const v=Math.min((row.version||1)-1,S.c.design.length-1);for(let t=0;t<T;t++){const ch=row['tarea_'+(t+1)];S.c.design[v][t].forEach((prod,pi)=>{attrs.forEach(a=>{const lv=prod[a.name];if(lc[a.name][lv]){lc[a.name][lv].tot++;if(ch===pi+1)lc[a.name][lv].ch++;}});});}});const utils={},rawR={};attrs.forEach(a=>{utils[a.name]={};const rates=a.levels.map(l=>{const c=lc[a.name][l];return Math.max(0.01,Math.min(0.99,c.tot>0?c.ch/c.tot:0.25));});const avg=rates.reduce((s,r2)=>s+Math.log(r2/(1-r2)),0)/rates.length;const us=rates.map(r2=>Math.log(r2/(1-r2))-avg);a.levels.forEach((l,i)=>{utils[a.name][l]=us[i];});rawR[a.name]=Math.max(...us)-Math.min(...us);});const tot=Object.values(rawR).reduce((s,v)=>s+v,0)||1;const imp={};let run=0;attrs.forEach((a,i)=>{if(i===attrs.length-1){imp[a.name]=Math.round((100-run)*10)/10;}else{const p=Math.round((rawR[a.name]/tot)*1000)/10;imp[a.name]=p;run+=p;}});S.c.res={utils,imp,lc,data};detectPriceAttr();renderCRes();initSim();initElast();buildCScript();gCS(4);genCAI();}
-function detectPriceAttr(){const attrs=S.c.attrs;const kw=/precio|tasa|costo|tarifa|fee|rate|cost|membres|annual|cuota|valor|s\//i;let d=attrs.find(a=>kw.test(a.name));S.c.priceAttr=d?d.name:attrs[0].name;const sel=document.getElementById('price-attr-sel');sel.innerHTML='';attrs.forEach(a=>{const o=document.createElement('option');o.value=a.name;o.textContent=a.name;if(a.name===S.c.priceAttr)o.selected=true;sel.appendChild(o);});const nt=document.getElementById('pd-notice'),tx=document.getElementById('pd-text');if(d){tx.innerHTML=`Detectado: <strong>${S.c.priceAttr}</strong>. Ajustalo si no es correcto.`;nt.className='nt nts';}else{tx.innerHTML='No se detectó automáticamente. Seleccionalo manualmente.';nt.className='nt ntw';}}
-function onPAC(){S.c.priceAttr=document.getElementById('price-attr-sel').value;initElast();updateSim();}
-function renderCRes(){const{utils,imp}=S.c.res,attrs=S.c.attrs;const ic=document.getElementById('cbc-ic');ic.innerHTML='';[...attrs].sort((a,b)=>imp[b.name]-imp[a.name]).forEach((attr,i)=>{const p=imp[attr.name];const row=document.createElement('div');row.className='rbr';row.innerHTML=`<div class="rl2">${attr.name}</div><div class="rbw"><div class="rbf" style="width:${p}%;background:${COLS[i%COLS.length]}">${p>8?p.toFixed(1)+'%':''}</div></div><div class="rv">${p.toFixed(1)}%</div>`;ic.appendChild(row);});const tr=document.createElement('div');tr.className='rbr';tr.innerHTML=`<div class="rl2" style="font-weight:600;color:var(--ink)">TOTAL</div><div class="rbw"><div class="rbf" style="width:100%;background:#1a1714">100%</div></div><div class="rv" style="font-weight:600">100%</div>`;ic.appendChild(tr);const uc=document.getElementById('cbc-uc');uc.innerHTML='';attrs.forEach((attr,ai)=>{const sec=document.createElement('div');sec.className='isec';sec.innerHTML=`<div class="ititle">${attr.name}</div>`;const us=attr.levels.map(l=>utils[attr.name][l]),mn=Math.min(...us),rn=Math.max(...us)-mn||1;attr.levels.forEach(l=>{const u=utils[attr.name][l],p=(u-mn)/rn*100;const row=document.createElement('div');row.className='rbr';row.innerHTML=`<div class="rl2" style="font-size:.73rem">${l}</div><div class="rbw"><div class="rbf" style="width:${Math.max(2,p)}%;background:${COLS[ai%COLS.length]}">${p>15?u.toFixed(2):''}</div></div><div class="rv">${u.toFixed(2)}</div>`;sec.appendChild(row);});uc.appendChild(sec);});}
-function calcShare(profiles){const{utils}=S.c.res;const tu=profiles.map(prof=>{if(!prof)return 0;return S.c.attrs.reduce((s,a)=>{const u=utils[a.name][prof[a.name]];return s+(isNaN(u)?0:u);},0);});const ex=tu.map(u=>Math.exp(u)),se=ex.reduce((s,v)=>s+v,0);return ex.map(e=>se>0?e/se*100:0);}
-function initSim(){const attrs=S.c.attrs;const g=document.getElementById('sim-prods');g.innerHTML='';const pn=['Producto A','Producto B','Producto C','Producto D'];for(let p=0;p<4;p++){const div=document.createElement('div');div.className='sim-prod';const sl=attrs.map((a,ai)=>`<div class="fg"><label>${a.name}</label><select id="sp-${p}-${ai}" onchange="updateSim()">${a.levels.map((l,li)=>`<option ${li===0?'selected':''}>${l}</option>`).join('')}</select></div>`).join('');div.innerHTML=`<div class="sim-prod-head" style="background:${PCOLS[p]}">${pn[p]}<span style="opacity:.7;font-size:.58rem">Producto ${p+1}</span></div><div class="sim-prod-body">${sl}</div><div class="sim-share-row"><div class="sim-share-label">Share</div><div class="sim-share-bar"><div class="sim-share-fill" id="sbar-${p}" style="background:${PCOLS[p]};width:20%"></div></div><div class="sim-share-val" id="sval-${p}">—</div></div>`;g.appendChild(div);}updateSim();}
-function updateSim(){if(!S.c.res)return;const attrs=S.c.attrs;const profiles=Array.from({length:4},(_,p)=>{const prof={};attrs.forEach((a,ai)=>{const sel=document.getElementById(`sp-${p}-${ai}`);if(sel)prof[a.name]=sel.value;});return prof;});const sh=calcShare([...profiles,null]);for(let p=0;p<4;p++){const s=sh[p].toFixed(1);document.getElementById('sbar-'+p).style.width=Math.max(2,sh[p])+'%';document.getElementById('sbar-'+p).textContent=sh[p]>8?s+'%':'';document.getElementById('sval-'+p).textContent=s+'%';}const ns=sh[4].toFixed(1);document.getElementById('sbar-none').style.width=Math.max(2,sh[4])+'%';document.getElementById('sval-none').textContent=ns+'%';}
-function initElast(){const attrs=S.c.attrs,pa=S.c.priceAttr;const npa=attrs.filter(a=>a.name!==pa);const cfg=document.getElementById('elast-cfg');cfg.innerHTML='';npa.forEach(a=>{const div=document.createElement('div');div.className='fg';div.innerHTML=`<label>${a.name}</label><select id="eb-${a.name.replace(/[^\w]/g,'_')}" onchange="renderElast()">${a.levels.map((l,i)=>`<option ${i===0?'selected':''}>${l}</option>`).join('')}</select>`;cfg.appendChild(div);});renderElast();}
-function renderElast(){if(!S.c.res)return;const attrs=S.c.attrs,pa=S.c.priceAttr;const pao=attrs.find(a=>a.name===pa);if(!pao)return;const npa=attrs.filter(a=>a.name!==pa);const base={};npa.forEach(a=>{const sel=document.getElementById('eb-'+a.name.replace(/[^\w]/g,'_'));if(sel)base[a.name]=sel.value;});const psh=pao.levels.map(lv=>{const prof={...base,[pa]:lv};return calcShare([prof,null])[0];});const mx=Math.max(...psh)||1;const gc=['#1a7a4a','#2563a8','#7c3aed','#c8430a','#d97706'];const container=document.getElementById('elast-curve');container.innerHTML='';pao.levels.forEach((lv,i)=>{const s=psh[i];const dt=i===0?null:(psh[i]-psh[i-1])/psh[i-1]*100;const row=document.createElement('div');row.className='elast-row';row.innerHTML=`<div class="elast-label">${lv}</div><div class="elast-bar"><div class="elast-fill" style="width:${s/mx*100}%;background:${gc[Math.min(i,gc.length-1)]}">${s>5?s.toFixed(1)+'%':''}</div></div><div class="elast-val">${s.toFixed(1)}%</div><div class="elast-delta" style="color:${i===0?'var(--ink3)':dt<0?'var(--r)':'var(--g)'}">${i===0?'—':(dt<0?'▼':'▲')+Math.abs(dt).toFixed(1)+'%'}</div>`;container.appendChild(row);});const leg=document.createElement('div');leg.style.cssText='display:flex;gap:1.2rem;margin-top:.45rem;font-size:.7rem;color:var(--ink3)';leg.innerHTML='<span>Share = probabilidad de elección vs. "Ninguno"</span><span style="color:var(--g)">▲ Sube</span><span style="color:var(--r)">▼ Baja vs. nivel anterior</span>';container.appendChild(leg);const td=psh[0]-psh[psh.length-1];const lastUp=psh[psh.length-1]>psh[0];document.getElementById('elast-ins-txt').innerHTML=lastUp?`El share sube al avanzar en "<strong>${pa}</strong>". Verificá el orden de los niveles.`:`Al pasar del nivel más bajo al más alto de "<strong>${pa}</strong>", el share cae aprox. <strong>${td.toFixed(1)} pp</strong>. Demanda ${td>10?'<strong>elástica</strong> (sensible al precio)':'relativamente <strong>inelástica</strong>'}.`;}
-// ══════════════════════════════════════════════════
-// MOTOR DE IA — GEMINI + FALLBACK AUTOMÁTICO
-// ══════════════════════════════════════════════════
-let _geminiKey = '';
-
-function onKeyInput(){
-  const v = document.getElementById('gemini-key').value.trim();
-  const badge = document.getElementById('api-status-badge');
-  if(v.length > 10){
-    badge.textContent = 'Key ingresada — guardá para activar';
-    badge.className = 'api-status api-empty';
-  } else {
-    badge.textContent = 'Sin key — se usará análisis automático';
-    badge.className = 'api-status api-empty';
-  }
-}
-
-function saveKey(){
-  const v = document.getElementById('gemini-key').value.trim();
-  const badge = document.getElementById('api-status-badge');
-  if(!v || v.length < 10){ alert('Ingresá una API key válida.'); return; }
-  _geminiKey = v;
-  badge.textContent = '✓ Key guardada — hacé clic en "Probar conexión"';
-  badge.className = 'api-status api-empty';
-  badge.style.cssText = '';
-}
-
-async function testKey(){
-  const badge = document.getElementById('api-status-badge');
-  if(!_geminiKey){
-    const v = document.getElementById('gemini-key').value.trim();
-    if(!v){ alert('Primero ingresá tu API key y hacé clic en Guardar.'); return; }
-    _geminiKey = v;
-  }
-  badge.textContent = '⟳ Probando conexión con OpenAI…';
-  badge.className = 'api-status api-empty';
-  badge.style.cssText = '';
-  try {
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json', 'Authorization':'Bearer '+_geminiKey},
-      body: JSON.stringify({model:'gpt-4o-mini', max_tokens:5, messages:[{role:'user',content:'ok'}]})
-    });
-    const d = await res.json();
-    if(d.error){
-      badge.textContent = '✗ ' + d.error.message;
-      badge.style.cssText = 'background:#2d0a0a;border:1px solid #7f1d1d;color:#f87171;font-family:Geist Mono,monospace;font-size:.6rem;padding:.22rem .55rem;border-radius:3px;white-space:normal;max-width:520px;';
-    } else if(d.choices?.[0]?.message?.content){
-      badge.textContent = '✓ Key activa — GPT-4o-mini habilitado';
-      badge.className = 'api-status api-ok';
-      badge.style.cssText = '';
-    } else {
-      badge.textContent = '⚠ Respuesta inesperada. Revisá la key.';
-      badge.style.cssText = 'background:#1c1307;border:1px solid #92400e;color:#fbbf24;font-family:Geist Mono,monospace;font-size:.6rem;padding:.22rem .55rem;border-radius:3px;';
-    }
-  } catch(e){
-    badge.textContent = '✗ Error de red: ' + e.message;
-    badge.style.cssText = 'background:#2d0a0a;border:1px solid #7f1d1d;color:#f87171;font-family:Geist Mono,monospace;font-size:.6rem;padding:.22rem .55rem;border-radius:3px;';
-  }
-}
-
-// Motor central — OpenAI GPT-4o-mini + fallback automático por reglas
-async function callAI(prompt, fallbackFn) {
-  if(!_geminiKey) return {ok:false, text: fallbackFn()};
-
-  const setBadge = (txt, cls='', css='') => {
-    const b = document.getElementById('api-status-badge');
-    if(!b) return;
-    b.textContent = txt;
-    b.className = 'api-status' + (cls ? ' '+cls : '');
-    b.style.cssText = css;
-  };
-
-  setBadge('⟳ Consultando GPT-4o-mini…', 'api-empty');
-  try {
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json', 'Authorization':'Bearer '+_geminiKey},
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        max_tokens: 900,
-        temperature: 0.75,
-        messages: [{role:'user', content: prompt}]
-      })
-    });
-    const d = await res.json();
-
-    if(d.error){
-      setBadge('✗ ' + d.error.message, '', 'background:#2d0a0a;border:1px solid #7f1d1d;color:#f87171;font-family:Geist Mono,monospace;font-size:.6rem;padding:.22rem .55rem;border-radius:3px;white-space:normal;max-width:520px;');
-      return {ok:false, text: fallbackFn()};
-    }
-
-    const text = d.choices?.[0]?.message?.content?.trim();
-    if(text){
-      setBadge('✓ Key activa — GPT-4o-mini habilitado', 'api-ok');
-      return {ok:true, text};
-    }
-
-    setBadge('⚠ Respuesta vacía. Usando análisis automático.', '', 'background:#1c1307;border:1px solid #92400e;color:#fbbf24;font-family:Geist Mono,monospace;font-size:.6rem;padding:.22rem .55rem;border-radius:3px;');
-    return {ok:false, text: fallbackFn()};
-
-  } catch(e) {
-    setBadge('✗ Error de red: '+e.message, '', 'background:#2d0a0a;border:1px solid #7f1d1d;color:#f87171;font-family:Geist Mono,monospace;font-size:.6rem;padding:.22rem .55rem;border-radius:3px;');
-    return {ok:false, text: fallbackFn()};
-  }
-}
-
-function showAI(elId, result) {
-  const el = document.getElementById(elId);
-  if(!el) return;
-  const tag = result.ok
-    ? '<span style="font-family:\'Geist Mono\',monospace;font-size:.58rem;background:#052e16;border:1px solid #166534;color:#4ade80;padding:.12rem .4rem;border-radius:3px;margin-right:.5rem;vertical-align:middle">✦ GPT</span>'
-    : '<span style="font-family:\'Geist Mono\',monospace;font-size:.58rem;background:#1c1917;border:1px solid #3a3530;color:#a09888;padding:.12rem .4rem;border-radius:3px;margin-right:.5rem;vertical-align:middle" title="Análisis generado automáticamente por reglas. Ingresá una API key de Gemini para conclusiones enriquecidas con IA.">⚙ AUTO</span>';
-  el.innerHTML = `<div class="aitxt">${tag}${result.text}</div>`;
-}
-
-// ── FALLBACKS AUTOMÁTICOS POR MÓDULO ──────────────
-
-function fallbackCBC() {
-  const{utils,imp}=S.c.res, attrs=S.c.attrs;
-  const srt=[...attrs].sort((a,b)=>imp[b.name]-imp[a.name]);
-  const top=srt[0], sec=srt[1]||{name:'',levels:[]};
-  const topBest=top.levels.reduce((b,l)=>utils[top.name][l]>utils[top.name][b]?l:b, top.levels[0]);
-  const topWorst=top.levels.reduce((b,l)=>utils[top.name][l]<utils[top.name][b]?l:b, top.levels[0]);
-  return `El análisis revela que <strong>${top.name}</strong> es el atributo que más influye en la decisión de compra (${imp[top.name].toFixed(1)}%), siendo el nivel "<em>${topBest}</em>" el más valorado y "<em>${topWorst}</em>" el que genera mayor rechazo. Esto indica que los consumidores priorizan este factor por encima del resto al momento de elegir.\n\n${sec.name?`El atributo <strong>${sec.name}</strong> ocupa el segundo lugar en importancia (${imp[sec.name].toFixed(1)}%), lo que sugiere que también representa un criterio relevante en la evaluación del producto. Los atributos con menor peso relativo pueden ser vistos como diferenciadores secundarios o de soporte en la propuesta de valor.`:'Los atributos restantes complementan la propuesta de valor sin ser determinantes en la elección final.'}\n\nEstrategicamente, se recomienda priorizar el posicionamiento del producto en torno a <strong>${top.name}</strong>, asegurando que el nivel "<em>${topBest}</em>" sea destacado en la comunicación y en el diseño de la oferta. Minimizar las configuraciones asociadas al nivel "<em>${topWorst}</em>" contribuiría a mejorar la preferencia general del producto.`;
-}
-
-function fallbackMaxDiff() {
-  const{ranked}=S.m.res;
-  const top3=ranked.slice(0,3).map(r=>r.it).join(', ');
-  const bot3=ranked.slice(-3).map(r=>r.it).join(', ');
-  const mid=ranked.filter(r=>r.score>=30&&r.score<60).map(r=>r.it).slice(0,2).join(' y ');
-  return `El ranking MaxDiff revela que los consumidores asignan mayor importancia a <strong>${top3}</strong>, lo que indica que estos aspectos son determinantes en la evaluación del producto o servicio. Su presencia sólida en la propuesta de valor es clave para conectar con las prioridades reales del segmento encuestado.\n\n${mid?`Los ítems de importancia media como <strong>${mid}</strong> no deben descartarse; representan diferenciadores secundarios que pueden inclinar la decisión cuando los atributos principales están parejos entre competidores.`:''} Los ítems con menor puntaje (<strong>${bot3}</strong>) generan escaso impacto en la decisión, por lo que su inclusión en la comunicación debe ser selectiva y solo como argumento de soporte.\n\nSe recomienda estructurar la propuesta de valor alrededor de los ítems de alta importancia, incorporándolos explícitamente en los mensajes clave de marketing. La segmentación posterior con los puntajes individuales podría revelar grupos con perfiles de preferencia distintos, abriendo oportunidades de personalización.`;
-}
-
-function fallbackVW() {
-  const{PMC,PME,OPP,IPP}=S.vw.res;
-  const prod=document.getElementById('vw-product')?.value||'el producto';
-  const rango=(PME.price-PMC.price).toFixed(1);
-  return `El análisis Van Westendorp para <strong>${prod}</strong> define un rango de precios psicológicamente aceptable entre <strong>${PMC.price.toFixed(1)}</strong> y <strong>${PME.price.toFixed(1)}</strong>, con una amplitud de ${rango} unidades monetarias. Por debajo del límite inferior, la percepción de baja calidad puede perjudicar la imagen del producto; por encima del superior, la mayoría de consumidores rechazaría la compra.\n\nEl precio óptimo estimado se ubica en <strong>${OPP.price.toFixed(1)}</strong>, punto donde se minimiza simultáneamente el rechazo por precio excesivo y por precio demasiado bajo. El precio de indiferencia —en torno a <strong>${IPP.price.toFixed(1)}</strong>— marca el umbral donde las percepciones de "barato" y "caro" se equilibran, constituyendo una referencia útil para estrategias de anclaje de precio.\n\nPara el lanzamiento, se recomienda posicionarse entre el precio óptimo y el de indiferencia, comunicando activamente los atributos de calidad que justifiquen el nivel de precio elegido. Un precio cercano al OPP maximiza la aceptación, mientras que acercarse al IPP puede ser adecuado si se busca proyectar una imagen de mayor valor.`;
-}
-
-function fallbackNMS() {
-  const{PMC,PME,OPP,maxDemand,maxRev}=S.nms.res;
-  const prod=document.getElementById('nms-product')?.value||'el producto';
-  return `El PSM para <strong>${prod}</strong> establece un rango aceptable entre ${PMC.price.toFixed(1)} y ${PME.price.toFixed(1)}, con precio óptimo en ${OPP.price.toFixed(1)}. La extensión Newton-Miller-Smith complementa este análisis conectando las percepciones de precio con la intención de compra declarada, ofreciendo una aproximación a la curva de demanda real del mercado.\n\nEl precio de máximo trial —<strong>${maxDemand.price.toFixed(1)}</strong>— maximiza el porcentaje de consumidores dispuestos a comprar (${maxDemand.demand_pct.toFixed(1)}%), siendo ideal para estrategias de penetración o lanzamiento donde el volumen y el reconocimiento de marca son prioritarios. El precio de máximo revenue —<strong>${maxRev.price.toFixed(1)}</strong>— optimiza los ingresos estimados y es preferible cuando la rentabilidad por unidad es el objetivo principal.\n\nLa elección entre ambos puntos depende del momento estratégico: en fases de introducción, priorizar el trial; en fases de madurez o con estructura de costos fija, orientarse al revenue máximo. Se recomienda evaluar ambos escenarios con los datos reales de costo marginal para obtener la recomendación de precio final.`;
-}
-
-// ── FUNCIONES genXXAI ─────────────────────────────
-
-async function genCAI(){
-  const{utils,imp}=S.c.res,attrs=S.c.attrs,n=S.c.data.length;
-  const srt=[...attrs].sort((a,b)=>imp[b.name]-imp[a.name]);
-  const isum=srt.map(a=>`${a.name}: ${imp[a.name].toFixed(1)}%`).join(', ');
-  const top=srt[0],tl=top.levels.map(l=>({l,u:utils[top.name][l]})).sort((a,b)=>b.u-a.u);
-  const prompt=`Eres experto en investigación de mercados y análisis conjunto CBC. Estudio CBC con ${n} encuestados. Atributos: ${attrs.map(a=>a.name).join(', ')}. IMPORTANCIAS (100%): ${isum}. Atributo dominante: ${top.name} (${imp[top.name].toFixed(1)}%) — nivel preferido: "${tl[0].l}", rechazado: "${tl[tl.length-1].l}". Redactá 3 párrafos breves (máx 80 palabras c/u) en español, tono profesional para estudiantes de marketing: 1. Atributo dominante e implicación estratégica. 2. Insights de atributos secundarios y trade-offs. 3. Recomendación concreta de producto o pricing. No uses listas. No repitas números exactos.`;
-  const result = await callAI(prompt, fallbackCBC);
-  showAI('cai', result);
-}
-
-async function genMAI(){
-  const{ranked}=S.m.res,items=S.m.items,n=S.m.data.length;
-  const t3=ranked.slice(0,3).map(r=>`${r.it} (${r.score.toFixed(0)})`).join(', ');
-  const b3=ranked.slice(-3).map(r=>`${r.it} (${r.score.toFixed(0)})`).join(', ');
-  const prompt=`Eres experto en investigación de mercados y BWS. MaxDiff con ${n} encuestados, ${items.length} ítems. Top 3: ${t3}. Menos importantes: ${b3}. Redactá 3 párrafos breves (máx 80 palabras c/u) en español: 1. Qué revela el ranking sobre prioridades del consumidor. 2. Implicaciones de ítems medios/bajos. 3. Recomendación estratégica para propuesta de valor. No repitas números exactos.`;
-  const result = await callAI(prompt, fallbackMaxDiff);
-  showAI('mai', result);
-}
-
-function buildCScript(){const attrs=S.c.attrs;const ll=attrs.map(a=>`  ${a.name.replace(/[^\w]/g,'_')} = c(${a.levels.map(l=>`"${l}"`).join(', ')})`).join(',\n');const sc=`# Kit de Investigación de Mercados — CBC Conjoint\n# Script generado automáticamente v3.0\n\nlibrary(mlogit); library(tidyverse); library(readxl)\n\natributos <- list(\n${ll}\n)\n\n# Cargar datos\ndatos <- read_excel("plantilla_cbc_conjoint.xlsx", sheet="Respuestas")\n\n# Importancias (suman 100%)\n# Ver documentación completa en el app\n`;document.getElementById('csp').textContent=sc;window._cs=sc;}
-function expC(){const{utils,imp}=S.c.res,attrs=S.c.attrs,wb=XLSX.utils.book_new();const ir=[['Atributo','Importancia (%)'],...[...attrs].sort((a,b)=>imp[b.name]-imp[a.name]).map(a=>[a.name,imp[a.name].toFixed(1)]),['TOTAL',Object.values(imp).reduce((s,v)=>s+v,0).toFixed(1)]];const wi=XLSX.utils.aoa_to_sheet(ir);XLSX.utils.book_append_sheet(wb,wi,'Importancias');const ur=[['Atributo','Nivel','Utilidad']];attrs.forEach(a=>{const s=[...a.levels].sort((x,y)=>utils[a.name][y]-utils[a.name][x]);s.forEach(l=>ur.push([a.name,l,utils[a.name][l].toFixed(4)]));ur.push(['','','']);});const wu=XLSX.utils.aoa_to_sheet(ur);XLSX.utils.book_append_sheet(wb,wu,'Utilidades');XLSX.writeFile(wb,'resultados_cbc_conjoint.xlsx');}
-
-// ══════════════════════════════════════════════════
-// MAXDIFF (igual que v2.1)
-// ══════════════════════════════════════════════════
-function loadMEx(){S.m.items=['Velocidad de entrega','Variedad de restaurantes','Precio del delivery','Seguimiento en tiempo real','Atención al cliente 24/7','Descuentos y promociones','Facilidad de uso de la app','Calidad de los alimentos','Opciones de pago','Reseñas verificadas de usuarios','Programa de puntos / fidelidad','Empaque ecológico'];renderMI();}
-function addMI(){if(S.m.items.length>=30){alert('Máximo 30.');return;}S.m.items.push('');renderMI();}
-function rmMI(i){if(S.m.items.length<=5){alert('Mínimo 5.');return;}S.m.items.splice(i,1);renderMI();}
-function renderMI(){const c=document.getElementById('md-ic');c.innerHTML='';S.m.items.forEach((it,i)=>{const r=document.createElement('div');r.style.cssText='display:flex;gap:.45rem;align-items:center;margin-bottom:.38rem';r.innerHTML=`<div style="width:26px;height:26px;background:var(--b);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:.68rem;flex-shrink:0">${i+1}</div><input type="text" value="${it}" placeholder="Ítem ${i+1}" style="flex:1" oninput="S.m.items[${i}]=this.value"><button class="brm" onclick="rmMI(${i})">✕</button>`;c.appendChild(r);});}
-function setMVer(n,el){S.m.vers=n;document.querySelectorAll('#mod-maxdiff .vp .pill').forEach(p=>p.classList.remove('act'));el.classList.add('act');}
-function genMDesign(){const items=S.m.items;if(items.length<5){alert('Mínimo 5.');return;}for(let it of items){if(!it.trim()){alert('Falta texto en ítem.');return;}}const K=parseInt(document.getElementById('mips').value),N=items.length,V=S.m.vers;const ns=Math.max(8,Math.ceil(N*4/K));S.m.design=[];for(let v=0;v<V;v++){const r=rng(111+v*77);S.m.design.push(buildMD(N,K,ns,r));}S.m.cv=0;S.m.cp=0;renderMVS();renderMC();gMS(2);}
-function buildMD(N,K,ns,r){const sets=[],app=new Array(N).fill(0);for(let s=0;s<ns;s++){const w=Array.from({length:N},(_,i)=>({i,w:(1/(app[i]+1))*(0.5+r())}));w.sort((a,b)=>b.w-a.w);const ch=w.slice(0,K).map(x=>x.i).sort(()=>r()-0.5);ch.forEach(i=>app[i]++);sets.push(ch);}return sets;}
-function renderMVS(){const sel=document.getElementById('md-vs');sel.innerHTML='';for(let v=0;v<S.m.vers;v++){const p=document.createElement('div');p.className='pill pb'+(v===0?' act':'');p.textContent='Versión '+(v+1);const vv=v;p.onclick=()=>{S.m.cv=vv;S.m.cp=0;document.querySelectorAll('#md-vs .pill').forEach(x=>x.classList.remove('act'));p.classList.add('act');renderMC();};sel.appendChild(p);}}
-function renderMC(){const v=S.m.cv,t=S.m.cp,d=S.m.design[v],ns=d.length,items=S.m.items;document.getElementById('mpi').textContent=`Tarjeta ${t+1} de ${ns}`;document.getElementById('mprev').disabled=t===0;document.getElementById('mnext').disabled=t===ns-1;document.getElementById('md-cd').innerHTML=`<div class="mdc"><div class="mdh">TARJETA ${t+1} — Más y menos importante <span style="font-size:.58rem;opacity:.8">V${v+1}</span></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem;padding:.45rem .65rem;background:#f0f4fa;border-bottom:1px solid var(--border)"><div style="font-family:'Geist Mono',monospace;font-size:.58rem;color:var(--g)">✓ MÁS IMPORTANTE</div><div style="font-family:'Geist Mono',monospace;font-size:.58rem;color:var(--r);text-align:right">✕ MENOS IMPORTANTE</div></div><div class="mil">${d[t].map(idx=>`<div class="mir"><span class="mix">${idx+1}</span><span>${items[idx]}</span><span class="mbl">☐ MÁS</span><span class="mwl">☐ MENOS</span></div>`).join('')}</div></div>`;}
-function chMP(d){const ns=S.m.design[S.m.cv].length;S.m.cp=Math.max(0,Math.min(ns-1,S.m.cp+d));renderMC();}
-function dlMTpl(){const wb=XLSX.utils.book_new(),V=S.m.vers,d=S.m.design,items=S.m.items,ns=d[0].length;const wi=XLSX.utils.aoa_to_sheet([['INSTRUCCIONES MaxDiff'],[''],['Cada fila = 1 encuestado. t[N]_mejor y t[N]_peor: número de ítem (1 a '+items.length+').'],[''],['ÍTEMS:',...items.map((it,i)=>['  '+(i+1)+'. '+it])]]);wi['!cols']=[{wch:80}];XLSX.utils.book_append_sheet(wb,wi,'Instrucciones');const tc=[];for(let t=1;t<=ns;t++){tc.push('t'+t+'_mejor','t'+t+'_peor');}const hd=['id_encuestado','version',...tc];const wr=XLSX.utils.aoa_to_sheet([hd,...Array.from({length:5},(_,i)=>[i+1,(i%V)+1,...Array(tc.length).fill('')])]);wr['!cols']=[{wch:14},{wch:9},...tc.map(()=>({wch:10}))];XLSX.utils.book_append_sheet(wb,wr,'Respuestas');for(let v=0;v<V;v++){const rows=[['TARJETA','POS','N° ÍTEM','ÍTEM']];d[v].forEach((set,ti)=>{set.forEach((idx,pos)=>rows.push([ti+1,pos+1,idx+1,items[idx]]));rows.push(['','','','']);});const wd=XLSX.utils.aoa_to_sheet(rows);wd['!cols']=[{wch:10},{wch:8},{wch:10},{wch:45}];XLSX.utils.book_append_sheet(wb,wd,'Diseño_V'+(v+1));}XLSX.writeFile(wb,'plantilla_maxdiff.xlsx');}
-function hMDrop(e){e.preventDefault();const f=e.dataTransfer.files[0];if(f)prMFile(f);}
-function hMFile(e){const f=e.target.files[0];if(f)prMFile(f);}
-function prMFile(file){const r=new FileReader();r.onload=e=>{try{const wb=XLSX.read(e.target.result,{type:'binary'});S.m.data=XLSX.utils.sheet_to_json(wb.Sheets['Respuestas']||wb.Sheets[wb.SheetNames[0]]);document.getElementById('mfs').classList.remove('hid');document.getElementById('mfst').textContent=`${file.name} — ${S.m.data.length} encuestados.`;document.getElementById('mab').disabled=false;}catch{alert('Error.');}};r.readAsBinaryString(file);}
-function loadMDemo(){const N=80,items=S.m.items,r=rng(555),tu=items.map((_,i)=>(items.length-i)*(0.8+r()*0.4));S.m.data=Array.from({length:N},(_,ei)=>{const row={id_encuestado:ei+1,version:(ei%S.m.vers)+1};S.m.design[ei%S.m.vers].forEach((set,t)=>{const us=set.map(idx=>tu[idx]*(0.7+r()*0.6));row['t'+(t+1)+'_mejor']=set[us.indexOf(Math.max(...us))]+1;row['t'+(t+1)+'_peor']=set[us.indexOf(Math.min(...us))]+1;});return row;});document.getElementById('mfs').classList.remove('hid');document.getElementById('mfst').textContent=`Datos demo — ${N} encuestados.`;document.getElementById('mab').disabled=false;}
-function analyzeM(){
-  const data=S.m.data,items=S.m.items,N=items.length;
-  const bc=new Array(N).fill(0),wc=new Array(N).fill(0),ap=new Array(N).fill(0);
-
-  // Puntajes individuales por encuestado (normalizados 0-100 dentro de cada uno)
-  const indivScores=data.map(row=>{
-    const v=Math.min((row.version||1)-1,S.m.design.length-1);
-    const bI=new Array(N).fill(0),wI=new Array(N).fill(0);
-    S.m.design[v].forEach((set,t)=>{
-      set.forEach(idx=>ap[idx]++);
-      const best=row['t'+(t+1)+'_mejor'],worst=row['t'+(t+1)+'_peor'];
-      if(best&&best>=1&&best<=N){bc[best-1]++;bI[best-1]++;}
-      if(worst&&worst>=1&&worst<=N){wc[worst-1]++;wI[worst-1]++;}
-    });
-    const net=items.map((_,i)=>bI[i]-wI[i]);
-    const mn=Math.min(...net),mx=Math.max(...net),rn=mx-mn||1;
-    return{id:row.id_encuestado,version:row.version||1,net,norm:net.map(s=>Math.round((s-mn)/rn*100*10)/10)};
-  });
-
-  // Puntajes netos agregados
-  const net=items.map((_,i)=>bc[i]-wc[i]);
-
-  // ── Normalización proporcional: suma exactamente 100% ──
-  // 1. Desplazar a positivos (sumar el mínimo si hay negativos)
-  const minNet=Math.min(...net);
-  const shifted=net.map(s=>s - minNet); // todos >= 0
-  const totalShifted=shifted.reduce((a,b)=>a+b,0)||1;
-
-  // 2. Calcular porcentaje proporcional
-  let runningSum=0;
-  const scores=shifted.map((s,i)=>{
-    if(i===items.length-1){
-      // último ítem ajusta el residuo para suma exacta
-      return Math.round((100-runningSum)*10)/10;
-    }
-    const pct=Math.round(s/totalShifted*1000)/10;
-    runningSum+=pct;
-    return pct;
-  });
-
-  const ranked=items.map((it,i)=>({it,rank:0,b:bc[i],w:wc[i],net:net[i],score:scores[i]}))
-    .sort((a,b)=>b.net-a.net);
-  ranked.forEach((r,i)=>r.rank=i+1);
-
-  S.m.res={ranked,indivScores};
-  renderMRes();
-  gMS(4);
-  genMAI();
-}
-function renderMRes(){
-  const{ranked}=S.m.res;
-  const total=ranked.reduce((s,r)=>s+r.score,0);
-
-  // Gráfico de barras con %
-  const rc=document.getElementById('md-rc');rc.innerHTML='';
-  // Zonas relativas: top tercio=verde, medio=azul, bajo=rojo
-  const sorted=[...ranked].sort((a,b)=>b.score-a.score);
-  const topThird=sorted[Math.floor(sorted.length/3)]?.score||0;
-  const botThird=sorted[Math.floor(sorted.length*2/3)]?.score||100;
-  const gc=s=>s>=topThird?'#1a7a4a':s>=botThird?'#2563a8':'#c8430a';
-
-  ranked.forEach(r=>{
-    const row=document.createElement('div');row.className='rbr';const col=gc(r.score);
-    row.innerHTML=`<div class="rl2" style="width:185px;font-size:.75rem"><span style="font-family:'Geist Mono',monospace;color:var(--ink3);font-size:.62rem">#${r.rank} </span>${r.it}</div>
-    <div class="rbw"><div class="rbf" style="width:${Math.max(0.5,r.score)}%;background:${col}">${r.score>4?r.score.toFixed(1)+'%':''}</div></div>
-    <div class="rv">${r.score.toFixed(1)}%</div>`;
-    rc.appendChild(row);
-  });
-  // Fila TOTAL
-  const tr=document.createElement('div');tr.className='rbr';
-  tr.innerHTML=`<div class="rl2" style="font-weight:600;color:var(--ink);width:185px">TOTAL</div>
-    <div class="rbw"><div class="rbf" style="width:100%;background:#1a1714">100%</div></div>
-    <div class="rv" style="font-weight:600">${total.toFixed(1)}%</div>`;
-  rc.appendChild(tr);
-
-  // Tabla estadísticas — columna renombrada a %
-  const st=document.getElementById('md-st');
-  const tbl=document.createElement('table');tbl.style.cssText='width:100%;border-collapse:collapse;font-size:.8rem';
-  tbl.innerHTML=`<thead><tr style="background:var(--surface)">
-    <th style="text-align:left;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">#</th>
-    <th style="text-align:left;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">ÍTEM</th>
-    <th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--g)">MÁS</th>
-    <th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--r)">MENOS</th>
-    <th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">NETO</th>
-    <th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">% IMPORTANCIA</th>
-  </tr></thead><tbody>
-  ${ranked.map(r=>`<tr style="border-bottom:1px solid var(--border)">
-    <td style="padding:.42rem .7rem;font-family:'Geist Mono',monospace;font-size:.68rem;color:var(--ink3)">${r.rank}</td>
-    <td style="padding:.42rem .7rem">${r.it}</td>
-    <td style="padding:.42rem .7rem;text-align:center;color:var(--g);font-weight:500">${r.b}</td>
-    <td style="padding:.42rem .7rem;text-align:center;color:var(--r)">${r.w}</td>
-    <td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace;color:${r.net>=0?'var(--g)':'var(--r)'}">${r.net>0?'+':''}${r.net}</td>
-    <td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace;font-weight:600">${r.score.toFixed(1)}%</td>
-  </tr>`).join('')}
-  <tr style="border-top:2px solid var(--border);background:var(--surface)">
-    <td colspan="5" style="padding:.42rem .7rem;font-weight:600;color:var(--ink);font-size:.8rem">TOTAL</td>
-    <td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace;font-weight:700">${total.toFixed(1)}%</td>
-  </tr>
-  </tbody>`;
-  st.innerHTML='';st.appendChild(tbl);
-}
-function expM(){const{ranked}=S.m.res,wb=XLSX.utils.book_new();const total=ranked.reduce((s,r)=>s+r.score,0);const rr=[['Rank','Ítem','Veces más impt.','Veces menos impt.','Neto','% Importancia'],...ranked.map(r=>[r.rank,r.it,r.b,r.w,r.net,r.score.toFixed(1)]),['','TOTAL','','','',total.toFixed(1)]];const wr=XLSX.utils.aoa_to_sheet(rr);XLSX.utils.book_append_sheet(wb,wr,'Ranking MaxDiff');XLSX.writeFile(wb,'resultados_maxdiff.xlsx');}
-function expMInd(){const{ranked,indivScores}=S.m.res,items=S.m.items,wb=XLSX.utils.book_new();const hd=['id_encuestado','version',...items.map((it,i)=>`score_${i+1}`)];const rows=indivScores.map(r=>[r.id,r.version,...r.norm]);const ws=XLSX.utils.aoa_to_sheet([hd,...rows]);XLSX.utils.book_append_sheet(wb,ws,'Scores individuales');const hd2=['id_encuestado','version',...items.map((it,i)=>`net_${i+1}`)];const rows2=indivScores.map(r=>[r.id,r.version,...r.net]);const ws2=XLSX.utils.aoa_to_sheet([hd2,...rows2]);XLSX.utils.book_append_sheet(wb,ws2,'Puntajes netos');const ref=[['Ref.'],['Score 0-100 normalizado por encuestado'],...items.map((it,i)=>[`${i+1}. ${it}`])];const ws3=XLSX.utils.aoa_to_sheet(ref);XLSX.utils.book_append_sheet(wb,ws3,'Referencia ítems');XLSX.writeFile(wb,'scores_maxdiff_individual.xlsx');}
-
-// ══════════════════════════════════════════════════
-// SCRIPT COPY/DOWNLOAD
-// ══════════════════════════════════════════════════
-function cpSc(mod){const sc=mod==='c'?window._cs:mod==='m'?window._ms:'';if(!sc)return;navigator.clipboard.writeText(sc).then(()=>{const btn=document.getElementById(mod==='c'?'ccpb':'mcpb');btn.textContent='✓ Copiado';btn.classList.add('ok');setTimeout(()=>{btn.textContent='⎘ Copiar';btn.classList.remove('ok');},2500);});}
-function dlSc(mod){const sc=mod==='c'?window._cs:window._ms,fn=mod==='c'?'script_cbc.R':'script_maxdiff.R';if(!sc)return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([sc],{type:'text/plain'}));a.download=fn;a.click();}
-
-// ══════════════════════════════════════════════════
-// VAN WESTENDORP PSM — ANÁLISIS
-// ══════════════════════════════════════════════════
-function hVWDrop(e){e.preventDefault();const f=e.dataTransfer.files[0];if(f)prVWFile(f);}
-function hVWFile(e){const f=e.target.files[0];if(f)prVWFile(f);}
-function prVWFile(file){const r=new FileReader();r.onload=e=>{try{const wb=XLSX.read(e.target.result,{type:'binary'});S.vw.data=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);document.getElementById('vwfs').classList.remove('hid');document.getElementById('vwfst').textContent=`${file.name} — ${S.vw.data.length} encuestados.`;document.getElementById('vwab').disabled=false;}catch{alert('Error.');}};r.readAsBinaryString(file);}
-
-function loadVWDemo(){
-  const N=120,r=rng(777);
-  S.vw.data=Array.from({length:N},(_,i)=>{
-    const ref=20+Math.floor(r()*30);
-    return{id:i+1,muy_barato:Math.max(1,Math.round(ref*(0.3+r()*0.2))),barato:Math.round(ref*(0.6+r()*0.2)),caro:Math.round(ref*(1.1+r()*0.3)),muy_caro:Math.round(ref*(1.4+r()*0.4))};
-  });
-  document.getElementById('vwfs').classList.remove('hid');
-  document.getElementById('vwfst').textContent=`Datos demo — ${N} encuestados simulados.`;
-  document.getElementById('vwab').disabled=false;
-}
-
-function analyzeVW(){
-  const raw=S.vw.data;
-  // Validar consistencia: muy_barato <= barato <= caro <= muy_caro
-  const valid=raw.filter(r=>{
-    const mb=+r.muy_barato,b=+r.barato,c=+r.caro,mc=+r.muy_caro;
-    return mb>0&&b>0&&c>0&&mc>0&&mb<=b&&b<=c&&c<=mc;
-  });
-  if(valid.length<10){alert(`Solo ${valid.length} respuestas válidas. Se necesitan al menos 10.`);return;}
-
-  const excluded=raw.length-valid.length;
-  // Recolectar todos los precios únicos y ordenarlos
-  const allPrices=new Set();
-  valid.forEach(r=>{[+r.muy_barato,+r.barato,+r.caro,+r.muy_caro].forEach(p=>allPrices.add(p));});
-  const prices=[...allPrices].sort((a,b)=>a-b);
-  const N=valid.length;
-
-  // Frecuencias acumuladas
-  // muy_barato (Too Cheap): % que dijeron ≤ precio → invertida (% que dijeron > precio)
-  // Barato y Muy Barato: acumulado DESCENDENTE
-  //   En el precio mínimo → 100% lo llama barato/muy barato
-  //   En el precio máximo → 0% lo llama barato/muy barato
-  //   = % de encuestados cuyo precio "barato/muy_barato" es MAYOR O IGUAL a p
-  // Caro y Muy Caro: acumulado ASCENDENTE
-  //   En el precio mínimo → 0% lo llama caro/muy caro
-  //   En el precio máximo → 100% lo llama caro/muy caro
-  //   = % de encuestados cuyo precio "caro/muy_caro" es MENOR O IGUAL a p
-  const curve={};
-  prices.forEach(p=>{
-    const n_mb=valid.filter(r=>+r.muy_barato>=p).length;  // desc: cuántos tienen muy_barato ≥ p
-    const n_b =valid.filter(r=>+r.barato>=p).length;       // desc: cuántos tienen barato ≥ p
-    const n_c =valid.filter(r=>+r.caro<=p).length;         // asc:  cuántos tienen caro ≤ p
-    const n_mc=valid.filter(r=>+r.muy_caro<=p).length;     // asc:  cuántos tienen muy_caro ≤ p
-    curve[p]={
-      tc  : n_mb/N*100,   // Muy barato: 100% en precio bajo → baja hacia 0%
-      ch  : n_b /N*100,   // Barato:     100% en precio bajo → baja hacia 0%
-      exp : n_c /N*100,   // Caro:       0% en precio bajo  → sube hacia 100%
-      texp: n_mc/N*100    // Muy caro:   0% en precio bajo  → sube hacia 100%
-    };
-  });
-
-  // Encontrar intersecciones interpolando
-  function findIntersect(key1,key2){
-    for(let i=0;i<prices.length-1;i++){
-      const p1=prices[i],p2=prices[i+1];
-      const a1=curve[p1][key1],a2=curve[p2][key1];
-      const b1=curve[p1][key2],b2=curve[p2][key2];
-      if((a1-b1)*(a2-b2)<=0){
-        const t=(b1-a1)/((a2-a1)-(b2-b1));
-        return{price:p1+t*(p2-p1),pct:a1+t*(a2-a1)};
-      }
-    }
-    // fallback: punto más cercano
-    let best=null,bestD=Infinity;
-    prices.forEach(p=>{const d=Math.abs(curve[p][key1]-curve[p][key2]);if(d<bestD){bestD=d;best=p;}});
-    return{price:best,pct:curve[best][key1]};
-  }
-
-  // PMC: Muy Barato ∩ Caro → precio mínimo aceptable (punto de marginalidad barata)
-  const PMC=findIntersect('tc','exp');
-  // PME: Barato ∩ Muy Caro → precio máximo aceptable (punto de marginalidad cara)
-  const PME=findIntersect('ch','texp');
-  // OPP: Muy Barato ∩ Muy Caro → precio óptimo (minimiza rechazo total)
-  const OPP=findIntersect('tc','texp');
-  // IPP: Barato ∩ Caro → precio de indiferencia (igual proporción lo ve barato que caro)
-  const IPP=findIntersect('ch','exp');
-
-  // Estadísticas descriptivas
-  const stats={};
-  ['muy_barato','barato','caro','muy_caro'].forEach(k=>{
-    const vals=valid.map(r=>+r[k]).sort((a,b)=>a-b);
-    const mean=vals.reduce((s,v)=>s+v,0)/vals.length;
-    const med=vals.length%2===0?(vals[vals.length/2-1]+vals[vals.length/2])/2:vals[Math.floor(vals.length/2)];
-    const sd=Math.sqrt(vals.reduce((s,v)=>s+(v-mean)**2,0)/vals.length);
-    stats[k]={mean:mean.toFixed(1),median:med.toFixed(1),sd:sd.toFixed(1),min:vals[0],max:vals[vals.length-1]};
-  });
-
-  S.vw.res={prices,curve,PMC,PME,OPP,IPP,stats,valid,excluded};
-  renderVWResults();
-  gVW(3);
-  genVWAI();
-}
-
-function renderVWResults(){
-  const{PMC,PME,OPP,IPP,stats,valid,excluded}=S.vw.res;
-  const prod=document.getElementById('vw-product')?.value||'el producto';
-
-  // Puntos de precio
-  const ppg=document.getElementById('vw-pp');
-  ppg.innerHTML=`
-    <div class="pp-card" style="border-top:3px solid #c8430a">
-      <div class="pp-label">PMC — Precio Mín. Aceptable</div>
-      <div class="pp-val" style="color:#c8430a">${PMC.price.toFixed(1)}</div>
-      <div class="pp-desc">Por debajo de este precio el consumidor duda de la calidad</div>
-    </div>
-    <div class="pp-card" style="border-top:3px solid #1a7a4a">
-      <div class="pp-label">OPP — Precio Óptimo</div>
-      <div class="pp-val" style="color:#1a7a4a">${OPP.price.toFixed(1)}</div>
-      <div class="pp-desc">Minimiza simultáneamente rechazo por precio alto y bajo</div>
-    </div>
-    <div class="pp-card" style="border-top:3px solid #2563a8">
-      <div class="pp-label">IPP — Precio Indiferencia</div>
-      <div class="pp-val" style="color:#2563a8">${IPP.price.toFixed(1)}</div>
-      <div class="pp-desc">Precio al que la mitad lo ve barato y la mitad caro</div>
-    </div>
-    <div class="pp-card" style="border-top:3px solid #7c3aed">
-      <div class="pp-label">PME — Precio Máx. Aceptable</div>
-      <div class="pp-val" style="color:#7c3aed">${PME.price.toFixed(1)}</div>
-      <div class="pp-desc">Por encima de este precio la mayoría lo rechazaría</div>
-    </div>`;
-
-  document.getElementById('vw-range-text').innerHTML=`Rango de precios aceptable: <strong>${PMC.price.toFixed(1)} — ${PME.price.toFixed(1)}</strong> · Rango óptimo de negociación: <strong>${OPP.price.toFixed(1)} — ${IPP.price.toFixed(1)}</strong> · Encuestados válidos: ${valid.length}${excluded>0?' ('+excluded+' excluidos por inconsistencia)':''}`;
-
-  // Leyenda
-  const legendData=[{label:'Barato / buen precio',color:'#d97706',dash:false},{label:'Muy barato (duda calidad)',color:'#2563a8',dash:false},{label:'Caro (aún aceptable)',color:'#1a7a4a',dash:false},{label:'Muy caro (rechaza)',color:'#56cfcf',dash:false}];
-  document.getElementById('vw-legend').innerHTML=legendData.map(l=>`<div class="vw-leg-item"><div class="vw-leg-dot" style="background:${l.color};${l.dash?'background:repeating-linear-gradient(90deg,'+l.color+' 0,'+l.color+' 6px,transparent 6px,transparent 10px)':''}"></div>${l.label}</div>`).join('');
-
-  // Canvas chart
-  drawVWChart('vw-canvas',S.vw.res,{PMC,PME,OPP,IPP});
-
-  // Stats
-  const cols=['muy_barato','barato','caro','muy_caro'];
-  const labels=['Muy barato (duda calidad)','Barato / buen precio','Caro (aún aceptable)','Muy caro (rechaza)'];
-  document.getElementById('vw-stats').innerHTML=`<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:.8rem">
-    <thead><tr style="background:var(--surface)"><th style="text-align:left;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.72rem;color:var(--ink3)">PREGUNTA</th><th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.72rem;color:var(--ink3)">MEDIA</th><th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.72rem;color:var(--ink3)">MEDIANA</th><th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.72rem;color:var(--ink3)">D.E.</th><th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.72rem;color:var(--ink3)">MÍN.</th><th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.72rem;color:var(--ink3)">MÁX.</th></tr></thead>
-    <tbody>${cols.map((k,i)=>`<tr style="border-bottom:1px solid var(--border)"><td style="padding:.42rem .7rem">${labels[i]}</td><td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace">${stats[k].mean}</td><td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace">${stats[k].median}</td><td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace">${stats[k].sd}</td><td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace">${stats[k].min}</td><td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace">${stats[k].max}</td></tr>`).join('')}
-    </tbody></table></div>`;
-}
-
-function drawVWChart(canvasId,res,pts){
-  const canvas=document.getElementById(canvasId);if(!canvas)return;
-  const{prices,curve}=res;
-  const ctx=canvas.getContext('2d');
-  const W=canvas.offsetWidth||700,H=canvas.offsetHeight||320;
-  canvas.width=W;canvas.height=H;
-  const pad={l:48,r:20,t:24,b:52};
-  const minP=prices[0],maxP=prices[prices.length-1];
-  const px=p=>pad.l+(p-minP)/(maxP-minP)*(W-pad.l-pad.r);
-  const py=pct=>H-pad.b-pct/100*(H-pad.t-pad.b);
-  ctx.clearRect(0,0,W,H);
-  // Grid
-  ctx.strokeStyle='#e2ddd4';ctx.lineWidth=1;
-  for(let g=0;g<=100;g+=25){const y=py(g);ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();}
-  for(let g=0;g<=4;g++){const x=pad.l+g/4*(W-pad.l-pad.r);ctx.beginPath();ctx.moveTo(x,pad.t);ctx.lineTo(x,H-pad.b);ctx.stroke();}
-  // Labels
-  ctx.fillStyle='#8a8278';ctx.font='11px Geist, sans-serif';ctx.textAlign='right';
-  for(let g=0;g<=100;g+=25){ctx.fillText(g+'%',pad.l-5,py(g)+4);}
-  ctx.textAlign='center';
-  const step=Math.ceil((maxP-minP)/6);
-  for(let p=Math.ceil(minP/step)*step;p<=maxP;p+=step){ctx.fillText(p,px(p),H-pad.b+16);}
-
-  function drawCurve(key,color,dashed){
-    ctx.beginPath();ctx.strokeStyle=color;ctx.lineWidth=2.5;
-    if(dashed){ctx.setLineDash([6,4]);}else{ctx.setLineDash([]);}
-    let first=true;
-    prices.forEach(p=>{const v=curve[p][key];if(first){ctx.moveTo(px(p),py(v));first=false;}else{ctx.lineTo(px(p),py(v));}});
-    ctx.stroke();ctx.setLineDash([]);
-  }
-  drawCurve('ch','#d97706',false);   // Barato → baja de izq a der (naranja)
-  drawCurve('tc','#2563a8',false);   // Muy barato → baja más rápido (azul)
-  drawCurve('exp','#1a7a4a',false);  // Caro → sube de izq a der (verde)
-  drawCurve('texp','#56cfcf',false); // Muy caro → sube más rápido (celeste)
-
-  // Intersections — colors match reference image style
-  const ptDefs=[
-    {pt:pts.PMC,col:'#c8430a',lbl:'PMC'},   // Muy Barato ∩ Caro
-    {pt:pts.OPP,col:'#1a7a4a',lbl:'OPP'},   // Muy Barato ∩ Muy Caro
-    {pt:pts.IPP,col:'#d97706',lbl:'IPP'},   // Barato ∩ Caro
-    {pt:pts.PME,col:'#7c3aed',lbl:'PME'}    // Barato ∩ Muy Caro
-  ];
-  ptDefs.forEach(({pt,col,lbl})=>{
-    if(!pt||!pt.price)return;
-    const x=px(pt.price),y=py(pt.pct);
-    // Vertical dashed line
-    ctx.beginPath();ctx.strokeStyle=col;ctx.lineWidth=1.2;ctx.setLineDash([4,3]);ctx.moveTo(x,pad.t);ctx.lineTo(x,H-pad.b);ctx.stroke();ctx.setLineDash([]);
-    // Dot at intersection
-    ctx.beginPath();ctx.fillStyle='#fff';ctx.arc(x,y,6,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.strokeStyle=col;ctx.lineWidth=2;ctx.arc(x,y,6,0,Math.PI*2);ctx.stroke();
-    ctx.beginPath();ctx.fillStyle=col;ctx.arc(x,y,3,0,Math.PI*2);ctx.fill();
-    // Label above
-    ctx.fillStyle=col;ctx.font='bold 11px Geist, sans-serif';ctx.textAlign='center';ctx.fillText(lbl,x,y-14);
-    // Price below x-axis
-    ctx.fillStyle='#1a1714';ctx.font='10px Geist Mono, monospace';ctx.fillText(pt.price.toFixed(1),x,H-pad.b+28);
-  });
-  // Rango aceptable shaded
-  if(pts.PMC&&pts.PME){
-    ctx.fillStyle='rgba(26,122,74,0.07)';
-    ctx.fillRect(px(pts.PMC.price),pad.t,px(pts.PME.price)-px(pts.PMC.price),H-pad.t-pad.b);
-  }
-}
-
-async function genVWAI(){
-  const{PMC,PME,OPP,IPP,stats,valid}=S.vw.res;
-  const prod=document.getElementById('vw-product')?.value||'el producto';
-  const prompt=`Eres experto en investigación de mercados y pricing. Van Westendorp PSM con ${valid.length} encuestados para: "${prod}". PMC=${PMC.price.toFixed(1)}, OPP=${OPP.price.toFixed(1)}, IPP=${IPP.price.toFixed(1)}, PME=${PME.price.toFixed(1)}. Rango aceptable: ${PMC.price.toFixed(1)} a ${PME.price.toFixed(1)}. Precio promedio "barato": ${stats.barato.mean}. Precio promedio "caro": ${stats.caro.mean}. Redactá 3 párrafos breves (máx 80 palabras c/u) en español: 1. Qué revelan los precios clave sobre la percepción del consumidor. 2. Rango estratégico recomendado y por qué. 3. Implicancias para la estrategia de precios (lanzamiento, reposicionamiento, comunicación). Sé concreto y contextualizado.`;
-  const result = await callAI(prompt, fallbackVW);
-  showAI('vwai', result);
-}
-function expVW(){
-  if(!S.vw.res)return;
-  const{PMC,PME,OPP,IPP,stats,valid}=S.vw.res,wb=XLSX.utils.book_new();
-  const pts=[['Punto','Precio','Descripción'],['PMC — Precio Mínimo Aceptable',PMC.price.toFixed(1),'Por debajo se duda de la calidad'],['OPP — Precio Óptimo',OPP.price.toFixed(1),'Minimiza rechazo por precio alto y bajo'],['IPP — Precio de Indiferencia',IPP.price.toFixed(1),'Mitad lo ve barato, mitad caro'],['PME — Precio Máximo Aceptable',PME.price.toFixed(1),'Por encima la mayoría rechaza']];
-  const w1=XLSX.utils.aoa_to_sheet(pts);XLSX.utils.book_append_sheet(wb,w1,'Puntos de precio');
-  const srows=[['Pregunta','Media','Mediana','D.E.','Mínimo','Máximo'],['Muy barato',stats.muy_barato.mean,stats.muy_barato.median,stats.muy_barato.sd,stats.muy_barato.min,stats.muy_barato.max],['Barato',stats.barato.mean,stats.barato.median,stats.barato.sd,stats.barato.min,stats.barato.max],['Caro',stats.caro.mean,stats.caro.median,stats.caro.sd,stats.caro.min,stats.caro.max],['Muy caro',stats.muy_caro.mean,stats.muy_caro.median,stats.muy_caro.sd,stats.muy_caro.min,stats.muy_caro.max]];
-  const w2=XLSX.utils.aoa_to_sheet(srows);XLSX.utils.book_append_sheet(wb,w2,'Estadísticas');
-  const aiT=document.getElementById('vwai')?.innerText||'';
-  const w3=XLSX.utils.aoa_to_sheet([['CONCLUSIONES IA'],[''],...aiT.split('\n').map(l=>[l])]);XLSX.utils.book_append_sheet(wb,w3,'Conclusiones IA');
-  const drows=[['id','muy_barato','barato','caro','muy_caro'],...valid.map(r=>[r.id||'',+r.muy_barato,+r.barato,+r.caro,+r.muy_caro])];
-  const w4=XLSX.utils.aoa_to_sheet(drows);XLSX.utils.book_append_sheet(wb,w4,'Datos válidos');
-  XLSX.writeFile(wb,'resultados_van_westendorp.xlsx');
-}
-
-// ══════════════════════════════════════════════════
-// NMS — Newton-Miller-Smith
-// ══════════════════════════════════════════════════
-function hNMDrop(e){e.preventDefault();const f=e.dataTransfer.files[0];if(f)prNMFile(f);}
-function hNMFile(e){const f=e.target.files[0];if(f)prNMFile(f);}
-function prNMFile(file){const r=new FileReader();r.onload=e=>{try{const wb=XLSX.read(e.target.result,{type:'binary'});S.nms.data=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);document.getElementById('nmfs').classList.remove('hid');document.getElementById('nmfst').textContent=`${file.name} — ${S.nms.data.length} encuestados.`;document.getElementById('nmab').disabled=false;}catch{alert('Error.');}};r.readAsBinaryString(file);}
-
-function loadNMSDemo(){
-  const N=120,r=rng(888);
-  S.nms.data=Array.from({length:N},(_,i)=>{
-    const ref=20+Math.floor(r()*30);
-    const mb=Math.max(1,Math.round(ref*(0.3+r()*0.2)));
-    const b=Math.round(ref*(0.6+r()*0.2));
-    const c=Math.round(ref*(1.1+r()*0.3));
-    const mc=Math.round(ref*(1.4+r()*0.4));
-    const ib=Math.min(5,Math.max(1,Math.round(3+r()*2)));
-    const ic=Math.min(5,Math.max(1,Math.round(2+r()*2)));
-    return{id:i+1,muy_barato:mb,barato:Math.max(mb,b),caro:Math.max(b,c),muy_caro:Math.max(c,mc),intent_barato:ib,intent_caro:ic};
-  });
-  document.getElementById('nmfs').classList.remove('hid');
-  document.getElementById('nmfst').textContent=`Datos demo — ${N} encuestados simulados.`;
-  document.getElementById('nmab').disabled=false;
-}
-
-// Calibración NMS estándar (Sawtooth): 5→70%, 4→50%, 3→30%, 2→10%, 1→0%
-const NMS_CAL={5:0.70,4:0.50,3:0.30,2:0.10,1:0.00};
-
-function analyzeNMS(){
-  const raw=S.nms.data;
-  const valid=raw.filter(r=>{
-    const mb=+r.muy_barato,b=+r.barato,c=+r.caro,mc=+r.muy_caro;
-    const ib=+r.intent_barato,ic=+r.intent_caro;
-    return mb>0&&b>0&&c>0&&mc>0&&mb<=b&&b<=c&&c<=mc&&ib>=1&&ib<=5&&ic>=1&&ic<=5;
-  });
-  if(valid.length<10){alert(`Solo ${valid.length} respuestas válidas.`);return;}
-
-  // PSM estándar (igual que VW)
-  const allPrices=new Set();
-  valid.forEach(r=>{[+r.muy_barato,+r.barato,+r.caro,+r.muy_caro].forEach(p=>allPrices.add(p));});
-  const prices=[...allPrices].sort((a,b)=>a-b);
-  const N=valid.length;
-  const curve={};
-  prices.forEach(p=>{
-    const n_mb=valid.filter(r=>+r.muy_barato>=p).length;  // desc
-    const n_b =valid.filter(r=>+r.barato>=p).length;       // desc
-    const n_c =valid.filter(r=>+r.caro<=p).length;         // asc
-    const n_mc=valid.filter(r=>+r.muy_caro<=p).length;     // asc
-    curve[p]={tc:n_mb/N*100,ch:n_b/N*100,exp:n_c/N*100,texp:n_mc/N*100};
-  });
-
-  function findIntersect(key1,key2){for(let i=0;i<prices.length-1;i++){const p1=prices[i],p2=prices[i+1];const a1=curve[p1][key1],a2=curve[p2][key1];const b1=curve[p1][key2],b2=curve[p2][key2];if((a1-b1)*(a2-b2)<=0){const t=(b1-a1)/((a2-a1)-(b2-b1));return{price:p1+t*(p2-p1),pct:a1+t*(a2-a1)};}}let best=null,bestD=Infinity;prices.forEach(p=>{const d=Math.abs(curve[p][key1]-curve[p][key2]);if(d<bestD){bestD=d;best=p;}});return{price:best,pct:curve[best][key1]};}
-
-  const PMC=findIntersect('tc','exp');
-  const PME=findIntersect('ch','texp');
-  const OPP=findIntersect('tc','texp');
-  const IPP=findIntersect('ch','exp');
-
-  // NMS: construir curva de demanda en rango de precios
-  // Para cada precio p en el rango:
-  //   Pi_cheap(p): prob de compra al precio "barato" del encuestado si p <= precio_barato_encuestado
-  //   Pi_exp(p): prob de compra al precio "caro" del encuestado si p == precio_caro
-  // Método: para cada precio en el rango, calcular demanda acumulada
-  const minP=Math.min(...valid.map(r=>+r.muy_barato));
-  const maxP=Math.max(...valid.map(r=>+r.muy_caro));
-  const step=Math.max(1,Math.round((maxP-minP)/60));
-  const pRange=[];for(let p=minP;p<=maxP;p+=step){pRange.push(p);}
-
-  // Para cada precio del rango, calcular % que compraría
-  // Usando interpolación entre punto "barato" (pi_b, intent_b) y "caro" (pi_c, intent_c)
-  // intent en very cheap y very expensive = 0%
-  const demand=pRange.map(p=>{
-    let total=0;
-    valid.forEach(r=>{
-      const pb=+r.barato,pc=+r.caro;
-      const mb=+r.muy_barato,mc=+r.muy_caro;
-      const ib=NMS_CAL[+r.intent_barato]||0;
-      const ic=NMS_CAL[+r.intent_caro]||0;
-      let prob=0;
-      if(p<=mb){prob=0;}
-      else if(p<=pb){prob=ib*(p-mb)/(pb-mb||1);}
-      else if(p<=pc){prob=ib+(ic-ib)*(p-pb)/(pc-pb||1);}
-      else if(p<=mc){prob=ic*(1-(p-pc)/(mc-pc||1));}
-      else{prob=0;}
-      total+=Math.max(0,Math.min(1,prob));
-    });
-    return{price:p,demand_pct:total/N*100};
-  });
-
-  // Revenue = price × demand (asumiendo 1000 unidades base)
-  const revenue=demand.map(d=>({price:d.price,rev:d.price*d.demand_pct}));
-  const maxDemand=demand.reduce((a,b)=>a.demand_pct>b.demand_pct?a:b);
-  const maxRev=revenue.reduce((a,b)=>a.rev>b.rev?a:b);
-
-  // Stats descriptivas
-  const stats={};
-  ['muy_barato','barato','caro','muy_caro'].forEach(k=>{
-    const vals=valid.map(r=>+r[k]).sort((a,b)=>a-b);
-    const mean=vals.reduce((s,v)=>s+v,0)/vals.length;
-    const med=vals.length%2===0?(vals[vals.length/2-1]+vals[vals.length/2])/2:vals[Math.floor(vals.length/2)];
-    stats[k]={mean:mean.toFixed(1),median:med.toFixed(1),min:vals[0],max:vals[vals.length-1]};
-  });
-
-  S.nms.res={prices,curve,PMC,PME,OPP,IPP,stats,valid,demand,revenue,maxDemand,maxRev};
-  renderNMSResults();
-  gNMS(3);
-  genNMSAI();
-}
-
-function renderNMSResults(){
-  const{PMC,PME,OPP,IPP,stats,valid,demand,revenue,maxDemand,maxRev}=S.nms.res;
-
-  // PSM puntos
-  document.getElementById('nms-pp').innerHTML=`
-    <div class="pp-card" style="border-top:3px solid #c8430a"><div class="pp-label">PMC</div><div class="pp-val" style="color:#c8430a">${PMC.price.toFixed(1)}</div><div class="pp-desc">Precio mínimo aceptable</div></div>
-    <div class="pp-card" style="border-top:3px solid #1a7a4a"><div class="pp-label">OPP</div><div class="pp-val" style="color:#1a7a4a">${OPP.price.toFixed(1)}</div><div class="pp-desc">Precio óptimo PSM</div></div>
-    <div class="pp-card" style="border-top:3px solid #2563a8"><div class="pp-label">IPP</div><div class="pp-val" style="color:#2563a8">${IPP.price.toFixed(1)}</div><div class="pp-desc">Precio de indiferencia</div></div>
-    <div class="pp-card" style="border-top:3px solid #7c3aed"><div class="pp-label">PME</div><div class="pp-val" style="color:#7c3aed">${PME.price.toFixed(1)}</div><div class="pp-desc">Precio máximo aceptable</div></div>`;
-
-  // NMS optima
-  document.getElementById('nms-optima').innerHTML=`
-    <div class="pp-card" style="border-top:3px solid #1a7a4a;grid-column:1/3">
-      <div class="pp-label">✦ Precio de Máximo Trial (NMS)</div>
-      <div class="pp-val" style="color:#1a7a4a">${maxDemand.price.toFixed(1)}</div>
-      <div class="pp-desc">Maximiza el % de consumidores dispuestos a comprar (${maxDemand.demand_pct.toFixed(1)}% del mercado)</div>
-    </div>
-    <div class="pp-card" style="border-top:3px solid #7c3aed;grid-column:3/5">
-      <div class="pp-label">✦ Precio de Máximo Revenue (NMS)</div>
-      <div class="pp-val" style="color:#7c3aed">${maxRev.price.toFixed(1)}</div>
-      <div class="pp-desc">Maximiza ingresos estimados (índice revenue: ${maxRev.rev.toFixed(0)})</div>
-    </div>`;
-
-  // PSM chart
-  document.getElementById('nms-vw-legend').innerHTML=`
-    <div class="vw-leg-item"><div class="vw-leg-dot" style="background:#d97706"></div>Barato / buen precio</div>
-    <div class="vw-leg-item"><div class="vw-leg-dot" style="background:#2563a8"></div>Muy barato (duda calidad)</div>
-    <div class="vw-leg-item"><div class="vw-leg-dot" style="background:#1a7a4a"></div>Caro (aún aceptable)</div>
-    <div class="vw-leg-item"><div class="vw-leg-dot" style="background:#56cfcf"></div>Muy caro (rechaza)</div>`;
-  drawVWChart('nms-vw-canvas',S.nms.res,{PMC,PME,OPP,IPP});
-
-  // NMS curves
-  drawNMSChart();
-
-  // Stats
-  const cols=['muy_barato','barato','caro','muy_caro'];
-  const labels=['Muy barato','Barato','Caro','Muy caro'];
-  document.getElementById('nms-stats').innerHTML=`<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:.8rem"><thead><tr style="background:var(--surface)"><th style="text-align:left;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">PREGUNTA</th><th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">MEDIA</th><th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">MEDIANA</th><th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">MÍN.</th><th style="text-align:center;padding:.45rem .7rem;border-bottom:1px solid var(--border);font-size:.7rem;color:var(--ink3)">MÁX.</th></tr></thead><tbody>${cols.map((k,i)=>`<tr style="border-bottom:1px solid var(--border)"><td style="padding:.42rem .7rem">${labels[i]}</td><td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace">${stats[k].mean}</td><td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace">${stats[k].median}</td><td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace">${stats[k].min}</td><td style="padding:.42rem .7rem;text-align:center;font-family:'Geist Mono',monospace">${stats[k].max}</td></tr>`).join('')}</tbody></table></div>`;
-}
-
-function drawNMSChart(){
-  const canvas=document.getElementById('nms-canvas');if(!canvas)return;
-  const{demand,revenue,maxDemand,maxRev}=S.nms.res;
-  const ctx=canvas.getContext('2d');
-  const W=canvas.offsetWidth||700,H=canvas.offsetHeight||260;
-  canvas.width=W;canvas.height=H;
-  const pad={l:50,r:55,t:20,b:40};
-  const prices=demand.map(d=>d.price);
-  const minP=prices[0],maxP=prices[prices.length-1];
-  const maxD=Math.max(...demand.map(d=>d.demand_pct));
-  const maxR=Math.max(...revenue.map(r=>r.rev));
-  const px=p=>pad.l+(p-minP)/(maxP-minP)*(W-pad.l-pad.r);
-  const pyD=v=>H-pad.b-v/100*(H-pad.t-pad.b);
-  const pyR=v=>H-pad.b-v/maxR*(H-pad.t-pad.b);
-  ctx.clearRect(0,0,W,H);
-  // Grid
-  ctx.strokeStyle='#e2ddd4';ctx.lineWidth=1;
-  for(let g=0;g<=100;g+=25){const y=pyD(g);ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();}
-  // Axis labels left
-  ctx.fillStyle='#8a8278';ctx.font='10px Geist, sans-serif';ctx.textAlign='right';
-  for(let g=0;g<=100;g+=25){ctx.fillText(g+'%',pad.l-5,pyD(g)+4);}
-  ctx.textAlign='center';
-  const step=Math.max(1,Math.round((maxP-minP)/6));
-  for(let p=Math.ceil(minP/step)*step;p<=maxP;p+=step){ctx.fillText(p,px(p),H-pad.b+16);}
-  // Demand curve
-  ctx.beginPath();ctx.strokeStyle='#1a7a4a';ctx.lineWidth=2.5;ctx.setLineDash([]);
-  demand.forEach((d,i)=>{i===0?ctx.moveTo(px(d.price),pyD(d.demand_pct)):ctx.lineTo(px(d.price),pyD(d.demand_pct));});
-  ctx.stroke();
-  // Revenue curve (scaled)
-  ctx.beginPath();ctx.strokeStyle='#7c3aed';ctx.lineWidth=2.5;ctx.setLineDash([5,4]);
-  revenue.forEach((d,i)=>{i===0?ctx.moveTo(px(d.price),pyR(d.rev)):ctx.lineTo(px(d.price),pyR(d.rev));});
-  ctx.stroke();ctx.setLineDash([]);
-  // Mark max demand
-  ctx.beginPath();ctx.fillStyle='#1a7a4a';ctx.arc(px(maxDemand.price),pyD(maxDemand.demand_pct),5,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='#1a7a4a';ctx.font='bold 10px Geist, sans-serif';ctx.textAlign='center';ctx.fillText('Max Trial',px(maxDemand.price),pyD(maxDemand.demand_pct)-12);
-  ctx.fillText(maxDemand.price.toFixed(0),px(maxDemand.price),pyD(maxDemand.demand_pct)+18);
-  // Mark max revenue
-  ctx.beginPath();ctx.fillStyle='#7c3aed';ctx.arc(px(maxRev.price),pyR(maxRev.rev),5,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='#7c3aed';ctx.textAlign='center';ctx.fillText('Max Rev.',px(maxRev.price),pyR(maxRev.rev)-12);
-  ctx.fillText(maxRev.price.toFixed(0),px(maxRev.price),pyR(maxRev.rev)+18);
-  // Legend
-  ctx.fillStyle='#1a7a4a';ctx.fillRect(W-pad.r-100,pad.t,20,3);ctx.fillStyle='#4a453f';ctx.font='10px Geist, sans-serif';ctx.textAlign='left';ctx.fillText('Demanda (%)',W-pad.r-75,pad.t+6);
-  ctx.strokeStyle='#7c3aed';ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(W-pad.r-100,pad.t+16);ctx.lineTo(W-pad.r-80,pad.t+16);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#4a453f';ctx.fillText('Revenue (índice)',W-pad.r-75,pad.t+20);
-}
-
-async function genNMSAI(){
-  const{PMC,PME,OPP,IPP,maxDemand,maxRev,valid}=S.nms.res;
-  const prod=document.getElementById('nms-product')?.value||'el producto';
-  const prompt=`Eres experto en pricing e investigación de mercados, especializado en Van Westendorp con extensión Newton-Miller-Smith (NMS). Estudio con ${valid.length} encuestados para: "${prod}". PSM: PMC=${PMC.price.toFixed(1)}, OPP=${OPP.price.toFixed(1)}, IPP=${IPP.price.toFixed(1)}, PME=${PME.price.toFixed(1)}. NMS: Precio máximo trial=${maxDemand.price.toFixed(1)} (${maxDemand.demand_pct.toFixed(1)}% compraría), Precio máximo revenue=${maxRev.price.toFixed(1)}. Redactá 3 párrafos breves (máx 85 palabras c/u) en español: 1. Qué revela el PSM sobre el rango aceptable. 2. Qué agregan las curvas NMS: cuándo priorizar volumen vs. revenue. 3. Recomendación estratégica considerando ambas metodologías. Sé concreto y contextualizado.`;
-  const result = await callAI(prompt, fallbackNMS);
-  showAI('nmai', result);
-}
-function expNMS(){
-  if(!S.nms.res)return;
-  const{PMC,PME,OPP,IPP,stats,valid,demand,revenue,maxDemand,maxRev}=S.nms.res,wb=XLSX.utils.book_new();
-  const pts=[['Punto','Precio','Descripción'],['PMC',PMC.price.toFixed(1),'Precio mínimo aceptable'],['OPP',OPP.price.toFixed(1),'Precio óptimo PSM'],['IPP',IPP.price.toFixed(1),'Precio de indiferencia'],['PME',PME.price.toFixed(1),'Precio máximo aceptable'],[''],['Max Trial (NMS)',maxDemand.price.toFixed(1),'Precio que maximiza volumen de compradores'],['Max Revenue (NMS)',maxRev.price.toFixed(1),'Precio que maximiza ingresos estimados']];
-  const w1=XLSX.utils.aoa_to_sheet(pts);XLSX.utils.book_append_sheet(wb,w1,'Puntos de precio');
-  const drows=[['Precio','Demanda (%)','Revenue (índice)'],...demand.map((d,i)=>[d.price,d.demand_pct.toFixed(1),revenue[i].rev.toFixed(1)])];
-  const w2=XLSX.utils.aoa_to_sheet(drows);XLSX.utils.book_append_sheet(wb,w2,'Curvas NMS');
-  const aiT=document.getElementById('nmai')?.innerText||'';
-  const w3=XLSX.utils.aoa_to_sheet([['CONCLUSIONES IA — NMS'],[''],...aiT.split('\n').map(l=>[l])]);XLSX.utils.book_append_sheet(wb,w3,'Conclusiones IA');
-  const drows2=[['id','muy_barato','barato','caro','muy_caro','intent_barato','intent_caro'],...valid.map(r=>[r.id||'',+r.muy_barato,+r.barato,+r.caro,+r.muy_caro,+r.intent_barato,+r.intent_caro])];
-  const w4=XLSX.utils.aoa_to_sheet(drows2);XLSX.utils.book_append_sheet(wb,w4,'Datos válidos');
-  XLSX.writeFile(wb,'resultados_nms.xlsx');
-}
-
-// ══ INIT ══
-window.addEventListener('load',()=>{loadCEx();loadMEx();});
-window.addEventListener('resize',()=>{if(S.vw.res)drawVWChart('vw-canvas',S.vw.res,S.vw.res);if(S.nms.res){drawVWChart('nms-vw-canvas',S.nms.res,S.nms.res);drawNMSChart();}});
+  // Vite/GitHub Pages expose public/js as ./js. Direct file previews need ./public/js.
+  const scriptBase = location.protocol === 'file:' ? './public/js/' : './js/';
+  [
+    'i18n.js',
+    'state-cases.js',
+    'education.js',
+    'app-shell.js',
+    'ai-service.js',
+    'engines/conjoint-engine.js',
+    'conjoint.js',
+    'engines/maxdiff-engine.js',
+    'maxdiff.js',
+    'engines/van-westendorp-engine.js',
+    'van-westendorp.js',
+    'engines/nms-engine.js',
+    'nms.js',
+    'engines/turf-engine.js',
+    'turf.js',
+    'init.js'
+  ].forEach(source => document.write(`<script src="${scriptBase}${source}"><\/script>`));
 </script>
 </body>
 </html>
