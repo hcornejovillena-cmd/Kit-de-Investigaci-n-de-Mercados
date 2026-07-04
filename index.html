@@ -928,6 +928,7 @@
 <script>
   // Vite/GitHub Pages expose public/js as ./js. Direct file previews need ./public/js.
   const scriptBase = location.protocol === 'file:' ? './public/js/' : './js/';
+  const scriptVersion = '4.0.1';
   [
     'i18n.js',
     'state-cases.js',
@@ -945,7 +946,7 @@
     'engines/turf-engine.js',
     'turf.js',
     'init.js'
-  ].forEach(source => document.write(`<script src="${scriptBase}${source}"><\/script>`));
+  ].forEach(source => document.write(`<script src="${scriptBase}${source}?v=${scriptVersion}"><\/script>`));
 </script>
 </body>
 </html>
